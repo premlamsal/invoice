@@ -34,3 +34,8 @@ Route::delete('invoice/{id}','InvoiceController@destroy');
 
 //Create new Customer
 Route::post('customer','CustomerController@store');
+
+//Search Customer
+Route::post('customer_search','CustomerController@search');
+
+

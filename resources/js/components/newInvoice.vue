@@ -12,11 +12,17 @@
             <label>Invoice No.</label>
                 Will be generated after Invoice Creation
         </div>
-        <div class="form-group">
+        <div class="form-group" style="position: relative;">
             <label>Customer</label>
-            <input type="text" class="form-control" v-model="info.customer_name" v-on:Keyup="autoComplete">
+            <input type="text" class="form-control" v-model="info.customer_name" v-on:keyup="autoComplete">
 
-           
+           <div class="customer-search-suggestion">
+               <div v-for="queryResult in queryResults" v-bind:key="queryResult.id" class="customer-search-suggestion-inner">
+                 <ul>
+                       <li  @click="clickSearchSuggestion(queryResult.id,queryResult.name)">{{queryResult.name}}</li>
+                   </ul>
+               </div>
+           </div>
                 <b-button id="show-btn" @click="$bvModal.show('bv-modal-example')" class="btn btn-warning" style="margin-top: 8px;">
                        <span class="fa fa-plus-circle"></span>
                      Add Customer</b-button>
@@ -134,6 +140,58 @@
  </div>
  
 </template>
+<style>
+.customer-search-suggestion {
+    background: #f2f2f2;
+    position: absolute;
+    overflow-y: scroll;
+    max-height: 9em;
+    color: #000;
+    border: 1px solid #e2dfdf;
+    border-top: 0px;
+    width: 100%;
+   
+}
+
+.customer-search-suggestion-inner {
+    padding: 1px;
+    border-top: 1px solid #d6d6d6;
+}
+.customer-search-suggestion-inner ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.customer-search-suggestion-inner li {
+    cursor: pointer;
+    padding: 10px;
+
+}
+.customer-search-suggestion-inner li:hover{
+    background: #007bff;
+    color: #fff;
+}
+
+
+.customer-search-suggestion::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.customer-search-suggestion::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+.customer-search-suggestion::-webkit-scrollbar-thumb
+{
+    background-color: #000000;
+}
+
+</style>
 
 <script>
    export default{
@@ -152,7 +210,8 @@
 
                 info:{},
                 customer:{},
-                showModal: false
+                showModal: false,
+                queryResults:[]
 
             };
 
@@ -240,7 +299,40 @@
             },
 
             autoComplete(){
-                alert("hello");
+
+                if(this.info.customer_name===""){
+
+                  this.queryResults=null;
+                 
+                }
+                else{
+                  
+                    fetch('api/customer_search/',{
+                        method: 'post',
+                        body: JSON.stringify({'searchQuery':this.info.customer_name}),
+                        headers:{
+                            'content-type': 'application/json'
+                        }
+                    })
+                    .then(res=>res.json())
+                    .then(data=>{
+                       
+                       this.queryResults=data.queryResults;
+
+
+                        
+                    })
+                    .catch(err=>console.log(err));
+                    console.log();
+                }
+   
+              
+            },
+            clickSearchSuggestion(customer_id,customer_name){
+
+                    Vue.set(this.info, 'customer_id', customer_id);
+                    Vue.set(this.info, 'customer_name', customer_name);
+                    this.queryResults=null;
             }
 
     },// end of methods

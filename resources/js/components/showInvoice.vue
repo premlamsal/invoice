@@ -100,7 +100,7 @@
         </tr>
     </tfoot>
  </table>
-        <button class="btn btn-success" @click="updateInvoice(id)">Edit</button>
+        <button class="btn btn-success" @click="editInvoice(id)">Edit</button>
         <router-link to="/invoices" class="btn btn-danger">Close</router-link>
  </div>
 
@@ -169,9 +169,9 @@
             this.id=this.$route.params.id;
 
         },//end of getIdFromUrl
-           updateInvoice(id){
+           editInvoice(id){
           // named route
-          this.$router.push({ name: 'editInvoice', params: { id } })
+           this.$router.push({ path: `/${id}/editInvoice/` }) 
         },
 
         fetchInvoice(){

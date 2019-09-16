@@ -26,15 +26,15 @@ let routes = [
   { path: '/', component: require('./components/Dashboard.vue').default},
   { path: '/dashboard', component: require('./components/Dashboard.vue').default},
   { path: '/newInvoice', component: require('./components/newInvoice.vue').default},
-  { path: '/editInvoice',name:'editInvoice' ,component: require('./components/editInvoice.vue').default},
-  { path: '/showInvoice',name:'showInvoice' ,component: require('./components/showInvoice.vue').default},
+  { path: '/:id/editInvoice',name:'editInvoice' ,component: require('./components/editInvoice.vue').default},
+  { path: '/:id/showInvoice/',name:'showInvoice' ,component: require('./components/showInvoice.vue').default},
 
 ];
 
 
 
 const router = new VueRouter({
-  
+ 
   routes // short for `routes: routes`
 });
 

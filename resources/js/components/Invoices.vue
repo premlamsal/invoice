@@ -122,11 +122,17 @@
         },
         editInvoice(id){
           // named route
-          this.$router.push({ name: 'editInvoice', params: { id } })
+          // this.$router.push({ name: 'editInvoice', params: { id } });
+            this.$router.push({ path: `${id}/editInvoice/` }) 
         },
         showInvoice(id){
           // named route
-          this.$router.push({ name: 'showInvoice', params: { id } })
+
+          // this.$router.push({ name: 'showInvoice', params: { id } }); //will hide parameter in url
+
+
+          this.$router.push({ path: `${id}/showInvoice/` }) 
+
 
         }
 
