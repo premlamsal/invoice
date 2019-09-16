@@ -1,0 +1,18 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Invoice extends Model
+{
+	public function invoiceDetail() {
+	    return $this->hasMany('\App\invoiceDetail','invoice_id','id');
+	}
+
+    public function customer() {
+	    return $this->belongsTo('\App\Customer','customer_id','id');
+	}
+
+	 protected $fillable = ['invoice_no', 'title', 'invoice_date','due_date','customer_id','customer_name','sub_total','discount','grand_total','status'];
+}

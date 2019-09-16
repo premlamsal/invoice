@@ -1,0 +1,216 @@
+<template>
+ <div>
+     <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <button class="btn btn-primary" style="float: right;"><span class="fa fa-print"></span></button>
+           </div>
+            <div class="card-body" style="color: black;">
+ <div class="row">
+    <div class="col-sm-4">
+        <div class="form-group">
+            <label>Invoice No.</label>
+            <span>{{info.invoice_no}}</span>
+        </div>
+        <div class="form-group">
+            <label class="text-primary">Inovice To</label>
+            <br>
+            <span style="font-weight: bold">{{info.customer_name}}</span>
+            <br>
+            <span style="font-weight: bold;color: black">{{info.customer_address}}</span>
+            <br>
+            <span style="font-weight: bold;color: black">{{info.customer_phone}}</span>
+
+        </div>
+
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group">
+          <!--   <label>Customer Address</label>
+            <textarea class="form-control" style="height: 7.6em" v-model="info.client_address"></textarea>
+                
+            -->
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4">
+        <div class="form-group">
+            <label>Title :</label>
+              {{info.title}}
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <label>Invoice Date :</label>
+              {{info.invoice_date}}
+            </div>
+            <div class="col-sm-6">
+                <label>Due Date :</label>
+                {{info.due_date}}
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+<table class="table table-bordered table-form">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="(item,index) in items">
+            <td class="table-name">
+                {{item.product_name}}
+            </td>
+            <td class="table-price">
+                {{item.price}}
+            </td>
+            <td class="table-qty">
+                {{item.quantity}}
+            </td>
+            <td class="table-total">
+                <span class="table-text" v-model="item.line_total">{{item.quantity * item.price}}</span>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="table-empty" colspan="2">
+                <!-- <button class="table-add_line btn btn-primary"><span class="fa fa-plus-circle"></span></button> -->
+            </td>
+            <td class="table-label">Sub Total</td>
+            <td class="table-amount">{{info.sub_total}}</td>
+        </tr>
+        <tr>
+            <td class="table-empty" colspan="2"></td>
+            <td class="table-label">Discount</td>
+            <td class="table-discount">
+                {{info.discount}}
+            </td>
+        </tr>
+        <tr>
+            <td class="table-empty" colspan="2"></td>
+            <td class="table-label text-primary" style="font-weight: bold;">Grand Total</td>
+            <td class="table-amount" style="font-weight: bold;">{{info.grand_total}}</td>
+        </tr>
+    </tfoot>
+ </table>
+        <button class="btn btn-success" @click="updateInvoice(id)">Edit</button>
+        <router-link to="/invoices" class="btn btn-danger">Close</router-link>
+ </div>
+
+ </div>
+
+ </div>
+ 
+</template>
+<style>
+    black{
+        color: black;
+    }
+</style>
+
+<style type="text/css">
+   label{
+    color: #000;
+   }
+   table{color: #000!important;}
+
+ </style>
+ <style>
+    label{
+        color: #000;
+        font-weight: bold;
+    }
+ </style>
+
+<script>
+   export default{
+
+        data(){
+
+            return{
+                items:[{
+
+                    product_name:'',
+                    price:'',
+                    quantity:'',
+                    line_total:''
+
+                }],
+
+                info:{},
+                id:'',
+               
+               
+
+            };
+
+        },
+        created(){
+           
+            //methods to be executed while this page is created
+            this.getIdFromUrl();
+            this.fetchInvoice();
+
+        },
+        mounted(){
+           
+        },
+        methods :{
+
+            getIdFromUrl(){
+
+            this.id=this.$route.params.id;
+
+        },//end of getIdFromUrl
+           updateInvoice(id){
+          // named route
+          this.$router.push({ name: 'editInvoice', params: { id } })
+        },
+
+        fetchInvoice(){
+
+          fetch('api/invoice/'+this.id)
+            .then(response => response.json())
+            .then(data => (
+                    
+                    Vue.set(this.info, 'invoice_no', data.invoice.id),
+                    Vue.set(this.info, 'title', data.invoice.title),
+                    Vue.set(this.info, 'customer_id', data.invoice.customer_id),
+                    Vue.set(this.info, 'customer_name', data.invoice.customer_name),
+                    Vue.set(this.info, 'invoice_date', data.invoice.invoice_date),
+                    Vue.set(this.info, 'due_date', data.invoice.due_date),
+                    Vue.set(this.info, 'sub_total', data.invoice.sub_total),
+                    Vue.set(this.info, 'grand_total', data.invoice.grand_total),
+                    Vue.set(this.info, 'customer_address', data.customer.address),
+                    Vue.set(this.info, 'customer_phone', data.customer.phone),
+                    //veu.set will make data reactive and updated
+                    this.items=data.invoice.invoice_detail
+
+                ));
+
+        }//enf od fetchInvoice
+
+    },// end of methods
+
+    computed:{
+
+      
+          
+
+    },//end of computed
+
+};//end of export default
+
+
+
+
+
+</script>
+
