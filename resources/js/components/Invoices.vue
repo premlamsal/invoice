@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Invoice No.</th>
@@ -54,6 +54,26 @@
                   </tbody>
                 </table>
               </div>
+              <div class="row">
+                <div class="col-md-8">
+                    <ul class="pagination">
+                      <li class="page-item" v-bind:class="{disabled:!pagination.first_link}"><button @click="fetchInvoices(pagination.first_link)" class="page-link">First</button></li>
+
+                      <li class="page-item" v-bind:class="{disabled:!pagination.prev_link}"><button @click="fetchInvoices(pagination.prev_link)" class="page-link">Previous</button></li>
+
+                      <li v-for="n in pagination.last_page" v-bind:key="n" class="page-item" v-bind:class="{active:pagination.current_page == n}"><button @click="fetchInvoices(pagination.path_page + n)" class="page-link">{{n}}</button></li>
+
+                      <li class="page-item" v-bind:class="{disabled:!pagination.next_link}"><button @click="fetchInvoices(pagination.next_link)" class="page-link">Next</button></li>
+
+                      <li class="page-item" v-bind:class="{disabled:!pagination.last_link}"><button @click="fetchInvoices(pagination.last_link)" class="page-link">Last</button></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                  Page: {{pagination.current_page}}-{{pagination.last_page}}
+                  Total Records: {{pagination.total_pages}}
+                </div>
+              </div>
+
             </div>
           </div>
  </div>
@@ -96,8 +116,15 @@
           let pagination={
             current_page : meta.current_page,
             last_page : meta.last_page,
-            next_page_url : links.next,
-            prev_page_url : links.prev
+            from_page : meta.from,
+            to_page : meta.to,
+            total_pages : meta.total,
+            path_page : meta.path+"?page=",
+            first_link : links.first,
+            last_link : links.last,
+            prev_link : links.prev,
+            next_link : links.next
+          
           }
           this.pagination=pagination;
         },

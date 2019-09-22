@@ -1898,6 +1898,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1930,8 +1950,14 @@ __webpack_require__.r(__webpack_exports__);
       var pagination = {
         current_page: meta.current_page,
         last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
+        from_page: meta.from,
+        to_page: meta.to,
+        total_pages: meta.total,
+        path_page: meta.path + "?page=",
+        first_link: links.first,
+        last_link: links.last,
+        prev_link: links.prev,
+        next_link: links.next
       };
       this.pagination = pagination;
     },
@@ -67969,7 +67995,7 @@ var render = function() {
             "table",
             {
               staticClass: "table table-bordered",
-              attrs: { id: "dataTable", width: "100%", cellspacing: "0" }
+              attrs: { width: "100%", cellspacing: "0" }
             },
             [
               _vm._m(1),
@@ -68056,6 +68082,144 @@ var render = function() {
               )
             ]
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-8" }, [
+            _c(
+              "ul",
+              { staticClass: "pagination" },
+              [
+                _c(
+                  "li",
+                  {
+                    staticClass: "page-item",
+                    class: { disabled: !_vm.pagination.first_link }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "page-link",
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchInvoices(_vm.pagination.first_link)
+                          }
+                        }
+                      },
+                      [_vm._v("First")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "page-item",
+                    class: { disabled: !_vm.pagination.prev_link }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "page-link",
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchInvoices(_vm.pagination.prev_link)
+                          }
+                        }
+                      },
+                      [_vm._v("Previous")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.pagination.last_page, function(n) {
+                  return _c(
+                    "li",
+                    {
+                      key: n,
+                      staticClass: "page-item",
+                      class: { active: _vm.pagination.current_page == n }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "page-link",
+                          on: {
+                            click: function($event) {
+                              return _vm.fetchInvoices(
+                                _vm.pagination.path_page + n
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(n))]
+                      )
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "page-item",
+                    class: { disabled: !_vm.pagination.next_link }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "page-link",
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchInvoices(_vm.pagination.next_link)
+                          }
+                        }
+                      },
+                      [_vm._v("Next")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "page-item",
+                    class: { disabled: !_vm.pagination.last_link }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "page-link",
+                        on: {
+                          click: function($event) {
+                            return _vm.fetchInvoices(_vm.pagination.last_link)
+                          }
+                        }
+                      },
+                      [_vm._v("Last")]
+                    )
+                  ]
+                )
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _vm._v(
+              "\n                 Page: " +
+                _vm._s(_vm.pagination.current_page) +
+                "-" +
+                _vm._s(_vm.pagination.last_page) +
+                "\n                 Total Records: " +
+                _vm._s(_vm.pagination.total_pages) +
+                "\n               "
+            )
+          ])
         ])
       ])
     ])

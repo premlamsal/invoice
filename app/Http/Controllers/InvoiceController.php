@@ -24,7 +24,7 @@ class InvoiceController extends Controller
         // return InvoiceResource::collection($Invoices);
         -----------------------------------------------------------*/
 
-         return InvoiceResource::collection(Invoice::with('invoiceDetail')->orderBy('created_at','desc')->paginate(25));
+         return InvoiceResource::collection(Invoice::with('invoiceDetail')->orderBy('created_at','desc')->paginate(5));
     }
 
     public function store(Request $request)
