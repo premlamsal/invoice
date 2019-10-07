@@ -1918,6 +1918,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -68018,19 +68028,49 @@ var render = function() {
                       ? _c(
                           "td",
                           {
-                            staticClass: "bg-success",
-                            staticStyle: { color: "#fff" }
+                            staticStyle: {
+                              color: "#fff",
+                              "text-align": "center"
+                            }
                           },
-                          [_vm._v(_vm._s(invoice.status))]
+                          [
+                            _c(
+                              "button",
+                              { staticClass: "btn btn-outline-success" },
+                              [
+                                _vm._v(
+                                  "\n                       " +
+                                    _vm._s(invoice.status) +
+                                    "\n                        "
+                                ),
+                                _c("span", { staticClass: "fa fa-check" })
+                              ]
+                            )
+                          ]
                         )
                       : invoice.status === "Not Paid"
                       ? _c(
                           "td",
                           {
-                            staticClass: "bg-danger",
-                            staticStyle: { color: "#fff" }
+                            staticStyle: {
+                              color: "#fff",
+                              "text-align": "center"
+                            }
                           },
-                          [_vm._v(_vm._s(invoice.status))]
+                          [
+                            _c(
+                              "button",
+                              { staticClass: "btn btn-outline-danger" },
+                              [
+                                _vm._v(
+                                  "\n                       " +
+                                    _vm._s(invoice.status) +
+                                    "\n                       "
+                                ),
+                                _c("span", { staticClass: "fa fa-times" })
+                              ]
+                            )
+                          ]
                         )
                       : _vm._e(),
                     _vm._v(" "),

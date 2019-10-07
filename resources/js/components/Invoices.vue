@@ -44,9 +44,19 @@
                       <td>{{invoice.invoice_date}}</td>
                       <td>{{invoice.due_date}}</td>
 
-                      <td style="color: #fff" v-if="(invoice.status==='Paid')" class="bg-success">{{invoice.status}}</td>
+                      <td style="color: #fff;text-align: center;" v-if="(invoice.status==='Paid')">
+                        <button class="btn btn-outline-success">
+                        {{invoice.status}}
+                         <span class="fa fa-check"></span>
+                        </button>
+                      </td>
 
-                      <td style="color: #fff;" v-else-if="(invoice.status==='Not Paid')" class="bg-danger">{{invoice.status}}</td>
+                      <td style="color: #fff;text-align: center;" v-else-if="(invoice.status==='Not Paid')">
+                        <button class="btn btn-outline-danger">
+                        {{invoice.status}}
+                        <span class="fa fa-times"></span>
+                        </button>
+                      </td>
 
                       <td>{{invoice.updated_at}}</td>
                       <td><button style="margin-right: 5px;" class="btn btn-primary" @click="showInvoice(invoice.id)"><span class="fa fa-align-justify"></span></button><button class="btn btn-success" @click="editInvoice(invoice.id)" style="margin-right: 5px;"><span class="fa fa-edit"></span></button><button class="btn btn-danger" @click="deleteInvoice(invoice.id)"><span class="fa fa-trash"></span></button></td>
