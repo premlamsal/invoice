@@ -185,7 +185,12 @@
                    this.items.splice(index,1);
                 }
                 else{
-                    alert('You can\'t delete this');
+                    // alert('You can\'t delete this');
+                      this.$toast.error({
+                            title:'Opps!!',
+                            message:'You can\'t delete this.'
+                        });
+                            
                 }
                 
                
@@ -212,7 +217,11 @@
                     })
                     .then(res=>res.json())
                     .then(data=>{
-                        alert('Invoice Updated');
+                        // alert('Invoice Updated');
+                         this.$toast.warn({
+                            title:'Invoice Updated',
+                            message:'Invoice Updated Sucessfully'
+                        });
                         	
                          this.$router.push({ name: 'invoices'});
 

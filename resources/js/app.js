@@ -34,13 +34,34 @@ const options = {
 
 Vue.use(VueHtmlToPaper, options);
 
-//print block//
+//print block ends//
 
 
+
+
+//bootstrap for vue//
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+//bootstrap for vue ends//
 
 
+
+//notification block//
+
+import CxltToastr from 'cxlt-vue2-toastr';
+
+var toastrConfigs = {
+    position: 'top right',
+    showDuration: 1000,
+    timeOut: 4000
+    
+}
+
+Vue.use(CxltToastr, toastrConfigs);
+
+import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
+
+//notification block ends//
 
 let routes = [
   { path: '/invoices', name:'invoices',component: require('./components/Invoices.vue').default },

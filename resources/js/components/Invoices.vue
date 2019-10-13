@@ -147,7 +147,12 @@
             })
             .then(res=>res.json())
             .then(data=>{
-              alert('Invoice Removed');
+              // alert('Invoice Removed');
+                this.$toast.error({
+                  title:'Invoice Deleted',
+                  message:'Invoice Deleted Sucessfuly',
+
+                });
               
               this.message="Invoice Removed";
               this.fetchInvoices();
