@@ -16,6 +16,27 @@ import BootstrapVue from 'bootstrap-vue';
 
 Vue.use(BootstrapVue);
 
+//print block//
+import VueHtmlToPaper from 'vue-html-to-paper';
+
+const options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    'https://unpkg.com/kidlat-css/css/kidlat.css'
+  ]
+}
+
+Vue.use(VueHtmlToPaper, options);
+
+//print block//
+
+
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
@@ -28,6 +49,7 @@ let routes = [
   { path: '/newInvoice', component: require('./components/newInvoice.vue').default},
   { path: '/:id/editInvoice',name:'editInvoice' ,component: require('./components/editInvoice.vue').default},
   { path: '/:id/showInvoice/',name:'showInvoice' ,component: require('./components/showInvoice.vue').default},
+  { path: '/:id/printInvoice/',name:'printInvoice' ,component: require('./components/printInvoice.vue').default},
 
 ];
 

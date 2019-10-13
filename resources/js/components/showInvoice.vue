@@ -3,9 +3,10 @@
      <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <button class="btn btn-primary" style="float: right;"><span class="fa fa-print"></span></button>
+                <button class="btn btn-primary" style="float: right;" @click="printInvoice(info.invoice_no)"><span class="fa fa-print"></span></button>
            </div>
             <div class="card-body" style="color: black;">
+                <div id="printThisBlock">
  <div class="row">
     <div class="col-sm-4">
         <div class="form-group">
@@ -13,18 +14,18 @@
             <span>{{info.invoice_no}}</span>
         </div>
         <div class="form-group">
-            <label class="text-primary">Inovice To</label>
+            <label class="text-primary">Invoice To Customer</label>
             <br>
-            <span style="font-weight: bold">{{info.customer_name}}</span>
+            <span style="font-weight: bold"> Name: </span>{{info.customer_name}}
             <br>
-            <span style="font-weight: bold;color: black">{{info.customer_address}}</span>
+            <span style="font-weight: bold;color: black"> Address: </span>{{info.customer_address}}
             <br>
-            <span style="font-weight: bold;color: black">{{info.customer_phone}}</span>
+            <span style="font-weight: bold;color: black"> Phone: </span>{{info.customer_phone}}
 
         </div>
 
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-5">
         <div class="form-group">
           <!--   <label>Customer Address</label>
             <textarea class="form-control" style="height: 7.6em" v-model="info.client_address"></textarea>
@@ -32,22 +33,18 @@
             -->
         </div>
     </div>
-    <div class="col-sm-2"></div>
-    <div class="col-sm-4">
-        <div class="form-group">
-            <label>Title :</label>
-              {{info.title}}
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <label>Invoice Date :</label>
-              {{info.invoice_date}}
-            </div>
-            <div class="col-sm-6">
-                <label>Due Date :</label>
-                {{info.due_date}}
-            </div>
-        </div>
+    
+    <div class="col-sm-3">
+         <div style="text-align: right;">
+         <span style="font-weight: bold"> Title: </span>
+            {{info.title}}
+        <br>
+         <span style="font-weight: bold"> Inovie Date: </span>
+            {{info.invoice_date}}
+        <br>
+         <span style="font-weight: bold"> Due Date: </span>
+           {{info.due_date}}
+    </div>
     </div>
 </div>
 <hr>
@@ -100,6 +97,7 @@
         </tr>
     </tfoot>
  </table>
+</div>
         <button class="btn btn-success" @click="editInvoice(id)">Edit</button>
         <router-link to="/invoices" class="btn btn-danger">Close</router-link>
  </div>
@@ -195,7 +193,18 @@
 
                 ));
 
-        }//enf od fetchInvoice
+        },//end of fetchInvoice
+        printInvoice(id){
+
+              // this.$router.push({ path: `/${id}/printInvoice/` })
+
+              // let routeData = this.$router.resolve({name: 'printInvoice', query: {data: "someData"}});
+              // window.open(routeData.href, '_blank');
+
+              this.$htmlToPaper('printThisBlock');
+
+
+        }
 
     },// end of methods
 

@@ -59,7 +59,7 @@
                       </td>
 
                       <td>{{invoice.updated_at}}</td>
-                      <td><button style="margin-right: 5px;" class="btn btn-primary" @click="showInvoice(invoice.id)"><span class="fa fa-align-justify"></span></button><button class="btn btn-success" @click="editInvoice(invoice.id)" style="margin-right: 5px;"><span class="fa fa-edit"></span></button><button class="btn btn-danger" @click="deleteInvoice(invoice.id)"><span class="fa fa-trash"></span></button></td>
+                      <td><button style="margin-right: 5px;" class="btn btn-outline-primary" @click="showInvoice(invoice.id)"><span class="fa fa-align-justify"></span></button><button class="btn btn-outline-success" @click="editInvoice(invoice.id)" style="margin-right: 5px;"><span class="fa fa-edit"></span></button><button class="btn btn-outline-danger" @click="deleteInvoice(invoice.id)"><span class="fa fa-trash"></span></button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -69,11 +69,11 @@
                     <ul class="pagination">
                       <li class="page-item" v-bind:class="{disabled:!pagination.first_link}"><button @click="fetchInvoices(pagination.first_link)" class="page-link">First</button></li>
 
-                      <li class="page-item" v-bind:class="{disabled:!pagination.prev_link}"><button @click="fetchInvoices(pagination.prev_link)" class="page-link">Previous</button></li>
+                      <li class="page-item" v-bind:class="{disabled:!pagination.prev_link}"><button @click="fetchInvoices(pagination.prev_link)" class="page-link"><</button></li>
 
                       <li v-for="n in pagination.last_page" v-bind:key="n" class="page-item" v-bind:class="{active:pagination.current_page == n}"><button @click="fetchInvoices(pagination.path_page + n)" class="page-link">{{n}}</button></li>
 
-                      <li class="page-item" v-bind:class="{disabled:!pagination.next_link}"><button @click="fetchInvoices(pagination.next_link)" class="page-link">Next</button></li>
+                      <li class="page-item" v-bind:class="{disabled:!pagination.next_link}"><button @click="fetchInvoices(pagination.next_link)" class="page-link">></button></li>
 
                       <li class="page-item" v-bind:class="{disabled:!pagination.last_link}"><button @click="fetchInvoices(pagination.last_link)" class="page-link">Last</button></li>
                     </ul>
