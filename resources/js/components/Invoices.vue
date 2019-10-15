@@ -118,7 +118,13 @@
               .then(res=>{
                 // console.log(res);
                 this.invoices=res.data;
-                vm.makePagination(res.meta,res.links);
+                if((this.invoices.length)!=null){
+                   vm.makePagination(res.meta,res.links);
+                }
+                else{
+                  
+                }
+               
               })
               .catch(err=>console.log(err));
         },

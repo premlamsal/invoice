@@ -1951,7 +1951,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         // console.log(res);
         _this.invoices = res.data;
-        vm.makePagination(res.meta, res.links);
+
+        if (_this.invoices.length != null) {
+          vm.makePagination(res.meta, res.links);
+        } else {}
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -2485,6 +2488,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2497,10 +2507,22 @@ __webpack_require__.r(__webpack_exports__);
       info: {},
       customer: {},
       showModal: false,
-      queryResults: []
+      queryResults: [],
+      error: {
+        customer_name: false,
+        title: false,
+        invoice_date: false,
+        due_date: false
+      }
     };
   },
-  created: function created() {//methods to be executed while this page is created
+  created: function created() {
+    //methods to be executed while this page is created
+    //for validation initializing the varibles
+    this.info.customer_name = "";
+    this.info.title = "";
+    this.info.due_date = "";
+    this.info.invoice_date = "";
   },
   methods: {
     //fetch(){} //all memeber functions will be created here
@@ -2533,37 +2555,56 @@ __webpack_require__.r(__webpack_exports__);
     createInvoice: function createInvoice() {
       var _this = this;
 
-      //Add
-      this.info.status = "Not Paid";
+      if (this.info.customer_name != "" && this.info.title != "" && this.info.invoice_date != "" && this.info.due_date != "") {
+        //Add
+        this.info.status = "Not Paid";
 
-      if (this.info.discount == null) {
-        this.info.discount = 0;
+        if (this.info.discount == null) {
+          this.info.discount = 0;
+        }
+
+        fetch('api/invoice', {
+          method: 'post',
+          body: JSON.stringify({
+            'info': this.info,
+            'items': this.items
+          }),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          // alert('Invoice Added');
+          _this.$toast.success({
+            title: 'Invoice Added',
+            message: 'Invoice Added Sucessfuly'
+          });
+
+          _this.$router.push({
+            name: 'invoices'
+          });
+        })["catch"](function (err) {
+          _this.displayToastMessage('Opps!!!', 'Something Happen');
+        });
+      } else {
+        if (this.info.customer_name == "") {
+          this.displayToastMessage('Error!!!', 'Customer Name can\'t be Empty'); // this.error.customer_name=true;
+        }
+
+        if (this.info.title == "") {
+          this.displayToastMessage('Error!!!', 'Invoice Title can\'t be Empty'); // this.error.title=true;
+        }
+
+        if (this.info.invoice_date == "") {
+          this.displayToastMessage('Error!!!', 'Invoice Date can\'t be Empty'); // this.error.invoice_date=true;
+        }
+
+        if (this.info.due_date == "") {
+          this.displayToastMessage('Error!!!', 'Invoice Due Date can\'t be Empty'); // this.error.invoice_date=true;
+        }
       }
 
-      fetch('api/invoice', {
-        method: 'post',
-        body: JSON.stringify({
-          'info': this.info,
-          'items': this.items
-        }),
-        headers: {
-          'content-type': 'application/json'
-        }
-      }).then(function (res) {
-        return res.json();
-      }).then(function (data) {
-        // alert('Invoice Added');
-        _this.$toast.success({
-          title: 'Invoice Added',
-          message: 'Invoice Added Sucessfuly'
-        });
-
-        _this.$router.push({
-          name: 'invoices'
-        });
-      })["catch"](function (err) {
-        return console.log(err);
-      });
       console.log();
     },
     addCustomer: function addCustomer() {
@@ -2618,10 +2659,17 @@ __webpack_require__.r(__webpack_exports__);
       Vue.set(this.info, 'customer_id', customer_id);
       Vue.set(this.info, 'customer_name', customer_name);
       this.queryResults = null;
+    },
+    displayToastMessage: function displayToastMessage(title, message) {
+      this.$toast.error({
+        title: title,
+        message: message
+      });
     }
   },
   // end of methods
   computed: {
+    //checks errors in the fields
     subTotal: function subTotal() {
       //reduce function is used to sum the array elements
       this.info.subTotal = this.items.reduce(function (carry, item) {
@@ -2653,7 +2701,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -69026,7 +69073,10 @@ var render = function() {
                         expression: "info.customer_name"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: {
+                      "form-control": !_vm.error.customer_name,
+                      "form-control is-invalid": _vm.error.customer_name
+                    },
                     attrs: { type: "text" },
                     domProps: { value: _vm.info.customer_name },
                     on: {
@@ -69243,7 +69293,10 @@ var render = function() {
                       expression: "info.title"
                     }
                   ],
-                  staticClass: "form-control",
+                  class: {
+                    "form-control": !_vm.error.title,
+                    "form-control is-invalid": _vm.error.title
+                  },
                   attrs: { type: "text" },
                   domProps: { value: _vm.info.title },
                   on: {
@@ -69270,7 +69323,10 @@ var render = function() {
                         expression: "info.invoice_date"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: {
+                      "form-control": !_vm.error.invoice_date,
+                      "form-control is-invalid": _vm.error.invoice_date
+                    },
                     attrs: { type: "date" },
                     domProps: { value: _vm.info.invoice_date },
                     on: {
@@ -69296,7 +69352,10 @@ var render = function() {
                         expression: "info.due_date"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: {
+                      "form-control": !_vm.error.due_date,
+                      "form-control is-invalid": _vm.error.due_date
+                    },
                     attrs: { type: "date" },
                     domProps: { value: _vm.info.due_date },
                     on: {
@@ -69700,7 +69759,7 @@ var render = function() {
                     { staticStyle: { "font-weight": "bold", color: "black" } },
                     [_vm._v(" Phone: ")]
                   ),
-                  _vm._v(_vm._s(_vm.info.customer_phone) + "\n\n        ")
+                  _vm._v(_vm._s(_vm.info.customer_phone) + "\n        ")
                 ])
               ]),
               _vm._v(" "),

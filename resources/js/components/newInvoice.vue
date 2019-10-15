@@ -14,8 +14,10 @@
         </div>
         <div class="form-group" style="position: relative;">
             <label>Customer</label>
-            <input type="text" class="form-control" v-model="info.customer_name" v-on:keyup="autoComplete">
 
+            <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" v-bind:class="{'form-control':!error.customer_name,'form-control is-invalid': error.customer_name }">
+
+            <!-- Search suggestion block -->
            <div class="customer-search-suggestion">
                <div v-for="queryResult in queryResults" v-bind:key="queryResult.id" class="customer-search-suggestion-inner">
                  <ul>
@@ -34,7 +36,9 @@
                         <div class="d-block">
                               <div class="form-group">
                                 <label for="Name">Name:</label>
+
                                 <input type="text" class="form-control" v-model="customer.name">
+
                               </div>
                               <div class="form-group">
                                 <label for="Address">Address:</label>
@@ -47,6 +51,7 @@
                         </div>
                         <b-button class="mt-3" block @click="addCustomer">Add Customer</b-button>
                       </b-modal>
+                    <!-- Search suggestion block ends -->
 
         </div>
         <div>
@@ -64,16 +69,18 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Title</label>
-            <input type="text" class="form-control" v-model="info.title">
+            <input type="text" v-bind:class="{'form-control':!error.title,'form-control is-invalid': error.title }" v-model="info.title">
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <label>Invoice Date</label>
-                <input type="date" class="form-control" v-model="info.invoice_date">
+                <input type="date" v-bind:class="{'form-control':!error.invoice_date,'form-control is-invalid': error.invoice_date }" v-model="info.invoice_date">
+                
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
-                <input type="date" class="form-control" v-model="info.due_date">
+                <input type="date" v-bind:class="{'form-control':!error.due_date,'form-control is-invalid': error.due_date }" v-model="info.due_date">
+                    
             </div>
         </div>
     </div>
@@ -211,13 +218,26 @@
                 info:{},
                 customer:{},
                 showModal: false,
-                queryResults:[]
+                queryResults:[],
+                error:{
+                    customer_name: false,
+                    title:false,
+                    invoice_date:false,
+                    due_date:false
+                }
+              
 
             };
 
         },
         created(){
             //methods to be executed while this page is created
+            //for validation initializing the varibles
+            this.info.customer_name="";
+            this.info.title="";
+            this.info.due_date="";
+            this.info.invoice_date="";
+           
 
         },
 
@@ -257,6 +277,7 @@
 
             },
             createInvoice(){
+              if(this.info.customer_name!="" &&this.info.title!="" &&this.info.invoice_date!="" &&this.info.due_date!=""){
                 //Add
                 this.info.status="Not Paid";
                 if(this.info.discount==null){
@@ -280,7 +301,34 @@
 
                         this.$router.push({ name: 'invoices'});
                     })
-                    .catch(err=>console.log(err));
+                    .catch(err=>{
+                            
+                           this.displayToastMessage('Opps!!!','Something Happen');
+
+                        });
+                }
+                else{
+
+                    if(this.info.customer_name==""){ 
+                        this.displayToastMessage('Error!!!','Customer Name can\'t be Empty');
+                        // this.error.customer_name=true;
+                    }
+                    if(this.info.title==""){ 
+                        this.displayToastMessage('Error!!!','Invoice Title can\'t be Empty');
+                        // this.error.title=true;
+                    }
+                    if(this.info.invoice_date==""){
+                        this.displayToastMessage('Error!!!','Invoice Date can\'t be Empty');
+                        // this.error.invoice_date=true;
+                    }
+                    if(this.info.due_date==""){ 
+                        this.displayToastMessage('Error!!!','Invoice Due Date can\'t be Empty');
+                        // this.error.invoice_date=true;
+                    }
+
+                   
+                }
+                    
                     console.log();
             },
             addCustomer(){
@@ -343,11 +391,20 @@
                     Vue.set(this.info, 'customer_id', customer_id);
                     Vue.set(this.info, 'customer_name', customer_name);
                     this.queryResults=null;
-            }
+            },
+            
+            displayToastMessage(title,message){
+                      this.$toast.error({
+                            title: title,
+                            message: message
+                            });
+            },
 
     },// end of methods
 
     computed:{
+        //checks errors in the fields
+
 
        subTotal: function() {
         //reduce function is used to sum the array elements

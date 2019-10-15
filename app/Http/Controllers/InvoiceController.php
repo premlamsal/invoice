@@ -37,7 +37,7 @@ class InvoiceController extends Controller
         if($items->isEmpty()) {
             return response()
             ->json([
-                'items_empty' => ['One or more Item is required.']
+                'items_empty' => 'One or more Item is required.'
             ], 422);
         }
 

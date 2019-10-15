@@ -21,7 +21,6 @@
             <span style="font-weight: bold;color: black"> Address: </span>{{info.customer_address}}
             <br>
             <span style="font-weight: bold;color: black"> Phone: </span>{{info.customer_phone}}
-
         </div>
 
     </div>
