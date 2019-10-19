@@ -98,9 +98,9 @@
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <router-link class="nav-link" to="/settings">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Settings</span></a>
+          <span>Settings</span></router-link>
       </li>
 
       <!-- Divider -->

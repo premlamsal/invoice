@@ -38,4 +38,10 @@ Route::post('customer','CustomerController@store');
 //Search Customer
 Route::post('customer_search','CustomerController@search');
 
+//retriving settings
+Route::get('settings','SettingsController@index');
+
+//updating settings
+Route::put('settings','SettingsController@update');
+
 

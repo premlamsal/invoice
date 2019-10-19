@@ -71,6 +71,7 @@ let routes = [
   { path: '/:id/editInvoice',name:'editInvoice' ,component: require('./components/editInvoice.vue').default},
   { path: '/:id/showInvoice/',name:'showInvoice' ,component: require('./components/showInvoice.vue').default},
   { path: '/:id/printInvoice/',name:'printInvoice' ,component: require('./components/printInvoice.vue').default},
+  { path: '/settings/',name:'settings' ,component: require('./components/settings.vue').default},
 
 ];
 
