@@ -218,10 +218,14 @@
                     .then(res=>res.json())
                     .then(data=>{
                         // alert('Invoice Updated');
-                         this.$toast.warn({
-                            title:'Invoice Updated',
-                            message:'Invoice Updated Sucessfully'
-                        });
+                        //for toast message
+                        //  this.$toast.warn({
+                        //     title:'Invoice Updated',
+                        //     message:'Invoice Updated Sucessfully'
+                        // });
+
+                        //sweet alert
+                        this.$swal('Good job!','You have updated the Invoice!','success');
                         	
                          this.$router.push({ name: 'invoices'});
 

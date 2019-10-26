@@ -146,26 +146,37 @@
         },
 
         deleteInvoice(id){
-          if(confirm('Are You sure ?')){
 
-            fetch('api/invoice/'+id,{
-              method: 'delete'
+            this.$swal({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if (result.value) {
+                //delete code here
+                   fetch('api/invoice/'+id,{
+                           method: 'delete'
+                        })
+                    .then(res=>res.json())
+                    .then(data=>{
+                        // alert('Invoice Removed');
+                        this.$swal(
+                                'Deleted!',
+                                'Invoice has been deleted.',
+                                'success'
+                        );
+                            
+                        this.message="Invoice Removed";
+                        this.fetchInvoices();
+                      })
+                    .catch(err=>console.log(err))
+
+              }
             })
-            .then(res=>res.json())
-            .then(data=>{
-              // alert('Invoice Removed');
-                this.$toast.error({
-                  title:'Invoice Deleted',
-                  message:'Invoice Deleted Sucessfuly',
-
-                });
-              
-              this.message="Invoice Removed";
-              this.fetchInvoices();
-            })
-            .catch(err=>console.log(err))
-
-          }
 
         },
         editInvoice(id){

@@ -47,7 +47,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 
 //notification block//
-
+//Toaster
 import CxltToastr from 'cxlt-vue2-toastr';
 
 var toastrConfigs = {
@@ -63,6 +63,23 @@ import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
 
 //notification block ends//
 
+
+
+
+
+//Sweet alert start//
+
+
+import VueSweetalert2 from 'vue-sweetalert2';
+ 
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
+ 
+Vue.use(VueSweetalert2);
+
+
+
+//Sweet alert ends//
 let routes = [
   { path: '/invoices', name:'invoices',component: require('./components/Invoices.vue').default },
   { path: '/', component: require('./components/Dashboard.vue').default},
@@ -112,7 +129,7 @@ const app = new Vue({
      router,
      data:{
      	message:''
-     }
-
+     },
+  
 });
 

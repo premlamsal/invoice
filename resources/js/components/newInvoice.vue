@@ -294,10 +294,13 @@
                     .then(res=>res.json())
                     .then(data=>{
                         // alert('Invoice Added');
-                        this.$toast.success({
-                            title:'Invoice Added',
-                            message:'Invoice Added Sucessfuly'
-                        });
+                        // this.$toast.success({
+                        //     title:'Invoice Added',
+                        //     message:'Invoice Added Sucessfuly'
+                        // });
+                        //sweet alert
+                        this.$swal('Good job!','You have created the Invoice!','success');
+                        
 
                         this.$router.push({ name: 'invoices'});
                     })
