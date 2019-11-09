@@ -63,8 +63,8 @@
 <style>
   .image{
     margin: 0 auto;
-    width: 100px;
-    height: 100px;
+    width: 225px;
+    height: 225px;
   }
 </style>
 <script>

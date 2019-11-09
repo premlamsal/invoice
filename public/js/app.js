@@ -35687,7 +35687,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.image{\n  margin: 0 auto;\n  width: 100px;\n  height: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.image{\n  margin: 0 auto;\n  width: 225px;\n  height: 225px;\n}\n", ""]);
 
 // exports
 
