@@ -74,13 +74,18 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Invoie Utilities:</h6>
+            <h6 class="collapse-header">Invoice Utilities:</h6>
              <router-link class="collapse-item" to="/newInvoice">New Invoices</router-link>
             <router-link class="collapse-item" to="/invoices">Invoices</router-link>
           </div>
         </div>
       </li>
-
+        <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <router-link class="nav-link" to="/estimates">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Estimate</span></router-link>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -89,12 +94,7 @@
         Addons
       </div>
 
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Profile</span></a>
-      </li>
+    
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">

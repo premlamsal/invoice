@@ -45,3 +45,19 @@ Route::get('settings','SettingsController@index');
 Route::put('settings','SettingsController@update');
 
 
+//List estimates
+Route::get('estimates','EstimateController@index');
+
+//List single estimate
+Route::get('estimate/{id}','EstimateController@show');
+
+//Create new estimate
+Route::post('estimate','EstimateController@store');
+
+//Update estimate
+Route::put('estimate','EstimateController@update');
+
+//Delete estimate
+Route::delete('estimate/{id}','EstimateController@destroy');
+
+

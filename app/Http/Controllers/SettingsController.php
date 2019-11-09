@@ -41,7 +41,7 @@ class SettingsController extends Controller
               $setting->company_name=$company_name;
               $setting->company_email=$company_email;
               $setting->company_address=$company_address;
-              $setting->company_phone=$company_name;
+              $setting->company_phone=$company_phone;
               $setting->company_url=$company_url;
               $setting->vat=$vat;
 

@@ -77,17 +77,31 @@ import 'sweetalert2/dist/sweetalert2.min.css';
  
 Vue.use(VueSweetalert2);
 
-
-
 //Sweet alert ends//
+
+
 let routes = [
-  { path: '/invoices', name:'invoices',component: require('./components/Invoices.vue').default },
+  
   { path: '/', component: require('./components/Dashboard.vue').default},
   { path: '/dashboard', component: require('./components/Dashboard.vue').default},
-  { path: '/newInvoice', component: require('./components/newInvoice.vue').default},
-  { path: '/:id/editInvoice',name:'editInvoice' ,component: require('./components/editInvoice.vue').default},
-  { path: '/:id/showInvoice/',name:'showInvoice' ,component: require('./components/showInvoice.vue').default},
-  { path: '/:id/printInvoice/',name:'printInvoice' ,component: require('./components/printInvoice.vue').default},
+
+  //invoice routes
+  { path: '/invoices', name:'invoices',component: require('./components/invoice/Invoices.vue').default },
+  { path: '/newInvoice', component: require('./components/invoice/newInvoice.vue').default},
+  { path: '/:id/editInvoice',name:'editInvoice' ,component: require('./components/invoice/editInvoice.vue').default},
+  { path: '/:id/showInvoice/',name:'showInvoice' ,component: require('./components/invoice/showInvoice.vue').default},
+  { path: '/:id/printInvoice/',name:'printInvoice' ,component: require('./components/invoice/printInvoice.vue').default},
+
+  //estimate routes
+  { path: '/estimates', name:'estimates',component: require('./components/estimate/Estimates.vue').default },
+  { path: '/newEstimate', component: require('./components/estimate/newEstimate.vue').default},
+  { path: '/:id/editEstimate',name:'editEstimate' ,component: require('./components/estimate/editEstimate.vue').default},
+  { path: '/:id/showEstimate/',name:'showEstimate' ,component: require('./components/estimate/showEstimate.vue').default},
+  { path: '/:id/printEstimate/',name:'printEstimate' ,component: require('./components/estimate/printEstimate.vue').default},
+
+
+
+  //settings route
   { path: '/settings/',name:'settings' ,component: require('./components/settings.vue').default},
 
 ];

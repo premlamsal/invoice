@@ -129,9 +129,9 @@
 
  </style>
  <style>
- 	label{
- 		color: #000;
- 	}
+    label{
+        color: #000;
+    }
  </style>
 
 <script>
@@ -226,7 +226,7 @@
 
                         //sweet alert
                         this.$swal('Good job!','You have updated the Invoice!','success');
-                        	
+                            
                          this.$router.push({ name: 'invoices'});
 
                     })
@@ -236,28 +236,28 @@
 
             getIdFromUrl(){
 
-      		this.id=this.$route.params.id;
+            this.id=this.$route.params.id;
 
-      	},//end of getIdFromUrl
+        },//end of getIdFromUrl
 
-      	fetchInvoice(){
+        fetchInvoice(){
 
           fetch('api/invoice/'+this.id)
             .then(response => response.json())
             .then(data => (
-            		
-            		Vue.set(this.info, 'invoice_no', data.invoice.id),
-            		Vue.set(this.info, 'title', data.invoice.title),
-            		Vue.set(this.info, 'customer_id', data.invoice.customer_id),
-            		Vue.set(this.info, 'customer_name', data.invoice.customer_name),
-            		Vue.set(this.info, 'invoice_date', data.invoice.invoice_date),
-            		Vue.set(this.info, 'due_date', data.invoice.due_date),
+                    
+                    Vue.set(this.info, 'invoice_no', data.invoice.id),
+                    Vue.set(this.info, 'title', data.invoice.title),
+                    Vue.set(this.info, 'customer_id', data.invoice.customer_id),
+                    Vue.set(this.info, 'customer_name', data.invoice.customer_name),
+                    Vue.set(this.info, 'invoice_date', data.invoice.invoice_date),
+                    Vue.set(this.info, 'due_date', data.invoice.due_date),
                     Vue.set(this.info, 'status', data.invoice.status),
-            		//veu.set will make data reactive and updated
-            		this.items=data.invoice.invoice_detail
-            	));
+                    //veu.set will make data reactive and updated
+                    this.items=data.invoice.invoice_detail
+                ));
 
-      	}//enf od fetchInvoice
+        }//enf od fetchInvoice
 
     },// end of methods
 
