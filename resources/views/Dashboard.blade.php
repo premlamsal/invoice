@@ -62,23 +62,15 @@
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-      <div class="sidebar-heading">
+     <!--  <div class="sidebar-heading">
         Billing
       </div>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
+ -->
+       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-receipt"></i>
-          <span>Invoice</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Invoice Utilities:</h6>
-             <router-link class="collapse-item" to="/newInvoice">New Invoices</router-link>
-            <router-link class="collapse-item" to="/invoices">Invoices</router-link>
-          </div>
-        </div>
+        <router-link class="nav-link" to="/invoices">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Invoices</span></router-link>
       </li>
         <!-- Nav Item - Charts -->
       <li class="nav-item">
@@ -90,9 +82,9 @@
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-      <div class="sidebar-heading">
+     <!--  <div class="sidebar-heading">
         Addons
-      </div>
+      </div> -->
 
     
 
