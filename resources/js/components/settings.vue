@@ -10,7 +10,7 @@
             <div class="card-body">
               <div class="row">
                <div class="col-md-4">  
-                  <form>
+                  <form @submit="formSubmit" enctype="multipart/form-data">
                     <div class="form-group">
                       <label>Company Name</label>
                       <input type="text" class="form-control" placeholder="Company Name" v-model="settings.company_name">
@@ -46,7 +46,7 @@
             <div class="col-md-3"></div>
               <div class="col-md-5">
                     <div class="card" style="width: 18rem;">
-                      <img class="card-img-top company_logo" v-bind:src="settings.company_logo" alt="Card image cap">
+                      <img class="card-img-top image" v-bind:src="settings.company_logo" alt="Card image cap">
                       <div class="card-body">
                         <h4 style="text-align: center;">{{settings.company_name}}</h4>
                         <p class="card-text" style="text-align: center;">{{settings.company_address}}</p>
@@ -61,7 +61,7 @@
   </div>
 </template>
 <style>
-  .company_logo{
+  .image{
     margin: 0 auto;
     width: 100px;
     height: 100px;
@@ -73,10 +73,10 @@
     data(){
       
       return {
-          //list of datas goes here
+          //list of data goes here
 
             settings:{},
-            company_logo:'',
+            image:'',
             selectedFile:''
 
 
@@ -112,15 +112,59 @@
 
               Vue.set(this.settings, 'vat', data.settings.vat)
               // console.log(data.settings.company_name)
-
-
           ));
       },//end of fetchSettings()
+
+
+
+
+
+      
       fileSelected(e){
-          alert("File Selected");
+          // alert("File Selected");
+          this.image=e.target.files[0];
+          //console.log(this.image);
 
-      }//end of fileSelected
+      },//end of fileSelected
+      formSubmit(e){
+        e.preventDefault();
+        let currObj=this;
 
+        const config={
+          headers:{'content-type':'multipart/form-data'},
+
+        }
+        let formData= new FormData();
+        formData.append('image',this.image);
+        formData.append('_method', 'PUT');//add this otherwise data won't pass to backend
+        formData.append('id',this.settings.id);
+        formData.append('company_name',this.settings.company_name);
+        formData.append('company_email',this.settings.company_email);
+        formData.append('company_address',this.settings.company_address);
+        formData.append('company_phone',this.settings.company_phone);
+        formData.append('company_url',this.settings.company_url);
+        formData.append('vat',this.settings.vat);
+        // Display the key/value pairs
+   
+        // posting data //using post and sending form data as PUT to match the api route name setting
+        axios.post('/api/settings',formData,config)
+        .then(function (response){
+          currObj.output=response.data.msg;
+          currObj.status=response.data.status;
+          // alert(currObj.status);
+           
+                currObj.$swal('Info',currObj.output ,currObj.status);
+
+                currObj.fetchSettings();
+                      
+
+        })
+        .catch(function(error){
+            currObj.output=error;
+            // console.log(currObj.output);
+        });
+
+      }//end of formSubmit
 
     }//end of methods block
 

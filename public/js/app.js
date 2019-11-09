@@ -2786,9 +2786,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      //list of datas goes here
+      //list of data goes here
       settings: {},
-      company_logo: '',
+      image: '',
       selectedFile: ''
     }; //end of return block inside of data block
   },
@@ -2812,8 +2812,41 @@ __webpack_require__.r(__webpack_exports__);
     },
     //end of fetchSettings()
     fileSelected: function fileSelected(e) {
-      alert("File Selected");
-    } //end of fileSelected
+      // alert("File Selected");
+      this.image = e.target.files[0]; //console.log(this.image);
+    },
+    //end of fileSelected
+    formSubmit: function formSubmit(e) {
+      e.preventDefault();
+      var currObj = this;
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      var formData = new FormData();
+      formData.append('image', this.image);
+      formData.append('_method', 'PUT'); //add this otherwise data won't pass to backend
+
+      formData.append('id', this.settings.id);
+      formData.append('company_name', this.settings.company_name);
+      formData.append('company_email', this.settings.company_email);
+      formData.append('company_address', this.settings.company_address);
+      formData.append('company_phone', this.settings.company_phone);
+      formData.append('company_url', this.settings.company_url);
+      formData.append('vat', this.settings.vat); // Display the key/value pairs
+      // posting data //using post and sending form data as PUT to match the api route name setting
+
+      axios.post('/api/settings', formData, config).then(function (response) {
+        currObj.output = response.data.msg;
+        currObj.status = response.data.status; // alert(currObj.status);
+
+        currObj.$swal('Info', currObj.output, currObj.status);
+        currObj.fetchSettings();
+      })["catch"](function (error) {
+        currObj.output = error; // console.log(currObj.output);
+      });
+    } //end of formSubmit
 
   } //end of methods block
 
@@ -35654,7 +35687,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.company_logo{\n  margin: 0 auto;\n  width: 100px;\n  height: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.image{\n  margin: 0 auto;\n  width: 100px;\n  height: 100px;\n}\n", ""]);
 
 // exports
 
@@ -72863,191 +72896,204 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-4" }, [
-            _c("form", [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Company Name")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.company_name,
-                      expression: "settings.company_name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Company Name" },
-                  domProps: { value: _vm.settings.company_name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+            _c(
+              "form",
+              {
+                attrs: { enctype: "multipart/form-data" },
+                on: { submit: _vm.formSubmit }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Company Name")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.company_name,
+                        expression: "settings.company_name"
                       }
-                      _vm.$set(
-                        _vm.settings,
-                        "company_name",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Company Email")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.company_email,
-                      expression: "settings.company_email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Company Email" },
-                  domProps: { value: _vm.settings.company_email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Company Name" },
+                    domProps: { value: _vm.settings.company_name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.settings,
+                          "company_name",
+                          $event.target.value
+                        )
                       }
-                      _vm.$set(
-                        _vm.settings,
-                        "company_email",
-                        $event.target.value
-                      )
                     }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Company Address")]),
+                  })
+                ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.company_address,
-                      expression: "settings.company_address"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Company Address" },
-                  domProps: { value: _vm.settings.company_address },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Company Email")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.company_email,
+                        expression: "settings.company_email"
                       }
-                      _vm.$set(
-                        _vm.settings,
-                        "company_address",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Company Phone")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.company_phone,
-                      expression: "settings.company_phone"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "phone", placeholder: "Company Phone" },
-                  domProps: { value: _vm.settings.company_phone },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Company Email" },
+                    domProps: { value: _vm.settings.company_email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.settings,
+                          "company_email",
+                          $event.target.value
+                        )
                       }
-                      _vm.$set(
-                        _vm.settings,
-                        "company_phone",
-                        $event.target.value
-                      )
                     }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("VAT Percentage")]),
+                  })
+                ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.vat,
-                      expression: "settings.vat"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "number", placeholder: "VAT Percentage" },
-                  domProps: { value: _vm.settings.vat },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Company Address")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.company_address,
+                        expression: "settings.company_address"
                       }
-                      _vm.$set(_vm.settings, "vat", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Company Website")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.company_url,
-                      expression: "settings.company_url"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "http://example.com" },
-                  domProps: { value: _vm.settings.company_url },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Company Address" },
+                    domProps: { value: _vm.settings.company_address },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.settings,
+                          "company_address",
+                          $event.target.value
+                        )
                       }
-                      _vm.$set(_vm.settings, "company_url", $event.target.value)
                     }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Company Logo")]),
+                  })
+                ]),
                 _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "file" },
-                  on: { change: _vm.fileSelected }
-                })
-              ]),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Save")])
-            ])
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Company Phone")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.company_phone,
+                        expression: "settings.company_phone"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "phone", placeholder: "Company Phone" },
+                    domProps: { value: _vm.settings.company_phone },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.settings,
+                          "company_phone",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("VAT Percentage")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.vat,
+                        expression: "settings.vat"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", placeholder: "VAT Percentage" },
+                    domProps: { value: _vm.settings.vat },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.settings, "vat", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Company Website")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.company_url,
+                        expression: "settings.company_url"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "http://example.com" },
+                    domProps: { value: _vm.settings.company_url },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.settings,
+                          "company_url",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Company Logo")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "file" },
+                    on: { change: _vm.fileSelected }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _vm._v("Save")
+                ])
+              ]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3" }),
@@ -73058,7 +73104,7 @@ var render = function() {
               { staticClass: "card", staticStyle: { width: "18rem" } },
               [
                 _c("img", {
-                  staticClass: "card-img-top company_logo",
+                  staticClass: "card-img-top image",
                   attrs: {
                     src: _vm.settings.company_logo,
                     alt: "Card image cap"
