@@ -27,6 +27,7 @@
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
   <!-- data picker css -->
   <!-- <link href="/css/datepicker.min.css" rel="stylesheet" type="text/css"> -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
  
 
 </head>
