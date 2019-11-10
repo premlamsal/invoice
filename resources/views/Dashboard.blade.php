@@ -69,13 +69,13 @@
        <!-- Nav Item - Charts -->
       <li class="nav-item">
         <router-link class="nav-link" to="/invoices">
-          <i class="fas fa-fw fa-chart-area"></i>
+          <i class="fas fa-fw fa-file-invoice"></i>
           <span>Invoices</span></router-link>
       </li>
         <!-- Nav Item - Charts -->
       <li class="nav-item">
         <router-link class="nav-link" to="/estimates">
-          <i class="fas fa-fw fa-chart-area"></i>
+          <i class="fas fa-fw fa-file-invoice-dollar"></i>
           <span>Estimate</span></router-link>
       </li>
       <!-- Divider -->
