@@ -23,6 +23,7 @@ class CreateInvoicesTable extends Migration
             $table->string('customer_name');
             $table->string('sub_total');
             $table->decimal('discount');
+            $table->decimal('tax_amount');
             $table->decimal('grand_total');
             $table->string('status');
             $table->timestamps();

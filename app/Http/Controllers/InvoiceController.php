@@ -43,7 +43,9 @@ class InvoiceController extends Controller
 
         $data = $request->info;
         $data['sub_total'] = $items->sum('line_total');
-        $data['grand_total'] = $data['sub_total'] - $data['discount'];
+        $data['tax_amount'] = $data['sub_total'] * 0.13;
+        $data['grand_total'] = $data['sub_total'] + $data['tax_amount'] - $data['discount'];
+       
 
         $invoice = Invoice::create($data);
 
@@ -78,8 +80,9 @@ class InvoiceController extends Controller
         $data = $request->info;
 
         $data['sub_total'] = $items->sum('line_total');
-        $data['grand_total'] = $data['sub_total'] - $data['discount'];
-
+         $data['tax_amount'] = $data['sub_total'] * 0.13;
+        $data['grand_total'] = $data['sub_total'] + $data['tax_amount'] - $data['discount'];
+       
         $invoice->update($data);
 
         InvoiceDetail::where('invoice_id', $invoice->id)->delete();

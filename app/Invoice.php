@@ -14,5 +14,5 @@ class Invoice extends Model
 	    return $this->belongsTo('\App\Customer','customer_id','id');
 	}
 
-	 protected $fillable = ['title', 'invoice_date','due_date','customer_id','customer_name','sub_total','discount','grand_total','status'];
+	 protected $fillable = ['title', 'invoice_date','due_date','customer_id','customer_name','sub_total','discount','tax_amount','grand_total','status'];
 }
