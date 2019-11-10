@@ -274,16 +274,21 @@
         setInvoiceVars: function(){
 
         },
+        
+        taxAmount: function(){
+
+            return this.subTotal*0.13;
+
+        },
 
        grandTotal: function() {
                 
-                if(this.info.discount!=null){
-                    this.info.subTotal= this.subTotal - parseFloat(this.info.discount); 
+              if(this.info.discount!=null){
+                    return this.subTotal - parseFloat(this.info.discount) + this.taxAmount; 
                 }
                 else{
-                    this.info.subTotal= this.subTotal - 0;
+                    return this.subTotal+this.taxAmount;
                 }
-               return this.info.subTotal;
         }
           
 

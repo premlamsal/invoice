@@ -10644,11 +10644,3 @@ a.text-dark:focus {
   }
 }
 
-.sidebar-dark .nav-item .nav-link:active, .sidebar-dark .nav-item .nav-link:focus, .sidebar-dark .nav-item .nav-link:hover{
-    color: #4e73df !important;
-    background: #fff !important;
-
-}
-.sidebar-dark .nav-item .nav-link:active i, .sidebar-dark .nav-item .nav-link:focus i, .sidebar-dark .nav-item .nav-link:hover i{
-  color: #4e73df!important;
-}

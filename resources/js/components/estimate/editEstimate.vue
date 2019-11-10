@@ -245,6 +245,7 @@
                     Vue.set(this.info, 'customer_name', data.estimate.customer_name),
                     Vue.set(this.info, 'estimate_date', data.estimate.estimate_date),
                     Vue.set(this.info, 'due_date', data.estimate.due_date),
+                    Vue.set(this.info, 'discount', data.estimate.discount),
                     Vue.set(this.info, 'status', data.estimate.status),
                     //veu.set will make data reactive and updated
                     this.items=data.estimate.estimate_detail
@@ -270,13 +271,12 @@
 
        grandTotal: function() {
                 
-                if(this.info.discount!=null){
-                    this.info.subTotal= this.subTotal - parseFloat(this.info.discount); 
+                 if(this.info.discount!=null){
+                    return this.subTotal - parseFloat(this.info.discount); 
                 }
                 else{
-                    this.info.subTotal= this.subTotal - 0;
+                    return this.subTotal;
                 }
-               return this.info.subTotal;
         }
           
 

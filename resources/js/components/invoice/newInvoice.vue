@@ -132,6 +132,12 @@
             </td>
         </tr>
         <tr>
+             <td class="table-empty" colspan="2"></td>
+             <td class="table-label">13% Tax</td>
+            <td class="table-amount">{{taxAmount}}</td>
+            
+        </tr>
+        <tr>
             <td class="table-empty" colspan="2"></td>
             <td class="table-label text-primary" style="font-weight: bold;">Grand Total</td>
             <td class="table-amount" style="font-weight: bold;">{{grandTotal}}</td>
@@ -418,15 +424,19 @@
 
         },
 
+        taxAmount: function(){
+
+            return this.subTotal*0.13;
+
+        },
        grandTotal: function() {
-                
+
                 if(this.info.discount!=null){
-                    this.info.subTotal= this.subTotal - parseFloat(this.info.discount); 
+                    return this.subTotal - parseFloat(this.info.discount) + this.taxAmount; 
                 }
                 else{
-                    this.info.subTotal= this.subTotal - 0;
+                    return this.subTotal+this.taxAmount;
                 }
-               return this.info.subTotal;
         }
           
 

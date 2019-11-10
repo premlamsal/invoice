@@ -417,12 +417,12 @@
        grandTotal: function() {
                 
                 if(this.info.discount!=null){
-                    this.info.subTotal= this.subTotal - parseFloat(this.info.discount); 
+                    return this.subTotal - parseFloat(this.info.discount); 
                 }
                 else{
-                    this.info.subTotal= this.subTotal - 0;
+                    return this.subTotal;
                 }
-               return this.info.subTotal;
+            
         }
           
 

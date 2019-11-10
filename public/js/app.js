@@ -2243,7 +2243,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/estimate/' + this.id).then(function (response) {
         return response.json();
       }).then(function (data) {
-        return Vue.set(_this2.info, 'estimate_no', data.estimate.id), Vue.set(_this2.info, 'title', data.estimate.title), Vue.set(_this2.info, 'customer_id', data.estimate.customer_id), Vue.set(_this2.info, 'customer_name', data.estimate.customer_name), Vue.set(_this2.info, 'estimate_date', data.estimate.estimate_date), Vue.set(_this2.info, 'due_date', data.estimate.due_date), Vue.set(_this2.info, 'status', data.estimate.status), //veu.set will make data reactive and updated
+        return Vue.set(_this2.info, 'estimate_no', data.estimate.id), Vue.set(_this2.info, 'title', data.estimate.title), Vue.set(_this2.info, 'customer_id', data.estimate.customer_id), Vue.set(_this2.info, 'customer_name', data.estimate.customer_name), Vue.set(_this2.info, 'estimate_date', data.estimate.estimate_date), Vue.set(_this2.info, 'due_date', data.estimate.due_date), Vue.set(_this2.info, 'discount', data.estimate.discount), Vue.set(_this2.info, 'status', data.estimate.status), //veu.set will make data reactive and updated
         _this2.items = data.estimate.estimate_detail;
       });
     } //enf od fetchEstimate
@@ -2261,12 +2261,10 @@ __webpack_require__.r(__webpack_exports__);
     setEstimateVars: function setEstimateVars() {},
     grandTotal: function grandTotal() {
       if (this.info.discount != null) {
-        this.info.subTotal = this.subTotal - parseFloat(this.info.discount);
+        return this.subTotal - parseFloat(this.info.discount);
       } else {
-        this.info.subTotal = this.subTotal - 0;
+        return this.subTotal;
       }
-
-      return this.info.subTotal;
     }
   } //end of computed
 
@@ -2664,12 +2662,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     grandTotal: function grandTotal() {
       if (this.info.discount != null) {
-        this.info.subTotal = this.subTotal - parseFloat(this.info.discount);
+        return this.subTotal - parseFloat(this.info.discount);
       } else {
-        this.info.subTotal = this.subTotal - 0;
+        return this.subTotal;
       }
-
-      return this.info.subTotal;
     }
   } //end of computed
 
@@ -2850,7 +2846,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/estimate/' + this.id).then(function (response) {
         return response.json();
       }).then(function (data) {
-        return Vue.set(_this.info, 'estimate_no', data.estimate.id), Vue.set(_this.info, 'title', data.estimate.title), Vue.set(_this.info, 'customer_id', data.estimate.customer_id), Vue.set(_this.info, 'customer_name', data.estimate.customer_name), Vue.set(_this.info, 'estimate_date', data.estimate.estimate_date), Vue.set(_this.info, 'due_date', data.estimate.due_date), Vue.set(_this.info, 'sub_total', data.estimate.sub_total), Vue.set(_this.info, 'grand_total', data.estimate.grand_total), Vue.set(_this.info, 'customer_address', data.customer.address), Vue.set(_this.info, 'customer_phone', data.customer.phone), //veu.set will make data reactive and updated
+        return Vue.set(_this.info, 'estimate_no', data.estimate.id), Vue.set(_this.info, 'title', data.estimate.title), Vue.set(_this.info, 'customer_id', data.estimate.customer_id), Vue.set(_this.info, 'customer_name', data.estimate.customer_name), Vue.set(_this.info, 'estimate_date', data.estimate.estimate_date), Vue.set(_this.info, 'due_date', data.estimate.due_date), Vue.set(_this.info, 'sub_total', data.estimate.sub_total), Vue.set(_this.info, 'grand_total', data.estimate.grand_total), Vue.set(_this.info, 'discount', data.estimate.discount), Vue.set(_this.info, 'customer_address', data.customer.address), Vue.set(_this.info, 'customer_phone', data.customer.phone), //veu.set will make data reactive and updated
         _this.items = data.estimate.estimate_detail;
       });
     },
@@ -3317,14 +3313,15 @@ __webpack_require__.r(__webpack_exports__);
       return this.info.subTotal;
     },
     setInvoiceVars: function setInvoiceVars() {},
+    taxAmount: function taxAmount() {
+      return this.subTotal * 0.13;
+    },
     grandTotal: function grandTotal() {
       if (this.info.discount != null) {
-        this.info.subTotal = this.subTotal - parseFloat(this.info.discount);
+        return this.subTotal - parseFloat(this.info.discount) + this.taxAmount;
       } else {
-        this.info.subTotal = this.subTotal - 0;
+        return this.subTotal + this.taxAmount;
       }
-
-      return this.info.subTotal;
     }
   } //end of computed
 
@@ -3341,6 +3338,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3727,14 +3730,15 @@ __webpack_require__.r(__webpack_exports__);
       }, 0);
       return this.info.subTotal;
     },
+    taxAmount: function taxAmount() {
+      return this.subTotal * 0.13;
+    },
     grandTotal: function grandTotal() {
       if (this.info.discount != null) {
-        this.info.subTotal = this.subTotal - parseFloat(this.info.discount);
+        return this.subTotal - parseFloat(this.info.discount) + this.taxAmount;
       } else {
-        this.info.subTotal = this.subTotal - 0;
+        return this.subTotal + this.taxAmount;
       }
-
-      return this.info.subTotal;
     }
   } //end of computed
 
@@ -74521,7 +74525,7 @@ var render = function() {
           _c(
             "table",
             {
-              staticClass: "table table-bordered",
+              staticClass: "table table-striped table-bordered",
               attrs: { width: "100%", cellspacing: "0" }
             },
             [
@@ -75910,6 +75914,19 @@ var render = function() {
                       }
                     }
                   })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", {
+                  staticClass: "table-empty",
+                  attrs: { colspan: "2" }
+                }),
+                _vm._v(" "),
+                _c("td", { staticClass: "table-label" }, [_vm._v("13% Tax")]),
+                _vm._v(" "),
+                _c("td", { staticClass: "table-amount" }, [
+                  _vm._v(_vm._s(_vm.taxAmount))
                 ])
               ]),
               _vm._v(" "),
