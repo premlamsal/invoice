@@ -90,6 +90,12 @@
             </td>
         </tr>
         <tr>
+             <td class="table-empty" colspan="2"></td>
+             <td class="table-label">13% Tax</td>
+            <td class="table-amount">{{info.taxAmount}}</td>
+            
+        </tr>
+        <tr>
             <td class="table-empty" colspan="2"></td>
             <td class="table-label text-primary" style="font-weight: bold;">Grand Total</td>
             <td class="table-amount" style="font-weight: bold;">{{info.grand_total}}</td>
@@ -183,10 +189,13 @@
                     Vue.set(this.info, 'customer_name', data.invoice.customer_name),
                     Vue.set(this.info, 'invoice_date', data.invoice.invoice_date),
                     Vue.set(this.info, 'due_date', data.invoice.due_date),
+                    Vue.set(this.info, 'discount', data.invoice.discount),
                     Vue.set(this.info, 'sub_total', data.invoice.sub_total),
+                    Vue.set(this.info, 'taxAmount', data.invoice.tax_amount),
                     Vue.set(this.info, 'grand_total', data.invoice.grand_total),
                     Vue.set(this.info, 'customer_address', data.customer.address),
                     Vue.set(this.info, 'customer_phone', data.customer.phone),
+                   
                     //veu.set will make data reactive and updated
                     this.items=data.invoice.invoice_detail
 

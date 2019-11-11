@@ -3889,6 +3889,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3925,7 +3931,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/invoice/' + this.id).then(function (response) {
         return response.json();
       }).then(function (data) {
-        return Vue.set(_this.info, 'invoice_no', data.invoice.id), Vue.set(_this.info, 'title', data.invoice.title), Vue.set(_this.info, 'customer_id', data.invoice.customer_id), Vue.set(_this.info, 'customer_name', data.invoice.customer_name), Vue.set(_this.info, 'invoice_date', data.invoice.invoice_date), Vue.set(_this.info, 'due_date', data.invoice.due_date), Vue.set(_this.info, 'sub_total', data.invoice.sub_total), Vue.set(_this.info, 'grand_total', data.invoice.grand_total), Vue.set(_this.info, 'customer_address', data.customer.address), Vue.set(_this.info, 'customer_phone', data.customer.phone), //veu.set will make data reactive and updated
+        return Vue.set(_this.info, 'invoice_no', data.invoice.id), Vue.set(_this.info, 'title', data.invoice.title), Vue.set(_this.info, 'customer_id', data.invoice.customer_id), Vue.set(_this.info, 'customer_name', data.invoice.customer_name), Vue.set(_this.info, 'invoice_date', data.invoice.invoice_date), Vue.set(_this.info, 'due_date', data.invoice.due_date), Vue.set(_this.info, 'discount', data.invoice.discount), Vue.set(_this.info, 'sub_total', data.invoice.sub_total), Vue.set(_this.info, 'taxAmount', data.invoice.tax_amount), Vue.set(_this.info, 'grand_total', data.invoice.grand_total), Vue.set(_this.info, 'customer_address', data.customer.address), Vue.set(_this.info, 'customer_phone', data.customer.phone), //veu.set will make data reactive and updated
         _this.items = data.invoice.invoice_detail;
       });
     },
@@ -76276,6 +76282,19 @@ var render = function() {
                         _vm._s(_vm.info.discount) +
                         "\n            "
                     )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("td", {
+                    staticClass: "table-empty",
+                    attrs: { colspan: "2" }
+                  }),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "table-label" }, [_vm._v("13% Tax")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "table-amount" }, [
+                    _vm._v(_vm._s(_vm.info.taxAmount))
                   ])
                 ]),
                 _vm._v(" "),
