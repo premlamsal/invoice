@@ -15,7 +15,7 @@
         <div class="form-group" style="position: relative;">
             <label>Customer</label>
 
-            <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" v-bind:class="{'form-control':!error.customer_name,'form-control is-invalid': error.customer_name }">
+            <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" class="form-control">
 
             <!-- Search suggestion block -->
            <div class="customer-search-suggestion">
@@ -69,18 +69,16 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Title</label>
-            <input type="text" v-bind:class="{'form-control':!error.title,'form-control is-invalid': error.title }" v-model="info.title">
+            <input type="text" v-model="info.title" class="form-control">
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <label>Invoice Date</label>
-                <input type="date" v-bind:class="{'form-control':!error.invoice_date,'form-control is-invalid': error.invoice_date }" v-model="info.invoice_date">
-                
+                <date-picker v-model="info.invoice_date" value-type="format" format="YYYY-MM-DD">hello</date-picker>
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
-                <input type="date" v-bind:class="{'form-control':!error.due_date,'form-control is-invalid': error.due_date }" v-model="info.due_date">
-                    
+                <date-picker v-model="info.due_date" value-type="format" format="YYYY-MM-DD"></date-picker>                
             </div>
         </div>
     </div>
@@ -154,6 +152,26 @@
  
 </template>
 <style>
+.datetime-picker{
+
+}
+.datetime-picker input{
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
 .customer-search-suggestion {
     background: #f2f2f2;
     position: absolute;
@@ -204,10 +222,17 @@
     background-color: #000000;
 }
 
+
 </style>
 
 <script>
+
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+
    export default{
+
+  components: { DatePicker },
 
         data(){
 

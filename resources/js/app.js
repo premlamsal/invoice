@@ -80,6 +80,8 @@ Vue.use(VueSweetalert2);
 //Sweet alert ends//
 
 
+
+
 let routes = [
   
   { path: '/', component: require('./components/Dashboard.vue').default},

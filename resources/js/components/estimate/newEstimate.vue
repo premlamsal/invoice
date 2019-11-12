@@ -15,7 +15,7 @@
         <div class="form-group" style="position: relative;">
             <label>Customer</label>
 
-            <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" v-bind:class="{'form-control':!error.customer_name,'form-control is-invalid': error.customer_name }">
+            <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" class="form-control">
 
             <!-- Search suggestion block -->
            <div class="customer-search-suggestion">
@@ -69,17 +69,17 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Title</label>
-            <input type="text" v-bind:class="{'form-control':!error.title,'form-control is-invalid': error.title }" v-model="info.title">
+            <input type="text" v-model="info.title">
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <label>Estimate Date</label>
-                <input type="date" v-bind:class="{'form-control':!error.estimate_date,'form-control is-invalid': error.estimate_date }" v-model="info.estimate_date">
+                <input type="date" v-model="info.estimate_date">
                 
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
-                <input type="date" v-bind:class="{'form-control':!error.due_date,'form-control is-invalid': error.due_date }" v-model="info.due_date">
+                <input type="date" v-model="info.due_date">
                     
             </div>
         </div>

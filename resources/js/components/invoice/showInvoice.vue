@@ -46,7 +46,7 @@
     </div>
     </div>
 </div>
-<hr>
+
 
 <table class="table table-bordered table-form">
     <thead>
@@ -112,24 +112,14 @@
  </div>
  
 </template>
-<style>
-    black{
-        color: black;
-    }
-</style>
-
-<style type="text/css">
-   label{
-    color: #000;
-   }
-   table{color: #000!important;}
-
- </style>
  <style>
-    label{
-        color: #000;
-        font-weight: bold;
+.black{
+    color: black;
     }
+label{
+     color: #000;
+        font-weight: bold;
+}
  </style>
 
 <script>
