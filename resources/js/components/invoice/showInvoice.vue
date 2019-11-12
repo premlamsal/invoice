@@ -7,6 +7,12 @@
            </div>
             <div class="card-body" style="color: black;">
                 <div id="printThisBlock">
+                     <div class="company-Block" style="text-align: center;">
+                <img class="comapny_logo_invoice" v-bind:src="settings.company_logo" alt="brand-logo-for-invoice" height="100px" width="100px">
+                <h5>{{settings.company_name}}</h5>
+                <p class="card-text">{{settings.company_address}}</p>
+                <!-- <p class="card-text">{{settings.company_phone}}</p> -->
+            </div>
  <div class="row">
     <div class="col-sm-4">
         <div class="form-group">
@@ -25,14 +31,8 @@
 
     </div>
     <div class="col-sm-5">
-        <div class="form-group">
-          <!--   <label>Customer Address</label>
-            <textarea class="form-control" style="height: 7.6em" v-model="info.client_address"></textarea>
-                
-            -->
-        </div>
+        
     </div>
-    
     <div class="col-sm-3">
          <div style="text-align: right;">
          <span style="font-weight: bold"> Title: </span>
@@ -120,7 +120,20 @@ label{
      color: #000;
         font-weight: bold;
 }
+.company-Block{
+/*border: 1px solid white;*/
+margin-bottom: 10px;
+text-align: center;
+}
+img.comapny_logo_invoice{
+    width: 100px;
+    height: 100px;
+}
+
+
+
  </style>
+
 
 <script>
    export default{
@@ -139,6 +152,8 @@ label{
 
                 info:{},
                 id:'',
+
+                settings:{},
                
                
 
@@ -150,6 +165,7 @@ label{
             //methods to be executed while this page is created
             this.getIdFromUrl();
             this.fetchInvoice();
+            this.fetchSettings();
 
         },
         mounted(){
@@ -202,7 +218,27 @@ label{
               this.$htmlToPaper('printThisBlock');
 
 
-        }
+        },
+    fetchSettings(){
+
+        fetch('api/settings/')
+        .then(response=>response.json())
+        .then(data=>(
+
+               Vue.set(this.settings, 'id', data.settings.id),
+              Vue.set(this.settings, 'company_name', data.settings.company_name),
+              Vue.set(this.settings, 'company_email', data.settings.company_email),
+              Vue.set(this.settings, 'company_address', data.settings.company_address),
+              Vue.set(this.settings, 'company_phone', data.settings.company_phone),
+              Vue.set(this.settings, 'company_url', data.settings.company_url),
+              //company image
+              Vue.set(this.settings, 'company_logo',"/img/"+ data.settings.company_logo),
+              // this.company_logo="/img/"+data.settings.company_logo //concatenate image location and image name
+
+              Vue.set(this.settings, 'vat', data.settings.vat)
+              // console.log(data.settings.company_name)
+          ));
+      },//end of fetchSettings()
 
     },// end of methods
 
