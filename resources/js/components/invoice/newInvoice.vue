@@ -74,11 +74,11 @@
         <div class="row">
             <div class="col-sm-6">
                 <label>Invoice Date</label>
-                <date-picker v-model="info.invoice_date" value-type="format" format="YYYY-MM-DD">hello</date-picker>
+                <input type="date" v-model="info.invoice_date" class="form-control">
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
-                <date-picker v-model="info.due_date" value-type="format" format="YYYY-MM-DD"></date-picker>                
+                <input type="date" v-model="info.due_date" class="form-control">   
             </div>
         </div>
     </div>
@@ -116,27 +116,27 @@
     </tbody>
     <tfoot>
         <tr>
-            <td class="table-empty" colspan="2">
+            <td class="table-empty" colspan="2" style="border: none;">
                 <button class="table-add_line btn btn-primary" @click="addNewLine"><span class="fa fa-plus-circle"></span></button>
             </td>
             <td class="table-label">Sub Total</td>
             <td class="table-amount">{{subTotal}}</td>
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="2" style="border: none;"></td>
             <td class="table-label">Discount</td>
             <td class="table-discount">
                 <input type="text" class="table-discount_input form-control" v-model="info.discount">
             </td>
         </tr>
         <tr>
-             <td class="table-empty" colspan="2"></td>
+             <td class="table-empty" colspan="2" style="border: none;"></td>
              <td class="table-label">13% Tax</td>
             <td class="table-amount">{{taxAmount}}</td>
             
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="2" style="border: none;"></td>
             <td class="table-label text-primary" style="font-weight: bold;">Grand Total</td>
             <td class="table-amount" style="font-weight: bold;">{{grandTotal}}</td>
         </tr>
@@ -227,12 +227,7 @@
 
 <script>
 
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
-
    export default{
-
-  components: { DatePicker },
 
         data(){
 
@@ -250,12 +245,7 @@ import 'vue2-datepicker/index.css';
                 customer:{},
                 showModal: false,
                 queryResults:[],
-                error:{
-                    customer_name: false,
-                    title:false,
-                    invoice_date:false,
-                    due_date:false
-                }
+                error:{}
               
 
             };
@@ -266,10 +256,10 @@ import 'vue2-datepicker/index.css';
             //for validation initializing the varibles
             this.info.customer_name="";
             this.info.title="";
-            this.info.due_date="";
-            this.info.invoice_date="";
-           
-
+            this.info.due_date= "";
+            this.info.invoice_date= "";
+            this.info.status="Not Paid";
+            this.info.discount=0;
         },
 
         methods :{
@@ -308,83 +298,35 @@ import 'vue2-datepicker/index.css';
 
             },
             createInvoice(){
-              if(this.info.customer_name!="" &&this.info.title!="" &&this.info.invoice_date!="" &&this.info.due_date!=""){
                 //Add
-                this.info.status="Not Paid";
-                if(this.info.discount==null){
-                    this.info.discount=0;
-                }
+                axios.post('api/invoice',{
+                    info:this.info,
+                    items:this.items
 
-                    fetch('api/invoice',{
-                        method: 'post',
-                        body: JSON.stringify({'info':this.info,'items':this.items}),
-                        headers:{
-                            'content-type': 'application/json'
-                        }
-                    })
-                    .then(res=>res.json())
-                    .then(data=>{
-                        // alert('Invoice Added');
-                        // this.$toast.success({
-                        //     title:'Invoice Added',
-                        //     message:'Invoice Added Sucessfuly'
-                        // });
-                        //sweet alert
-                        this.$swal('Good job!','You have created the Invoice!','success');
-                        
-
-                        this.$router.push({ name: 'invoices'});
-                    })
-                    .catch(err=>{
-                            
-                           this.displayToastMessage('Opps!!!','Something Happen');
-
-                        });
-                }
-                else{
-
-                    if(this.info.customer_name==""){ 
-                        this.displayToastMessage('Error!!!','Customer Name can\'t be Empty');
-                        // this.error.customer_name=true;
+                }).then(response=>{
+                   this.$router.push({ name: 'invoices'});
+                }).catch(error=>{
+                    if(error.response.status==422){
+                        this.errors=error.response.data.errors;
+                        console.log(this.errors);
                     }
-                    if(this.info.title==""){ 
-                        this.displayToastMessage('Error!!!','Invoice Title can\'t be Empty');
-                        // this.error.title=true;
-                    }
-                    if(this.info.invoice_date==""){
-                        this.displayToastMessage('Error!!!','Invoice Date can\'t be Empty');
-                        // this.error.invoice_date=true;
-                    }
-                    if(this.info.due_date==""){ 
-                        this.displayToastMessage('Error!!!','Invoice Due Date can\'t be Empty');
-                        // this.error.invoice_date=true;
-                    }
+                });
 
-                   
-                }
-                    
-                    console.log();
             },
             addCustomer(){
-
-                  fetch('api/customer/',{
-                        method: 'post',
-                        body: JSON.stringify({'customer':this.customer}),
-                        headers:{
-                            'content-type': 'application/json'
-                        }
-                    })
-                    .then(res=>res.json())
-                    .then(data=>{
-                        alert('Customer Added');
+                  axios.post('api/customer',{
+                    customer:this.customer
+                }).then(response=>{
+                    alert('Customer Added');
                         this.customer.name='';
                         this.customer.address="";
                         this.customer.phone="";
-
-                        
-                    })
-                    .catch(err=>console.log(err));
-                    console.log();
+                }).catch(error=>{
+                    if(error.response.status==422){
+                        this.errors=error.response.data.errors;
+                        console.log(this.errors);
+                    }
+                });
 
                       this.$bvModal.hide('bv-modal-example')
 
@@ -398,24 +340,19 @@ import 'vue2-datepicker/index.css';
                  
                 }
                 else{
-                  
-                    fetch('api/customer_search/',{
-                        method: 'post',
-                        body: JSON.stringify({'searchQuery':this.info.customer_name}),
-                        headers:{
-                            'content-type': 'application/json'
+
+                       axios.post('api/customer_search/',{
+                        searchQuery:this.info.customer_name
+
+                    }).then(response=>{
+                        this.queryResults=response.data.queryResults;
+                    }).catch(error=>{
+                        if(error.response.status==422){
+                            this.errors=error.response.data.errors;
+                            console.log(this.errors);
                         }
-                    })
-                    .then(res=>res.json())
-                    .then(data=>{
-                       
-                       this.queryResults=data.queryResults;
+                    });
 
-
-                        
-                    })
-                    .catch(err=>console.log(err));
-                    console.log();
                 }
    
               

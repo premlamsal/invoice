@@ -102,6 +102,7 @@
         </tr>
     </tfoot>
  </table>
+        <p><b>Amount in Words </b>{{info.grand_total_words}}</p>
 </div>
         <button class="btn btn-success" @click="editInvoice(id)">Edit</button>
         <router-link to="/invoices" class="btn btn-danger">Close</router-link>
@@ -136,6 +137,8 @@ img.comapny_logo_invoice{
 
 
 <script>
+
+    var converter = require('number-to-words');
    export default{
 
         data(){
@@ -203,8 +206,11 @@ img.comapny_logo_invoice{
                     Vue.set(this.info, 'customer_phone', data.customer.phone),
                    
                     //veu.set will make data reactive and updated
-                    this.items=data.invoice.invoice_detail
+                    this.items=data.invoice.invoice_detail,
 
+                    //converting number to words
+                    
+                     this.info.grand_total_words=converter.toWords(this.info.grand_total)
                 ));
 
         },//end of fetchInvoice

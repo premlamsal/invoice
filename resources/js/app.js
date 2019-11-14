@@ -80,8 +80,6 @@ Vue.use(VueSweetalert2);
 //Sweet alert ends//
 
 
-
-
 let routes = [
   
   { path: '/', component: require('./components/Dashboard.vue').default},
@@ -129,6 +127,7 @@ const router = new VueRouter({
 // register modal component
 Vue.component('modal', {
   template: '#modal-template'
+  
 })
 
 
