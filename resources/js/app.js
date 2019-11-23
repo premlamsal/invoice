@@ -100,6 +100,8 @@ let routes = [
   { path: '/:id/printEstimate/',name:'printEstimate' ,component: require('./components/estimate/printEstimate.vue').default},
 
 
+  //units route
+  { path: '/units/',name:'units' ,component: require('./components/units/Units.vue').default},
 
   //settings route
   { path: '/settings/',name:'settings' ,component: require('./components/settings.vue').default},

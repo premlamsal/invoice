@@ -69,17 +69,17 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Title</label>
-            <input type="text" v-model="info.title">
+            <input type="text" v-model="info.title" class="form-control">
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <label>Estimate Date</label>
-                <input type="date" v-model="info.estimate_date">
+                <input type="date" v-model="info.estimate_date" class="form-control">
                 
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
-                <input type="date" v-model="info.due_date">
+                <input type="date" v-model="info.due_date" class="form-control">
                     
             </div>
         </div>

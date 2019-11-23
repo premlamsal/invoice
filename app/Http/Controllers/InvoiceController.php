@@ -32,15 +32,15 @@ class InvoiceController extends Controller
         // //validation
         $this->validate($request,[
         'info.customer_name' => 'required|string|max:50',
-        // 'info.title' => 'required|string|max:255',
-        // 'info.invoice_date' => 'required|date',
-        // 'info.due_date' => 'required|date',
-        // 'info.status' => 'required|string|max:10',
-        // 'info.discount'=> 'required|numeric|min:0',
+        'info.title' => 'required|string|max:255',
+        'info.invoice_date' => 'required|date',
+        'info.due_date' => 'required|date',
+        'info.status' => 'required|string|max:10',
+        'info.discount'=> 'required|numeric|min:0',
 
-        // 'items.*.product_name'=> 'required|max:255',
-        // 'items.*.price'=> 'required|numeric|min:1',
-        // 'items.*.quantity'=> 'required|integer|min:1',
+        'items.*.product_name'=> 'required|max:255',
+        'items.*.price'=> 'required|numeric|min:1',
+        'items.*.quantity'=> 'required|integer|min:1',
         ]);
 
 
