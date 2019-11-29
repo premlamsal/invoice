@@ -24,7 +24,7 @@
                                 <input type="text" class="form-control" placeholder="ex. kilogram or square foot or litre" v-model="unit.long_name">
                               </div>
                         </div>
-                        <b-button class="mt-3" block>Save</b-button>
+                        <b-button class="mt-3" block @click="addUnit">Save</b-button>
                       </b-modal>
             <!-- add unit modal end-->
 
@@ -38,6 +38,7 @@
                 <table class="table table-striped table-bordered" width="100%" cellspacing="0">
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>Short Name</th>
                       <th>Long Name</th>
                       <th>Updated at</th>
@@ -48,8 +49,8 @@
                     <tr v-for="unit in units" v-bind:key="unit.id">
                       <td>{{unit.id}}</td>
                       <td>{{unit.short_name}}</td>
-                      <td>{{unit.updated_at}}</td>
                       <td>{{unit.long_name}}</td>
+                      <td>{{unit.updated_at}}</td>
                   
                       <td><button class="btn btn-outline-success" style="margin-right: 5px;" @click=editUnit(unit.id)><span class="fa fa-edit"></span></button><button class="btn btn-outline-danger" @click=deleteUnit(unit.id)><span class="fa fa-trash"></span></button></td>
                     </tr>
@@ -75,11 +76,55 @@
     },
     created(){
       //this block will execute when component created
+      this.fetchUnits();
     },
 
     methods:{
       //methods codes here
       fetchUnits(){
+
+        let vm=this;// current pointer instance while going inside the another functional instance
+        axios.get('/api/units')
+        .then(function(response){
+          vm.units=response.data.data;
+        })
+        .catch(function(error){
+          console.log();
+        });
+
+        //above and below code provide same result but above code need current instance pointer for value assignmnent 
+
+         //below code donot need current pointer to be save becasue it execute in current block rather then another block that need previous pointer.
+
+
+        // axios.get('/api/units')
+        // .then(response=>{
+        //   // console.log(response.data.data)
+        //   this.units=response.data.data
+        // })
+        // .catch(error=>{
+        //   console.log(error)
+        // })
+
+
+      },
+      addUnit(){
+
+        let currObj=this;
+        axios.post('/api/unit',this.unit)
+        .then(function(response){
+          currObj.output=response.data.msg;
+          currObj.status=response.data.status;
+          currObj.$swal('Info',currObj.output ,currObj.status);
+
+          currObj.$bvModal.hide('bv-modal-add-unit');
+          
+          currObj.fetchUnits();
+
+        })
+        .catch(function(error){
+           currObj.output=error;
+        });
 
 
 

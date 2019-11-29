@@ -4158,6 +4158,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4167,11 +4168,42 @@ __webpack_require__.r(__webpack_exports__);
 
     };
   },
-  created: function created() {//this block will execute when component created
+  created: function created() {
+    //this block will execute when component created
+    this.fetchUnits();
   },
   methods: {
     //methods codes here
-    fetchUnits: function fetchUnits() {},
+    fetchUnits: function fetchUnits() {
+      var vm = this; // current pointer instance while going inside the another functional instance
+
+      axios.get('/api/units').then(function (response) {
+        vm.units = response.data.data;
+      })["catch"](function (error) {
+        console.log();
+      }); //above and below code provide same result but above code need current instance pointer for value assignmnent 
+      //below code donot need current pointer to be save becasue it execute in current block rather then another block that need previous pointer.
+      // axios.get('/api/units')
+      // .then(response=>{
+      //   // console.log(response.data.data)
+      //   this.units=response.data.data
+      // })
+      // .catch(error=>{
+      //   console.log(error)
+      // })
+    },
+    addUnit: function addUnit() {
+      var currObj = this;
+      axios.post('/api/unit', this.unit).then(function (response) {
+        currObj.output = response.data.msg;
+        currObj.status = response.data.status;
+        currObj.$swal('Info', currObj.output, currObj.status);
+        currObj.$bvModal.hide('bv-modal-add-unit');
+        currObj.fetchUnits();
+      })["catch"](function (error) {
+        currObj.output = error;
+      });
+    },
     editUnit: function editUnit(id) {
       this.$bvModal.show('bv-modal-add-unit');
     },
@@ -76814,9 +76846,15 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("b-button", { staticClass: "mt-3", attrs: { block: "" } }, [
-            _vm._v("Save")
-          ])
+          _c(
+            "b-button",
+            {
+              staticClass: "mt-3",
+              attrs: { block: "" },
+              on: { click: _vm.addUnit }
+            },
+            [_vm._v("Save")]
+          )
         ],
         1
       ),
@@ -76843,9 +76881,9 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(unit.short_name))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(unit.updated_at))]),
-                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(unit.long_name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(unit.updated_at))]),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -76904,6 +76942,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Short Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Long Name")]),

@@ -61,3 +61,10 @@ Route::put('estimate','EstimateController@update');
 Route::delete('estimate/{id}','EstimateController@destroy');
 
 
+//List Units
+Route::get('units','UnitController@index');
+
+//Add Unit
+Route::post('unit','UnitController@store');
+
+
