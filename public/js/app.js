@@ -4159,13 +4159,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       units: [],
       //contains all the retrived units from the database
-      unit: {} //for form single unit data
-
+      unit: {},
+      //for form single unit data
+      modalForName: "",
+      modalForCode: 0
     };
   },
   created: function created() {
@@ -4192,6 +4195,21 @@ __webpack_require__.r(__webpack_exports__);
       //   console.log(error)
       // })
     },
+    showAddModal: function showAddModal() {
+      this.modalForName = "Add Unit"; // Vue.set(this.modalForName,"Add Unit");
+
+      this.modalForCode = 0; //0 for add 
+      // Vue.set(this.modalForCode,0);
+
+      this.$bvModal.show('bv-modal-add-unit');
+    },
+    callFunc: function callFunc() {
+      if (this.modalForCode == 0) {
+        this.addUnit(); // console.log("Add Unit");
+      } else if (this.modalForCode == 1) {
+        this.updateUnit(); // console.log("Edit Unit");
+      }
+    },
     addUnit: function addUnit() {
       var currObj = this;
       axios.post('/api/unit', this.unit).then(function (response) {
@@ -4205,9 +4223,40 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editUnit: function editUnit(id) {
+      var _this = this;
+
+      this.modalForName = "Edit Unit";
+      this.modalForCode = 1; // 1 for Edit
+
       this.$bvModal.show('bv-modal-add-unit');
+      axios.get('/api/units/' + id).then(function (response) {
+        // console.log(response.data.unit)
+        Vue.set(_this.unit, 'short_name', response.data.unit.short_name);
+        Vue.set(_this.unit, 'long_name', response.data.unit.long_name);
+        Vue.set(_this.unit, 'id', id); //to send id to the update controller 
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
-    updateUnit: function updateUnit() {},
+    updateUnit: function updateUnit() {
+      var currObj = this;
+      var formData = new FormData();
+      formData.append('_method', 'PUT'); //add this otherwise data won't pass to backend
+
+      formData.append('short_name', this.unit.short_name);
+      formData.append('long_name', this.unit.long_name);
+      formData.append('id', this.unit.id);
+      axios.post('/api/unit', formData).then(function (response) {
+        currObj.output = response.data.msg;
+        currObj.status = response.data.status; // alert(currObj.status);
+
+        currObj.$swal('Info', currObj.output, currObj.status);
+        currObj.$bvModal.hide('bv-modal-add-unit');
+        currObj.fetchUnits();
+      })["catch"](function (error) {
+        currObj.output = error; // console.log(currObj.output);
+      });
+    },
     deleteUnit: function deleteUnit(id) {} //end of methods block
 
   }
@@ -76750,11 +76799,7 @@ var render = function() {
               staticClass: "btn btn-success",
               staticStyle: { "margin-top": "8px" },
               attrs: { id: "show-btn" },
-              on: {
-                click: function($event) {
-                  return _vm.$bvModal.show("bv-modal-add-unit")
-                }
-              }
+              on: { click: _vm.showAddModal }
             },
             [
               _c("span", { staticClass: "fa fa-plus-circle" }),
@@ -76775,7 +76820,9 @@ var render = function() {
               fn: function() {
                 return [
                   _vm._v(
-                    "\n                         Add Unit\n                       "
+                    "\n                         " +
+                      _vm._s(_vm.modalForName) +
+                      "\n                       "
                   )
                 ]
               },
@@ -76790,6 +76837,27 @@ var render = function() {
               _c("label", { attrs: { for: "Short Name" } }, [
                 _vm._v("Short Name")
               ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.unit.id,
+                    expression: "unit.id"
+                  }
+                ],
+                attrs: { type: "hidden" },
+                domProps: { value: _vm.unit.id },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.unit, "id", $event.target.value)
+                  }
+                }
+              }),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -76851,9 +76919,9 @@ var render = function() {
             {
               staticClass: "mt-3",
               attrs: { block: "" },
-              on: { click: _vm.addUnit }
+              on: { click: _vm.callFunc }
             },
-            [_vm._v("Save")]
+            [_vm._v(_vm._s(_vm.modalForName))]
           )
         ],
         1

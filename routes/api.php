@@ -64,7 +64,13 @@ Route::delete('estimate/{id}','EstimateController@destroy');
 //List Units
 Route::get('units','UnitController@index');
 
+//List single Unit
+Route::get('units/{id}','UnitController@show');
+
 //Add Unit
 Route::post('unit','UnitController@store');
+
+//Update Unit
+Route::put('unit','UnitController@update');
 
 

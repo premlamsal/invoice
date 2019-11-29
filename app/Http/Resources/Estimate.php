@@ -25,7 +25,7 @@ class Estimate extends JsonResource
             'grand_total'=> $this->grand_total,
             'estimate_no'=> $this->estimate_no,
             'status'=>$this->status,
-            'updated_at'=>$this->created_at->diffForHumans(),
+            'updated_at'=>$this->updated_at->diffForHumans(),
         ];
 
     }

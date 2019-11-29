@@ -19,7 +19,7 @@ class Unit extends JsonResource
             'id'=>$this->id,
             'short_name'=> $this->short_name,
             'long_name'=> $this->long_name,
-            'updated_at'=>$this->created_at->diffForHumans(),
+            'updated_at'=>$this->updated_at->diffForHumans(),
         ];
     }
 

@@ -3,7 +3,7 @@
     <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Units</h1>
           <p class="mb-4">
-             <b-button id="show-btn" @click="$bvModal.show('bv-modal-add-unit')" class="btn btn-success" style="margin-top: 8px;">
+             <b-button id="show-btn" @click="showAddModal" class="btn btn-success" style="margin-top: 8px;">
                        <span class="fa fa-plus-circle"></span>
                      Add Unit</b-button>
           </p>
@@ -11,11 +11,12 @@
           <!-- add unit model start -->
                       <b-modal id="bv-modal-add-unit" hide-footer>
                         <template v-slot:modal-title>
-                          Add Unit
+                          {{modalForName}}
                         </template>
                         <div class="d-block">
                               <div class="form-group">
                                 <label for="Short Name">Short Name</label>
+                                <input type="hidden" v-model="unit.id">
                                 <input type="text" class="form-control" placeholder="ex. kg or sq.ft or ltr" v-model="unit.short_name">
 
                               </div>
@@ -24,7 +25,7 @@
                                 <input type="text" class="form-control" placeholder="ex. kilogram or square foot or litre" v-model="unit.long_name">
                               </div>
                         </div>
-                        <b-button class="mt-3" block @click="addUnit">Save</b-button>
+                        <b-button class="mt-3" block @click="callFunc">{{modalForName}}</b-button>
                       </b-modal>
             <!-- add unit modal end-->
 
@@ -70,7 +71,10 @@
 
         units:[], //contains all the retrived units from the database
 
-        unit:{} //for form single unit data
+        unit:{}, //for form single unit data
+
+        modalForName: "",
+        modalForCode: 0 ,      
 
       }
     },
@@ -108,8 +112,26 @@
 
 
       },
-      addUnit(){
+      showAddModal(){
+        this.modalForName="Add Unit";
+        // Vue.set(this.modalForName,"Add Unit");
+        this.modalForCode=0; //0 for add 
+        // Vue.set(this.modalForCode,0);
+        this.$bvModal.show('bv-modal-add-unit')
+      },
+      callFunc(){
 
+        if(this.modalForCode==0){
+            this.addUnit();
+            // console.log("Add Unit");
+        }
+        else if(this.modalForCode==1){
+            this.updateUnit();
+            // console.log("Edit Unit");
+        }
+
+      },
+      addUnit(){        
         let currObj=this;
         axios.post('/api/unit',this.unit)
         .then(function(response){
@@ -118,7 +140,7 @@
           currObj.$swal('Info',currObj.output ,currObj.status);
 
           currObj.$bvModal.hide('bv-modal-add-unit');
-          
+
           currObj.fetchUnits();
 
         })
@@ -130,9 +152,47 @@
 
       },
       editUnit(id){
+        this.modalForName="Edit Unit";
+        this.modalForCode=1;// 1 for Edit
         this.$bvModal.show('bv-modal-add-unit');
+
+        axios.get('/api/units/'+id)
+        .then(response=>{
+          // console.log(response.data.unit)
+          Vue.set(this.unit, 'short_name', response.data.unit.short_name);
+          Vue.set(this.unit, 'long_name', response.data.unit.long_name);
+          Vue.set(this.unit, 'id', id);//to send id to the update controller 
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+
       },
       updateUnit(){
+
+        let currObj=this;
+        let formData= new FormData();
+        formData.append('_method', 'PUT');//add this otherwise data won't pass to backend
+        formData.append('short_name',this.unit.short_name);
+        formData.append('long_name',this.unit.long_name);
+        formData.append('id',this.unit.id);
+
+        axios.post('/api/unit',formData)
+        .then(function(response){
+          currObj.output=response.data.msg;
+          currObj.status=response.data.status;
+          // alert(currObj.status);
+           
+                currObj.$swal('Info',currObj.output ,currObj.status);
+                currObj.$bvModal.hide('bv-modal-add-unit');
+                currObj.fetchUnits();
+
+        })
+        .catch(function(error){
+           currObj.output=error;
+            // console.log(currObj.output);
+        })
+
 
 
       },

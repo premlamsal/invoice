@@ -25,7 +25,7 @@ class Invoice extends JsonResource
             'grand_total'=> $this->grand_total,
             'invoice_no'=> $this->invoice_no,
             'status'=>$this->status,
-            'updated_at'=>$this->created_at->diffForHumans(),
+            'updated_at'=>$this->updated_at->diffForHumans(),
         ];
 
 
