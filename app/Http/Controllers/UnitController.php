@@ -75,7 +75,7 @@ class UnitController extends Controller
          if($unit->delete()){
              return response()->json([
                 'msg'=>'successfully Deleted',
-                'status'=>'error'
+                'status'=>'success'
             ]);
          }
          else{

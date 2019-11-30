@@ -100,6 +100,11 @@
           <i class="fas fa-fw fa-balance-scale"></i>
           <span>Units</span></router-link>
       </li>
+      <li class="nav-item">
+        <router-link class="nav-link" to="/customers">
+          <i class="fas fa-fw fa-balance-scale"></i>
+          <span>Customers</span></router-link>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 

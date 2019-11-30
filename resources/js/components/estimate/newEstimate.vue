@@ -25,20 +25,18 @@
                    </ul>
                </div>
            </div>
-                <b-button id="show-btn" @click="$bvModal.show('bv-modal-example')" class="btn btn-warning" style="margin-top: 8px;">
+                <b-button id="show-btn" @click="$bvModal.show('bv-modal-add-customer')" class="btn btn-warning" style="margin-top: 8px;">
                        <span class="fa fa-plus-circle"></span>
                      Add Customer</b-button>
 
-                      <b-modal id="bv-modal-example" hide-footer>
+                      <b-modal id="bv-modal-add-customer" hide-footer>
                         <template v-slot:modal-title>
                           Add Customer
                         </template>
                         <div class="d-block">
                               <div class="form-group">
                                 <label for="Name">Name:</label>
-
                                 <input type="text" class="form-control" v-model="customer.name">
-
                               </div>
                               <div class="form-group">
                                 <label for="Address">Address:</label>
@@ -331,27 +329,22 @@
                     console.log();
             },
             addCustomer(){
+                
+                 let currObj=this;
+                        axios.post('/api/customer',this.customer)
+                        .then(function(response){
+                          currObj.output=response.data.msg;
+                          currObj.status=response.data.status;
+                          currObj.$swal('Info',currObj.output ,currObj.status);
 
-                  fetch('api/customer/',{
-                        method: 'post',
-                        body: JSON.stringify({'customer':this.customer}),
-                        headers:{
-                            'content-type': 'application/json'
-                        }
-                    })
-                    .then(res=>res.json())
-                    .then(data=>{
-                        alert('Customer Added');
-                        this.customer.name='';
-                        this.customer.address="";
-                        this.customer.phone="";
+                          currObj.$bvModal.hide('bv-modal-add-customer');
 
-                        
-                    })
-                    .catch(err=>console.log(err));
-                    console.log();
+                          currObj.fetchCustomers();
 
-                      this.$bvModal.hide('bv-modal-example')
+                        })
+                        .catch(function(error){
+                           currObj.output=error;
+                        });
 
             },
 

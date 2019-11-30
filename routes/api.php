@@ -32,17 +32,35 @@ Route::put('invoice','InvoiceController@update');
 //Delete invoice
 Route::delete('invoice/{id}','InvoiceController@destroy');
 
+
+//List Customers
+Route::get('customers','CustomerController@index');
+
 //Create new Customer
 Route::post('customer','CustomerController@store');
 
+//List single customer
+Route::get('customer/{id}','CustomerController@show');
+
+//Update customer
+Route::put('customer','CustomerController@update');
+
+//Delete customer
+Route::delete('customer/{id}','CustomerController@destroy');
+
+
+
 //Search Customer
 Route::post('customer_search','CustomerController@search');
+
+
 
 //retriving settings
 Route::get('settings','SettingsController@index');
 
 //updating settings
 Route::put('settings','SettingsController@update');
+
 
 
 //List estimates
