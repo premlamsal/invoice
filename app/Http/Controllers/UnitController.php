@@ -62,7 +62,7 @@ class UnitController extends Controller
         }
         else{
             return response()->json([
-                'msg'=>'Opps! My Back got cracked while working in Database',
+                'msg'=>'Error Updating Data',
                 'status'=>'error'
             ]);
         }
@@ -71,5 +71,18 @@ class UnitController extends Controller
     public function destroy($id)
     {
 
+        $unit=Unit::findOrFail($id);
+         if($unit->delete()){
+             return response()->json([
+                'msg'=>'successfully Deleted',
+                'status'=>'error'
+            ]);
+         }
+         else{
+             return response()->json([
+                'msg'=>'Error while deleting data',
+                'status'=>'error'
+            ]);
+         }
     }
 }

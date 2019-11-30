@@ -73,4 +73,6 @@ Route::post('unit','UnitController@store');
 //Update Unit
 Route::put('unit','UnitController@update');
 
+//Delete Unit
+Route::delete('unit/{id}','UnitController@destroy');
 

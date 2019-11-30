@@ -4257,7 +4257,32 @@ __webpack_require__.r(__webpack_exports__);
         currObj.output = error; // console.log(currObj.output);
       });
     },
-    deleteUnit: function deleteUnit(id) {} //end of methods block
+    deleteUnit: function deleteUnit(id) {
+      var currObj = this;
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]('/api/unit/' + id).then(function (response) {
+            currObj.output = response.data.msg;
+            currObj.status = response.data.status; // alert(currObj.status);
+
+            currObj.$swal('Info', currObj.output, currObj.status);
+            currObj.fetchUnits();
+          })["catch"](function (error) {
+            currObj.output = error;
+            console.log(currObj.output);
+          });
+        }
+      });
+    } //end of deleteUnit()
+    //end of methods block
 
   }
 });
