@@ -18,9 +18,9 @@ class CustomerController extends Controller
     {   
     
      $this->validate($request, [
-      'name' => 'required|alpha|max:100',
+      'name' => 'required|regex:/^[\pL\s\-]+$/u',
       'address' => 'required|string|max:200',
-      'phone' => 'required|numeric|size:10'
+      'phone' => 'required|digits:10'
      ]);
 
         $customer=new Customer();
@@ -47,11 +47,11 @@ class CustomerController extends Controller
     public function update(Request $request){
 
         $this->validate($request, [
-          'name' => 'required|alpha|max:100',
+          'name' => 'required|regex:/^[\pL\s\-]+$/u',
           'address' => 'required|string|max:200',
-          'phone' => 'required|numeric|size:10'
+          'phone' => 'required|digits:10'
         ]);
-        
+
         $id=$request->input('id');//get id from edit modal
         $customer=Customer::findOrFail($id);
         $customer->name=$request->input('name');
