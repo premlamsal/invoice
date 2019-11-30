@@ -1908,6 +1908,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1916,7 +1920,8 @@ __webpack_require__.r(__webpack_exports__);
       customer: {},
       //for form single unit data
       modalForName: "",
-      modalForCode: 0
+      modalForCode: 0,
+      errors: []
     };
   },
   created: function created() {
@@ -1965,9 +1970,14 @@ __webpack_require__.r(__webpack_exports__);
         currObj.status = response.data.status;
         currObj.$swal('Info', currObj.output, currObj.status);
         currObj.$bvModal.hide('bv-modal-add-customer');
+        currObj.errors = ''; //clearing errors
+
         currObj.fetchCustomers();
       })["catch"](function (error) {
-        currObj.output = error;
+        if (error.response.status == 422) {
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
+        }
       });
     },
     editCustomer: function editCustomer(id) {
@@ -2005,7 +2015,8 @@ __webpack_require__.r(__webpack_exports__);
         currObj.$bvModal.hide('bv-modal-add-customer');
         currObj.fetchCustomers();
       })["catch"](function (error) {
-        currObj.output = error; // console.log(currObj.output);
+        currObj.output = error;
+        console.log(currObj.output);
       });
     },
     deleteCustomer: function deleteCustomer(id) {
@@ -72808,7 +72819,7 @@ var render = function() {
                     expression: "customer.name"
                   }
                 ],
-                staticClass: "form-control",
+                class: ["form-control"],
                 attrs: { type: "text" },
                 domProps: { value: _vm.customer.name },
                 on: {
@@ -72819,7 +72830,13 @@ var render = function() {
                     _vm.$set(_vm.customer, "name", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.errors.name
+                ? _c("span", { class: ["errorText"] }, [
+                    _vm._v(_vm._s(_vm.errors.name[0]))
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -72834,7 +72851,7 @@ var render = function() {
                     expression: "customer.address"
                   }
                 ],
-                staticClass: "form-control",
+                class: ["form-control"],
                 attrs: { type: "text" },
                 domProps: { value: _vm.customer.address },
                 on: {
@@ -72845,7 +72862,13 @@ var render = function() {
                     _vm.$set(_vm.customer, "address", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.errors.address
+                ? _c("span", { class: ["errorText"] }, [
+                    _vm._v(_vm._s(_vm.errors.address[0]))
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -72860,7 +72883,7 @@ var render = function() {
                     expression: "customer.phone"
                   }
                 ],
-                staticClass: "form-control",
+                class: ["form-control"],
                 attrs: { type: "phone" },
                 domProps: { value: _vm.customer.phone },
                 on: {
@@ -72871,7 +72894,13 @@ var render = function() {
                     _vm.$set(_vm.customer, "phone", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.errors.phone
+                ? _c("span", { class: ["errorText"] }, [
+                    _vm._v(_vm._s(_vm.errors.phone[0]))
+                  ])
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),
@@ -92725,10 +92754,6 @@ var routes = [{
   path: '/:id/showEstimate/',
   name: 'showEstimate',
   component: __webpack_require__(/*! ./components/estimate/showEstimate.vue */ "./resources/js/components/estimate/showEstimate.vue")["default"]
-}, {
-  path: '/:id/printEstimate/',
-  name: 'printEstimate',
-  component: __webpack_require__(/*! ./components/estimate/printEstimate.vue */ "./resources/js/components/estimate/printEstimate.vue")["default"]
 }, {
   path: '/:id/printEstimate/',
   name: 'printEstimate',

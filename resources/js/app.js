@@ -98,7 +98,6 @@ let routes = [
   { path: '/:id/editEstimate',name:'editEstimate' ,component: require('./components/estimate/editEstimate.vue').default},
   { path: '/:id/showEstimate/',name:'showEstimate' ,component: require('./components/estimate/showEstimate.vue').default},
   { path: '/:id/printEstimate/',name:'printEstimate' ,component: require('./components/estimate/printEstimate.vue').default},
-  { path: '/:id/printEstimate/',name:'printEstimate' ,component: require('./components/estimate/printEstimate.vue').default},
 
   //customer routes
   { path: '/customers', name:'customers',component: require('./components/customer/customers.vue').default },

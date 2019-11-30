@@ -16,20 +16,12 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {   
-        // //collecting data from post to array
-        // $Data=collect($request->customer);
-
-        // $Customer=new Customer;
-        // $Customer->name=$Data['name'];
-        // $Customer->address=$Data['address'];
-        // $Customer->phone=$Data['phone'];
-        // $Customer->save();
-
-        // return response()
-        //     ->json([
-        //         'created' => true,
-        //         'message' => "Customer Added"
-        //     ]);
+    
+     $this->validate($request, [
+      'name' => 'required|alpha|max:100',
+      'address' => 'required|string|max:200',
+      'phone' => 'required|numeric|size:10'
+     ]);
 
         $customer=new Customer();
         $customer->name=$request->input('name');
@@ -38,16 +30,18 @@ class CustomerController extends Controller
 
         if($customer->save()){
             return response()->json([
-                'msg'=>'You have successfully added the information.',
+                'msg'=>'Customer added successfully',
                 'status'=>'success'
             ]);
         }
         else{
             return response()->json([
-                'msg'=>'Opps! My Back got cracked while working in Database',
+                'msg'=>'Error while adding customer',
                 'status'=>'error'
             ]);
         }
+         
+
     }
 
     public function update(Request $request){
@@ -60,13 +54,13 @@ class CustomerController extends Controller
 
         if($customer->save()){
             return response()->json([
-                'msg'=>'You have successfully updated the information.',
+                'msg'=>'Customer update successfully',
                 'status'=>'success'
             ]);
         }
         else{
             return response()->json([
-                'msg'=>'Opps! My Back got cracked while working in Database',
+                'msg'=>'Error while updating customer',
                 'status'=>'error'
             ]);
         }
@@ -118,7 +112,7 @@ class CustomerController extends Controller
         }
         else{
             return response()->json([
-                'msg'=>'Opps! My Back got cracked while working in Database',
+                'msg'=>'Error while retriving Customer',
                 'status'=>'error'
             ]);
         }

@@ -17,17 +17,21 @@
                                <div class="form-group">
                                 <input type="hidden" v-model="customer.id">
                                 <label for="Name">Name:</label>
-                                <input type="text" class="form-control" v-model="customer.name">
+                               <!--  <input type="text"  v-model="customer.name" :class="['form-control', errors.name ? 'is-invalid' : '']"> -->
+                               <input type="text"  v-model="customer.name" :class="['form-control']">
+                                <span v-if="errors.name" :class="['errorText']">{{ errors.name[0] }}</span>
                               </div>
                               <div class="form-group">
                                 <label for="Address">Address:</label>
-                                <input type="text" class="form-control" v-model="customer.address">
+                                <input type="text" v-model="customer.address" :class="['form-control']">
+                                <span v-if="errors.address" :class="['errorText']">{{ errors.address[0] }}</span>
                               </div>
                                <div class="form-group">
                                 <label for="Phone">Phone:</label>
-                                <input type="phone" class="form-control" v-model="customer.phone">
-                              </div>
-                        </div>
+                                <input type="phone" v-model="customer.phone" :class="['form-control']">
+                                <span v-if="errors.phone" :class="['errorText']">{{ errors.phone[0] }}</span>
+                               </div>
+                            </div>
                         <b-button class="mt-3" block @click="callFunc">{{modalForName}}</b-button>
                       </b-modal>
             <!-- add unit modal end-->
@@ -80,6 +84,8 @@
 
         modalForName: "",
         modalForCode: 0 ,      
+
+        errors:[],
 
       }
     },
@@ -146,11 +152,17 @@
 
           currObj.$bvModal.hide('bv-modal-add-customer');
 
+          currObj.errors = '';//clearing errors
+
           currObj.fetchCustomers();
 
         })
         .catch(function(error){
-           currObj.output=error;
+           if (error.response.status == 422){
+             currObj.validationErrors = error.response.data.errors;    
+             currObj.errors = currObj.validationErrors;
+             // console.log(currObj.errors);
+            }
         });
 
 
@@ -195,10 +207,11 @@
                 currObj.$bvModal.hide('bv-modal-add-customer');
                 currObj.fetchCustomers();
 
-        })
-        .catch(function(error){
-           currObj.output=error;
-            // console.log(currObj.output);
+        }).catch(function(error){
+            
+              currObj.output=error;
+              console.log(currObj.output);
+            
         })
 
 

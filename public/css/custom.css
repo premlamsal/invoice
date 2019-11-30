@@ -13,3 +13,6 @@
 .sidebar-dark .nav-item .router-link-exact-active i{
 	 color: #4e73df !important;
 }
+.errorText{
+	color: red;
+}
