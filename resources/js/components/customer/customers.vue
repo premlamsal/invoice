@@ -208,10 +208,11 @@
                 currObj.fetchCustomers();
 
         }).catch(function(error){
-            
-              currObj.output=error;
-              console.log(currObj.output);
-            
+              if (error.response.status == 422){
+             currObj.validationErrors = error.response.data.errors;    
+             currObj.errors = currObj.validationErrors;
+             // console.log(currObj.errors);
+            }   
         })
 
 
