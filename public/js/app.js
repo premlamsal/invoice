@@ -1991,6 +1991,8 @@ __webpack_require__.r(__webpack_exports__);
       this.modalForCode = 1; // 1 for Edit
 
       this.$bvModal.show('bv-modal-add-customer');
+      currObj.errors = ''; //clearing errors
+
       axios.get('/api/customer/' + id).then(function (response) {
         // console.log(response.data.unit)
         Vue.set(_this.customer, 'name', response.data.customer.name);
@@ -2019,6 +2021,8 @@ __webpack_require__.r(__webpack_exports__);
         currObj.customer.name = '';
         currObj.customer.address = '';
         currObj.customer.phone = '';
+        currObj.errors = ''; //clearing errors
+
         currObj.fetchCustomers();
       })["catch"](function (error) {
         if (error.response.status == 422) {

@@ -178,7 +178,7 @@
         this.modalForName="Edit Customer";
         this.modalForCode=1;// 1 for Edit
         this.$bvModal.show('bv-modal-add-customer');
-
+        currObj.errors = '';//clearing errors
         axios.get('/api/customer/'+id)
         .then(response=>{
           // console.log(response.data.unit)
@@ -214,7 +214,7 @@
                 currObj.customer.name='';
                 currObj.customer.address='';
                 currObj.customer.phone='';
-          
+                currObj.errors = '';//clearing errors
                 currObj.fetchCustomers();
 
         }).catch(function(error){
