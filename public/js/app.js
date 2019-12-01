@@ -4380,6 +4380,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4388,7 +4389,8 @@ __webpack_require__.r(__webpack_exports__);
       unit: {},
       //for form single unit data
       modalForName: "",
-      modalForCode: 0
+      modalForCode: 0,
+      errors: []
     };
   },
   created: function created() {
@@ -4437,9 +4439,14 @@ __webpack_require__.r(__webpack_exports__);
         currObj.status = response.data.status;
         currObj.$swal('Info', currObj.output, currObj.status);
         currObj.$bvModal.hide('bv-modal-add-unit');
+        currObj.errors = ''; //clearing errors
+
         currObj.fetchUnits();
       })["catch"](function (error) {
-        currObj.output = error;
+        if (error.response.status == 422) {
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
+        }
       });
     },
     editUnit: function editUnit(id) {
@@ -4449,6 +4456,8 @@ __webpack_require__.r(__webpack_exports__);
       this.modalForCode = 1; // 1 for Edit
 
       this.$bvModal.show('bv-modal-add-unit');
+      currObj.errors = ''; //clearing errors
+
       axios.get('/api/units/' + id).then(function (response) {
         // console.log(response.data.unit)
         Vue.set(_this.unit, 'short_name', response.data.unit.short_name);
@@ -4472,9 +4481,17 @@ __webpack_require__.r(__webpack_exports__);
 
         currObj.$swal('Info', currObj.output, currObj.status);
         currObj.$bvModal.hide('bv-modal-add-unit');
+        currObj.customer.name = '';
+        currObj.customer.address = '';
+        currObj.customer.phone = '';
+        currObj.errors = ''; //clearing errors
+
         currObj.fetchUnits();
       })["catch"](function (error) {
-        currObj.output = error; // console.log(currObj.output);
+        if (error.response.status == 422) {
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
+        }
       });
     },
     deleteUnit: function deleteUnit(id) {
@@ -77414,7 +77431,7 @@ var render = function() {
                     expression: "unit.short_name"
                   }
                 ],
-                staticClass: "form-control",
+                class: ["form-control"],
                 attrs: { type: "text", placeholder: "ex. kg or sq.ft or ltr" },
                 domProps: { value: _vm.unit.short_name },
                 on: {
@@ -77425,7 +77442,13 @@ var render = function() {
                     _vm.$set(_vm.unit, "short_name", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.errors.short_name
+                ? _c("span", { class: ["errorText"] }, [
+                    _vm._v(_vm._s(_vm.errors.short_name[0]))
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -77442,7 +77465,7 @@ var render = function() {
                     expression: "unit.long_name"
                   }
                 ],
-                staticClass: "form-control",
+                class: ["form-control"],
                 attrs: {
                   type: "text",
                   placeholder: "ex. kilogram or square foot or litre"
@@ -77456,7 +77479,13 @@ var render = function() {
                     _vm.$set(_vm.unit, "long_name", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.errors.long_name
+                ? _c("span", { class: ["errorText"] }, [
+                    _vm._v(_vm._s(_vm.errors.long_name[0]))
+                  ])
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),

@@ -16,7 +16,14 @@ class UnitController extends Controller
 
    
     public function store(Request $request)
-    {
+    {   
+
+        $this->validate($request, [
+          'short_name' => 'required|string|max:10',
+          'long_name' => 'required|string|max:100',
+        ]);
+
+
         $unit=new Unit();
         $unit->short_name=$request->input('short_name');
         $unit->long_name=$request->input('long_name');
@@ -49,7 +56,12 @@ class UnitController extends Controller
     }
 
     public function update(Request $request)
-    {
+    {   
+         $this->validate($request, [
+          'short_name' => 'required|string|max:10',
+          'long_name' => 'required|string|max:100',
+        ]);
+
         $id=$request->input('id');
         $unit = Unit::findOrFail($id);
         $unit->short_name=$request->input('short_name');

@@ -16,13 +16,14 @@
                         <div class="d-block">
                               <div class="form-group">
                                 <label for="Short Name">Short Name</label>
-                                <input type="hidden" v-model="unit.id">
-                                <input type="text" class="form-control" placeholder="ex. kg or sq.ft or ltr" v-model="unit.short_name">
-
+                                <input type="hidden" v-model="unit.id" >
+                                <input type="text" :class="['form-control']" placeholder="ex. kg or sq.ft or ltr" v-model="unit.short_name">
+                                <span v-if="errors.short_name" :class="['errorText']">{{ errors.short_name[0] }}</span>
                               </div>
                               <div class="form-group">
                                 <label for="Long Name">Long Name</label>
-                                <input type="text" class="form-control" placeholder="ex. kilogram or square foot or litre" v-model="unit.long_name">
+                                <input type="text" :class="['form-control']" placeholder="ex. kilogram or square foot or litre" v-model="unit.long_name">
+                                <span v-if="errors.long_name" :class="['errorText']">{{ errors.long_name[0] }}</span>
                               </div>
                         </div>
                         <b-button class="mt-3" block @click="callFunc">{{modalForName}}</b-button>
@@ -74,7 +75,9 @@
         unit:{}, //for form single unit data
 
         modalForName: "",
-        modalForCode: 0 ,      
+        modalForCode: 0 ,    
+
+        errors: [],  
 
       }
     },
@@ -141,11 +144,17 @@
 
           currObj.$bvModal.hide('bv-modal-add-unit');
 
+          currObj.errors = '';//clearing errors
+
           currObj.fetchUnits();
 
         })
         .catch(function(error){
-           currObj.output=error;
+          if (error.response.status == 422){
+             currObj.validationErrors = error.response.data.errors;    
+             currObj.errors = currObj.validationErrors;
+             // console.log(currObj.errors);
+            }
         });
 
 
@@ -155,7 +164,7 @@
         this.modalForName="Edit Unit";
         this.modalForCode=1;// 1 for Edit
         this.$bvModal.show('bv-modal-add-unit');
-
+        currObj.errors = '';//clearing errors
         axios.get('/api/units/'+id)
         .then(response=>{
           // console.log(response.data.unit)
@@ -185,12 +194,21 @@
            
                 currObj.$swal('Info',currObj.output ,currObj.status);
                 currObj.$bvModal.hide('bv-modal-add-unit');
+
+                currObj.customer.name='';
+                currObj.customer.address='';
+                currObj.customer.phone='';
+                currObj.errors = '';//clearing errors
+                
                 currObj.fetchUnits();
 
         })
         .catch(function(error){
-           currObj.output=error;
-            // console.log(currObj.output);
+             if (error.response.status == 422){
+             currObj.validationErrors = error.response.data.errors;    
+             currObj.errors = currObj.validationErrors;
+             // console.log(currObj.errors);
+            }   
         })
 
 
