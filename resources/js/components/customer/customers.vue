@@ -152,6 +152,11 @@
 
           currObj.$bvModal.hide('bv-modal-add-customer');
 
+
+          currObj.customer.name='';
+          currObj.customer.address='';
+          currObj.customer.phone='';
+
           currObj.errors = '';//clearing errors
 
           currObj.fetchCustomers();
@@ -205,6 +210,11 @@
            
                 currObj.$swal('Info',currObj.output ,currObj.status);
                 currObj.$bvModal.hide('bv-modal-add-customer');
+
+                currObj.customer.name='';
+                currObj.customer.address='';
+                currObj.customer.phone='';
+          
                 currObj.fetchCustomers();
 
         }).catch(function(error){

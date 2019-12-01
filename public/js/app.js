@@ -1970,6 +1970,9 @@ __webpack_require__.r(__webpack_exports__);
         currObj.status = response.data.status;
         currObj.$swal('Info', currObj.output, currObj.status);
         currObj.$bvModal.hide('bv-modal-add-customer');
+        currObj.customer.name = '';
+        currObj.customer.address = '';
+        currObj.customer.phone = '';
         currObj.errors = ''; //clearing errors
 
         currObj.fetchCustomers();
@@ -2013,6 +2016,9 @@ __webpack_require__.r(__webpack_exports__);
 
         currObj.$swal('Info', currObj.output, currObj.status);
         currObj.$bvModal.hide('bv-modal-add-customer');
+        currObj.customer.name = '';
+        currObj.customer.address = '';
+        currObj.customer.phone = '';
         currObj.fetchCustomers();
       })["catch"](function (error) {
         if (error.response.status == 422) {
