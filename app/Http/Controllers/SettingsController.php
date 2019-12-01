@@ -22,49 +22,42 @@ class SettingsController extends Controller
    }
    public function update(Request $request){
 
-           if($request->company_name!="" && $request->company_email!="" && $request->company_address!="" && $request->company_phone!="" && $request->company_url!="" && $request->vat!="")
-           {
+        $this->validate($request, [
+          'company_name' => 'required|string|max:200',
+          'company_email' => 'required|email|max:255',
+          'company_address' => 'required|string|max:200',
+          'company_phone' =>  'required|digits:10',
+          'company_url' => 'required|url',
+          'vat' => 'required|numeric ',
+          
+        ]);
 
-            
-
-              $company_name= $request->input('company_name');
-              $company_email= $request->input('company_email');
-              $company_address= $request->input('company_address');
-              $company_phone= $request->input('company_phone');
-              $company_url= $request->input('company_url');
-              $vat= $request->input('vat');
-
-              $id=$request->input('id');
-
-
-              $setting=Setting::findOrFail($id);
-              $setting->company_name=$company_name;
-              $setting->company_email=$company_email;
-              $setting->company_address=$company_address;
-              $setting->company_phone=$company_phone;
-              $setting->company_url=$company_url;
-              $setting->vat=$vat;
-
-              if($request->hasFile('image')){
-                $imageName = time().'.'.$request->image->getClientOriginalExtension();
-                $request->image->move(public_path('img'), $imageName);
-                $setting->company_logo=$imageName;
-              }
-
-              if($setting->update()){
-                   $sendResponse=response()->json(['msg'=>'You have successfully changed the information.','status'=>'success']);
-              }
-              else{
-                 $sendResponse=response()->json(['msg'=>'Opps! My Back got cracked while working in Database','status'=>'error']);
-              }
+      $id=$request->input('id');
+      $setting=Setting::findOrFail($id);
+      $setting->company_name=$request->input('company_name');
+      $setting->company_email=$request->input('company_email');
+      $setting->company_address=$request->input('company_address');
+      $setting->company_phone=$request->input('company_phone');
+      $setting->company_url=$request->input('company_url');
+      $setting->vat=$request->input('vat');
          
-           }
-           else{
-             $sendResponse=response()->json(['msg'=>'Opps! I am quite hungry, Please provide all information.','status'=>'error']);
-           }
-
-           return $sendResponse;
-     
-   
+      if($request->hasFile('image')){
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('img'), $imageName);
+        $setting->company_logo=$imageName;
+        }
+      if($setting->update()){
+        return response()->json([
+          'msg'=>'You have successfully changed the information.',
+          'status'=>'success'
+        ]);
+      }
+        else{
+          return response()->json([
+            'msg'=>'Opps! My Back got cracked while working in Database',
+            'status'=>'error'
+          ]);
+        }
+         
    }
 }

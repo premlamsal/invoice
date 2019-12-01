@@ -13,31 +13,38 @@
                   <form @submit="formSubmit" enctype="multipart/form-data">
                     <div class="form-group">
                       <label>Company Name</label>
-                      <input type="text" class="form-control" placeholder="Company Name" v-model="settings.company_name">
+                      <input type="text" :class="['form-control']" placeholder="Company Name" v-model="settings.company_name">
+                      <span v-if="errors.company_name" :class="['errorText']">{{ errors.company_name[0] }}</span>
                     </div>
                     <div class="form-group">
                       <label>Company Email</label>
-                      <input type="text" class="form-control" placeholder="Company Email" v-model="settings.company_email">
+                      <input type="text" :class="['form-control']" placeholder="Company Email" v-model="settings.company_email">
+                      <span v-if="errors.company_email" :class="['errorText']">{{ errors.company_email[0] }}</span>
                     </div>
                     <div class="form-group">
                       <label>Company Address</label>
-                      <input type="text" class="form-control" placeholder="Company Address" v-model="settings.company_address">
+                      <input type="text" :class="['form-control']" placeholder="Company Address" v-model="settings.company_address">
+                      <span v-if="errors.company_address" :class="['errorText']">{{ errors.company_address[0] }}</span>
                     </div>
                     <div class="form-group">
                       <label>Company Phone</label>
-                      <input type="phone" class="form-control" placeholder="Company Phone" v-model="settings.company_phone">
+                      <input type="phone" :class="['form-control']" placeholder="Company Phone" v-model="settings.company_phone">
+                      <span v-if="errors.company_phone" :class="['errorText']">{{ errors.company_phone[0] }}</span>
                     </div>
                      <div class="form-group">
                       <label>VAT Percentage</label>
-                      <input type="number" class="form-control" placeholder="VAT Percentage" v-model="settings.vat">
+                      <input type="number" :class="['form-control']" placeholder="VAT Percentage" v-model="settings.vat">
+                      <span v-if="errors.vat" :class="['errorText']">{{ errors.vat[0] }}</span>
                     </div>
                     <div class="form-group">
                       <label>Company Website</label>
-                      <input type="text" class="form-control" placeholder="http://example.com" v-model="settings.company_url">
+                      <input type="text" :class="['form-control']" placeholder="http://example.com" v-model="settings.company_url">
+                      <span v-if="errors.company_url" :class="['errorText']">{{ errors.company_url[0] }}</span>
                     </div>
                      <div class="form-group">
                       <label>Company Logo</label>
-                      <input type="file" class="form-control" v-on:change="fileSelected">
+                      <input type="file" :class="['form-control']" v-on:change="fileSelected">
+                      <span v-if="errors.image" :class="['errorText']">{{ errors.image[0] }}</span>
                     </div>
                    
                     <button class="btn btn-primary">Save</button>
@@ -77,7 +84,9 @@
 
             settings:{},
             image:'',
-            selectedFile:''
+            selectedFile:'',
+
+            errors: [],
 
 
 
@@ -160,8 +169,11 @@
 
         })
         .catch(function(error){
-            currObj.output=error;
-            // console.log(currObj.output);
+              if (error.response.status == 422){
+             currObj.validationErrors = error.response.data.errors;    
+             currObj.errors = currObj.validationErrors;
+             // console.log(currObj.errors);
+            }   
         });
 
       }//end of formSubmit

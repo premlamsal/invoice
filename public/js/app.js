@@ -4235,13 +4235,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       //list of data goes here
       settings: {},
       image: '',
-      selectedFile: ''
+      selectedFile: '',
+      errors: []
     }; //end of return block inside of data block
   },
   //end of data block
@@ -4296,7 +4304,10 @@ __webpack_require__.r(__webpack_exports__);
         currObj.$swal('Info', currObj.output, currObj.status);
         currObj.fetchSettings();
       })["catch"](function (error) {
-        currObj.output = error; // console.log(currObj.output);
+        if (error.response.status == 422) {
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
+        }
       });
     } //end of formSubmit
 
@@ -4456,7 +4467,7 @@ __webpack_require__.r(__webpack_exports__);
       this.modalForCode = 1; // 1 for Edit
 
       this.$bvModal.show('bv-modal-add-unit');
-      currObj.errors = ''; //clearing errors
+      this.errors = ''; //clearing errors
 
       axios.get('/api/units/' + id).then(function (response) {
         // console.log(response.data.unit)
@@ -77078,7 +77089,7 @@ var render = function() {
                         expression: "settings.company_name"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: ["form-control"],
                     attrs: { type: "text", placeholder: "Company Name" },
                     domProps: { value: _vm.settings.company_name },
                     on: {
@@ -77093,7 +77104,13 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.company_name
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors.company_name[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -77108,7 +77125,7 @@ var render = function() {
                         expression: "settings.company_email"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: ["form-control"],
                     attrs: { type: "text", placeholder: "Company Email" },
                     domProps: { value: _vm.settings.company_email },
                     on: {
@@ -77123,7 +77140,13 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.company_email
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors.company_email[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -77138,7 +77161,7 @@ var render = function() {
                         expression: "settings.company_address"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: ["form-control"],
                     attrs: { type: "text", placeholder: "Company Address" },
                     domProps: { value: _vm.settings.company_address },
                     on: {
@@ -77153,7 +77176,13 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.company_address
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors.company_address[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -77168,7 +77197,7 @@ var render = function() {
                         expression: "settings.company_phone"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: ["form-control"],
                     attrs: { type: "phone", placeholder: "Company Phone" },
                     domProps: { value: _vm.settings.company_phone },
                     on: {
@@ -77183,7 +77212,13 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.company_phone
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors.company_phone[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -77198,7 +77233,7 @@ var render = function() {
                         expression: "settings.vat"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: ["form-control"],
                     attrs: { type: "number", placeholder: "VAT Percentage" },
                     domProps: { value: _vm.settings.vat },
                     on: {
@@ -77209,7 +77244,13 @@ var render = function() {
                         _vm.$set(_vm.settings, "vat", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.vat
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors.vat[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -77224,7 +77265,7 @@ var render = function() {
                         expression: "settings.company_url"
                       }
                     ],
-                    staticClass: "form-control",
+                    class: ["form-control"],
                     attrs: { type: "text", placeholder: "http://example.com" },
                     domProps: { value: _vm.settings.company_url },
                     on: {
@@ -77239,17 +77280,29 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.company_url
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors.company_url[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", [_vm._v("Company Logo")]),
                   _vm._v(" "),
                   _c("input", {
-                    staticClass: "form-control",
+                    class: ["form-control"],
                     attrs: { type: "file" },
                     on: { change: _vm.fileSelected }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.image
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors.image[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("button", { staticClass: "btn btn-primary" }, [

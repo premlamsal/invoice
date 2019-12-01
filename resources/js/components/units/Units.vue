@@ -164,7 +164,7 @@
         this.modalForName="Edit Unit";
         this.modalForCode=1;// 1 for Edit
         this.$bvModal.show('bv-modal-add-unit');
-        currObj.errors = '';//clearing errors
+        this.errors = '';//clearing errors
         axios.get('/api/units/'+id)
         .then(response=>{
           // console.log(response.data.unit)
@@ -199,7 +199,7 @@
                 currObj.customer.address='';
                 currObj.customer.phone='';
                 currObj.errors = '';//clearing errors
-                
+
                 currObj.fetchUnits();
 
         })
