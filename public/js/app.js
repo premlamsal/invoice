@@ -2715,6 +2715,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2728,12 +2733,7 @@ __webpack_require__.r(__webpack_exports__);
       customer: {},
       showModal: false,
       queryResults: [],
-      error: {
-        customer_name: false,
-        title: false,
-        estimate_date: false,
-        due_date: false
-      }
+      errors: []
     };
   },
   created: function created() {
@@ -2829,9 +2829,17 @@ __webpack_require__.r(__webpack_exports__);
         currObj.status = response.data.status;
         currObj.$swal('Info', currObj.output, currObj.status);
         currObj.$bvModal.hide('bv-modal-add-customer');
+        currObj.customer.name = '';
+        currObj.customer.address = '';
+        currObj.customer.phone = '';
+        currObj.errors = ''; //clearing errors
+
         currObj.fetchCustomers();
       })["catch"](function (error) {
-        currObj.output = error;
+        if (error.response.status == 422) {
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
+        }
       });
     },
     autoComplete: function autoComplete() {
@@ -3791,6 +3799,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3804,7 +3815,7 @@ __webpack_require__.r(__webpack_exports__);
       customer: {},
       showModal: false,
       queryResults: [],
-      error: {}
+      errors: []
     };
   },
   created: function created() {
@@ -3864,25 +3875,27 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addCustomer: function addCustomer() {
-      var _this2 = this;
+      var currObj = this;
+      axios.post('/api/customer', this.customer).then(function (response) {
+        currObj.output = response.data.msg;
+        currObj.status = response.data.status;
+        currObj.$swal('Info', currObj.output, currObj.status);
+        currObj.$bvModal.hide('bv-modal-add-customer');
+        currObj.customer.name = '';
+        currObj.customer.address = '';
+        currObj.customer.phone = '';
+        currObj.errors = ''; //clearing errors
 
-      axios.post('api/customer', {
-        customer: this.customer
-      }).then(function (response) {
-        alert('Customer Added');
-        _this2.customer.name = '';
-        _this2.customer.address = "";
-        _this2.customer.phone = "";
+        currObj.fetchCustomers();
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this2.errors = error.response.data.errors;
-          console.log(_this2.errors);
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
         }
       });
-      this.$bvModal.hide('bv-modal-example');
     },
     autoComplete: function autoComplete() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (this.info.customer_name === "") {
         this.queryResults = null;
@@ -3890,11 +3903,11 @@ __webpack_require__.r(__webpack_exports__);
         axios.post('api/customer_search/', {
           searchQuery: this.info.customer_name
         }).then(function (response) {
-          _this3.queryResults = response.data.queryResults;
+          _this2.queryResults = response.data.queryResults;
         })["catch"](function (error) {
           if (error.response.status == 422) {
-            _this3.errors = error.response.data.errors;
-            console.log(_this3.errors);
+            _this2.errors = error.response.data.errors;
+            console.log(_this2.errors);
           }
         });
       }
@@ -73130,7 +73143,7 @@ var staticRenderFns = [
                           staticClass:
                             "text-xs font-weight-bold text-primary text-uppercase mb-1"
                         },
-                        [_vm._v("Earnings (Monthly)")]
+                        [_vm._v("Invoices (Total)")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -73138,13 +73151,13 @@ var staticRenderFns = [
                         {
                           staticClass: "h5 mb-0 font-weight-bold text-gray-800"
                         },
-                        [_vm._v("$40,000")]
+                        [_vm._v("200")]
                       )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-auto" }, [
                       _c("i", {
-                        staticClass: "fas fa-calendar fa-2x text-gray-300"
+                        staticClass: "fas fa-file-invoice fa-2x text-gray-300"
                       })
                     ])
                   ]
@@ -73171,7 +73184,7 @@ var staticRenderFns = [
                           staticClass:
                             "text-xs font-weight-bold text-success text-uppercase mb-1"
                         },
-                        [_vm._v("Earnings (Annual)")]
+                        [_vm._v("Estimates (Total)")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -73179,13 +73192,14 @@ var staticRenderFns = [
                         {
                           staticClass: "h5 mb-0 font-weight-bold text-gray-800"
                         },
-                        [_vm._v("$215,000")]
+                        [_vm._v("300")]
                       )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-auto" }, [
                       _c("i", {
-                        staticClass: "fas fa-dollar-sign fa-2x text-gray-300"
+                        staticClass:
+                          "fas fa-file-invoice-dollar fa-2x text-gray-300"
                       })
                     ])
                   ]
@@ -73212,7 +73226,7 @@ var staticRenderFns = [
                           staticClass:
                             "text-xs font-weight-bold text-info text-uppercase mb-1"
                         },
-                        [_vm._v("Tasks")]
+                        [_vm._v("Customer (Total)")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -73226,7 +73240,7 @@ var staticRenderFns = [
                                 staticClass:
                                   "h5 mb-0 mr-3 font-weight-bold text-gray-800"
                               },
-                              [_vm._v("50%")]
+                              [_vm._v("10")]
                             )
                           ]),
                           _vm._v(" "),
@@ -73254,7 +73268,7 @@ var staticRenderFns = [
                     _vm._v(" "),
                     _c("div", { staticClass: "col-auto" }, [
                       _c("i", {
-                        staticClass: "fas fa-clipboard-list fa-2x text-gray-300"
+                        staticClass: "fas fa-user-friends fa-2x text-gray-300"
                       })
                     ])
                   ]
@@ -73281,7 +73295,7 @@ var staticRenderFns = [
                           staticClass:
                             "text-xs font-weight-bold text-warning text-uppercase mb-1"
                         },
-                        [_vm._v("Pending Requests")]
+                        [_vm._v("Notifications  ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -73303,6 +73317,48 @@ var staticRenderFns = [
               ])
             ]
           )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-xl-8 col-lg-7" }, [
+          _c("div", { staticClass: "card shadow mb-4" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+              },
+              [
+                _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                  _vm._v("Activities")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xl-4 col-lg-5" }, [
+          _c("div", { staticClass: "card shadow mb-4" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+              },
+              [
+                _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                  _vm._v("Company Info")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown no-arrow" })
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" })
+          ])
         ])
       ])
     ])
@@ -74353,6 +74409,31 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "d-block" }, [
                         _c("div", { staticClass: "form-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.customer.id,
+                                expression: "customer.id"
+                              }
+                            ],
+                            attrs: { type: "hidden" },
+                            domProps: { value: _vm.customer.id },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.customer,
+                                  "id",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
                           _c("label", { attrs: { for: "Name" } }, [
                             _vm._v("Name:")
                           ]),
@@ -74366,7 +74447,7 @@ var render = function() {
                                 expression: "customer.name"
                               }
                             ],
-                            staticClass: "form-control",
+                            class: ["form-control"],
                             attrs: { type: "text" },
                             domProps: { value: _vm.customer.name },
                             on: {
@@ -74381,7 +74462,13 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.name
+                            ? _c("span", { class: ["errorText"] }, [
+                                _vm._v(_vm._s(_vm.errors.name[0]))
+                              ])
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -74398,7 +74485,7 @@ var render = function() {
                                 expression: "customer.address"
                               }
                             ],
-                            staticClass: "form-control",
+                            class: ["form-control"],
                             attrs: { type: "text" },
                             domProps: { value: _vm.customer.address },
                             on: {
@@ -74413,7 +74500,13 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.address
+                            ? _c("span", { class: ["errorText"] }, [
+                                _vm._v(_vm._s(_vm.errors.address[0]))
+                              ])
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -74430,7 +74523,7 @@ var render = function() {
                                 expression: "customer.phone"
                               }
                             ],
-                            staticClass: "form-control",
+                            class: ["form-control"],
                             attrs: { type: "phone" },
                             domProps: { value: _vm.customer.phone },
                             on: {
@@ -74445,7 +74538,13 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.phone
+                            ? _c("span", { class: ["errorText"] }, [
+                                _vm._v(_vm._s(_vm.errors.phone[0]))
+                              ])
+                            : _vm._e()
                         ])
                       ]),
                       _vm._v(" "),
@@ -76199,6 +76298,31 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "d-block" }, [
                         _c("div", { staticClass: "form-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.customer.id,
+                                expression: "customer.id"
+                              }
+                            ],
+                            attrs: { type: "hidden" },
+                            domProps: { value: _vm.customer.id },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.customer,
+                                  "id",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
                           _c("label", { attrs: { for: "Name" } }, [
                             _vm._v("Name:")
                           ]),
@@ -76212,7 +76336,7 @@ var render = function() {
                                 expression: "customer.name"
                               }
                             ],
-                            staticClass: "form-control",
+                            class: ["form-control"],
                             attrs: { type: "text" },
                             domProps: { value: _vm.customer.name },
                             on: {
@@ -76227,7 +76351,13 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.name
+                            ? _c("span", { class: ["errorText"] }, [
+                                _vm._v(_vm._s(_vm.errors.name[0]))
+                              ])
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -76244,7 +76374,7 @@ var render = function() {
                                 expression: "customer.address"
                               }
                             ],
-                            staticClass: "form-control",
+                            class: ["form-control"],
                             attrs: { type: "text" },
                             domProps: { value: _vm.customer.address },
                             on: {
@@ -76259,7 +76389,13 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.address
+                            ? _c("span", { class: ["errorText"] }, [
+                                _vm._v(_vm._s(_vm.errors.address[0]))
+                              ])
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -76276,7 +76412,7 @@ var render = function() {
                                 expression: "customer.phone"
                               }
                             ],
-                            staticClass: "form-control",
+                            class: ["form-control"],
                             attrs: { type: "phone" },
                             domProps: { value: _vm.customer.phone },
                             on: {
@@ -76291,7 +76427,13 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.phone
+                            ? _c("span", { class: ["errorText"] }, [
+                                _vm._v(_vm._s(_vm.errors.phone[0]))
+                              ])
+                            : _vm._e()
                         ])
                       ]),
                       _vm._v(" "),

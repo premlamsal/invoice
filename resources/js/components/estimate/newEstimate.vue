@@ -34,19 +34,24 @@
                           Add Customer
                         </template>
                         <div class="d-block">
-                              <div class="form-group">
+                             <div class="form-group">
+                                <input type="hidden" v-model="customer.id">
                                 <label for="Name">Name:</label>
-                                <input type="text" class="form-control" v-model="customer.name">
+                               <!--  <input type="text"  v-model="customer.name" :class="['form-control', errors.name ? 'is-invalid' : '']"> -->
+                               <input type="text"  v-model="customer.name" :class="['form-control']">
+                                <span v-if="errors.name" :class="['errorText']">{{ errors.name[0] }}</span>
                               </div>
                               <div class="form-group">
                                 <label for="Address">Address:</label>
-                                <input type="text" class="form-control" v-model="customer.address">
+                                <input type="text" v-model="customer.address" :class="['form-control']">
+                                <span v-if="errors.address" :class="['errorText']">{{ errors.address[0] }}</span>
                               </div>
                                <div class="form-group">
                                 <label for="Phone">Phone:</label>
-                                <input type="phone" class="form-control" v-model="customer.phone">
-                              </div>
-                        </div>
+                                <input type="phone" v-model="customer.phone" :class="['form-control']">
+                                <span v-if="errors.phone" :class="['errorText']">{{ errors.phone[0] }}</span>
+                               </div>
+                            </div>
                         <b-button class="mt-3" block @click="addCustomer">Add Customer</b-button>
                       </b-modal>
                     <!-- Search suggestion block ends -->
@@ -217,12 +222,7 @@
                 customer:{},
                 showModal: false,
                 queryResults:[],
-                error:{
-                    customer_name: false,
-                    title:false,
-                    estimate_date:false,
-                    due_date:false
-                }
+                errors:[],
               
 
             };
@@ -329,22 +329,32 @@
                     console.log();
             },
             addCustomer(){
-                
-                 let currObj=this;
-                        axios.post('/api/customer',this.customer)
-                        .then(function(response){
-                          currObj.output=response.data.msg;
-                          currObj.status=response.data.status;
-                          currObj.$swal('Info',currObj.output ,currObj.status);
+                         let currObj=this;
+                axios.post('/api/customer',this.customer)
+                .then(function(response){
+                  currObj.output=response.data.msg;
+                  currObj.status=response.data.status;
+                  currObj.$swal('Info',currObj.output ,currObj.status);
 
-                          currObj.$bvModal.hide('bv-modal-add-customer');
+                  currObj.$bvModal.hide('bv-modal-add-customer');
 
-                          currObj.fetchCustomers();
 
-                        })
-                        .catch(function(error){
-                           currObj.output=error;
-                        });
+                  currObj.customer.name='';
+                  currObj.customer.address='';
+                  currObj.customer.phone='';
+
+                  currObj.errors = '';//clearing errors
+
+                  currObj.fetchCustomers();
+
+                })
+                .catch(function(error){
+                   if (error.response.status == 422){
+                     currObj.validationErrors = error.response.data.errors;    
+                     currObj.errors = currObj.validationErrors;
+                     // console.log(currObj.errors);
+                    }
+                });
 
             },
 
