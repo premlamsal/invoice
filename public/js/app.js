@@ -2746,7 +2746,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {//methods to be executed while this page is created
-    //for validation initializing the varibles
     // this.info.customer_name="";
     // this.info.title="";
     // this.info.due_date="";
@@ -2779,6 +2778,12 @@ __webpack_require__.r(__webpack_exports__);
       this.items[index].line_total = this.items[index].price * this.items[index].quantity;
     },
     createEstimate: function createEstimate() {
+      this.info.status = "Not Paid";
+
+      if (this.info.discount == null || this.info.discount == "") {
+        this.info.discount = 0;
+      }
+
       var formData = new FormData();
       formData.append('_method', 'POST');
       formData.append('title', this.info.title);
@@ -2791,9 +2796,13 @@ __webpack_require__.r(__webpack_exports__);
         items: this.items
       }).then(function (response) {
         currObj.output = response.data.msg;
-        currObj.status = response.data.status; // currObj.$swal('Info',currObj.output ,currObj.status);
-
+        currObj.status = response.data.status;
+        currObj.$swal('Info', currObj.output, currObj.status);
         currObj.errors = ''; //clearing errors
+
+        this.$router.push({
+          name: 'estimates'
+        });
       })["catch"](function (error) {
         if (error.response.status == 422) {
           currObj.validationErrors = error.response.data.errors;
@@ -74349,11 +74358,12 @@ var render = function() {
                   _vm._v(" "),
                   _vm.errors["info.customer_name"]
                     ? _c("span", { class: ["errorText"] }, [
-                        _vm._v(_vm._s(_vm.errors["info.customer_name"][0]))
+                        _vm._v(
+                          _vm._s(_vm.errors["info.customer_name"][0]) + " "
+                        ),
+                        _c("br")
                       ])
                     : _vm._e(),
-                  _vm._v(" "),
-                  _c("br"),
                   _vm._v(" "),
                   _c(
                     "div",

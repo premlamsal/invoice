@@ -17,8 +17,8 @@
 
             <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" class="form-control">
 
-           <span v-if="errors['info.customer_name']" :class="['errorText']">{{errors['info.customer_name'][0]}}</span>
-           <br>
+           <span v-if="errors['info.customer_name']" :class="['errorText']">{{errors['info.customer_name'][0]}} <br></span>
+          
 
             <!-- Search suggestion block -->
            <div class="customer-search-suggestion">
@@ -239,11 +239,11 @@
         },
         created(){
             //methods to be executed while this page is created
-            //for validation initializing the varibles
             // this.info.customer_name="";
             // this.info.title="";
             // this.info.due_date="";
             // this.info.estimate_date="";
+           
 
 
         },
@@ -285,6 +285,12 @@
             },
             createEstimate(){
 
+                    this.info.status="Not Paid";
+                    if(this.info.discount==null || this.info.discount==""){
+                        this.info.discount=0;
+                    }
+                  
+
                     let formData=new FormData();
                     formData.append('_method','POST');
                     formData.append('title',this.info.title);
@@ -297,9 +303,10 @@
                         .then(function(response){
                           currObj.output=response.data.msg;
                           currObj.status=response.data.status;
-                          // currObj.$swal('Info',currObj.output ,currObj.status);
+                          currObj.$swal('Info',currObj.output ,currObj.status);
 
                           currObj.errors = '';//clearing errors
+                          this.$router.push({ name: 'estimates'});
 
 
                         })

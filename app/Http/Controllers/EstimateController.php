@@ -24,7 +24,7 @@ class EstimateController extends Controller
         // $request=json_decode($request->items, true);
         $this->validate($request,[
 
-            'info.title' => 'required | numeric',
+            'info.title' => 'required | string |max:200',
             'info.customer_name' => 'required | string| max:200',
             'info.due_date' => 'required | date',
             'info.estimate_date' => 'required | date',
@@ -35,38 +35,29 @@ class EstimateController extends Controller
 
         ]);
 
-        print_r($request->all());
-        
+        // print_r($request->all());
 
-    
-       
-       
+        $items = collect($request->items)->transform(function($item) {
+            $item['line_total'] = $item['quantity'] *$item['price'];
+            return new EstimateDetail($item);
+        });
 
+        if($items->isEmpty()) {
+            return response()
+            ->json([
+                'items_empty' => 'One or more Item is required.'
+            ], 422);
+        }
 
+        $data = $request->info;
+        $data['sub_total'] = $items->sum('line_total');
+        $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
+        $estimate = Estimate::create($data);
 
+        $estimate->estimateDetail()->saveMany($items);
 
-        // $items = collect($request->items)->transform(function($item) {
-        //     $item['line_total'] = $item['quantity'] *$item['price'];
-        //     return new EstimateDetail($item);
-        // });
-
-        // if($items->isEmpty()) {
-        //     return response()
-        //     ->json([
-        //         'items_empty' => 'One or more Item is required.'
-        //     ], 422);
-        // }
-
-        // $data = $request->info;
-        // $data['sub_total'] = $items->sum('line_total');
-        // $data['grand_total'] = $data['sub_total'] - $data['discount'];
-
-        // $estimate = Estimate::create($data);
-
-        // $estimate->estimateDetail()->saveMany($items);
-
-         // return response()->json(['msg'=>'You have successfully created the Estimate.','status'=>'success']);
+         return response()->json(['msg'=>'You have successfully created the Estimate.','status'=>'success']);
     }
 
     public function show($id)
