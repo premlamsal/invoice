@@ -16,3 +16,6 @@
 .errorText{
 	color: red;
 }
+td.table-error {
+    background: radial-gradient(red, transparent);
+}

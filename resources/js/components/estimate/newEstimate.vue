@@ -17,6 +17,9 @@
 
             <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" class="form-control">
 
+           <span v-if="errors['info.customer_name']" :class="['errorText']">{{errors['info.customer_name'][0]}}</span>
+           <br>
+
             <!-- Search suggestion block -->
            <div class="customer-search-suggestion">
                <div v-for="queryResult in queryResults" v-bind:key="queryResult.id" class="customer-search-suggestion-inner">
@@ -72,18 +75,20 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Title</label>
-            <input type="text" v-model="info.title" class="form-control">
+            <input type="text" v-model="info.title" :class="['form-control']">
+           <span v-if="errors['info.title']" :class="['errorText']">{{errors['info.title'][0]}}</span>
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <label>Estimate Date</label>
-                <input type="date" v-model="info.estimate_date" class="form-control">
-                
+                <input type="date" v-model="info.estimate_date" :class="['form-control']">
+                <span v-if="errors['info.estimate_date']" :class="['errorText']">{{errors['info.estimate_date'][0]}}</span>
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
-                <input type="date" v-model="info.due_date" class="form-control">
-                    
+                <input type="date" v-model="info.due_date" :class="['form-control']">
+                <span v-if="errors['info.due_date']" :class="['errorText']">{{errors['info.due_date'][0]}}</span>
+                <!-- <span v-if="errors['items'.'due_date']" :class="['errorText']"></span> -->
             </div>
         </div>
     </div>
@@ -102,14 +107,17 @@
     </thead>
     <tbody>
         <tr v-for="(item,index) in items">
-            <td class="table-name">
-                <input type="text" name="" class="form-control" placeholder="Product Name" v-model="item.product_name">
+            <td class="table-name" :class="{'table-error':errors['items.' + index + '.product_name']}">
+                <input type="text"  :class="['form-control']" placeholder="Product Name" v-model="item.product_name">
+
             </td>
-            <td class="table-price">
-                <input type="text" class="form-control" placeholder="Enter the price" v-model="item.price">
+            <td class="table-price" :class="{'table-error':errors['items.' + index + '.price']}">
+                <input type="text" :class="['form-control']" placeholder="Enter the price" v-model="item.price">
+                 <!-- <span v-if="errors['items.' + index + '.price']" :class="['errorText']"></span> -->
+                  <!-- <span v-if="errors['items.' + index + '.price']" :class="['errorText']">{{errors['items.' + index + '.price']}}</span> -->
             </td>
-            <td class="table-qty">
-                <input type="text" class="form-control" placeholder="Quantity" v-model="item.quantity">
+            <td class="table-qty" :class="{'table-error':errors['items.' + index + '.quantity']}">
+                <input type="text" :class="['form-control']" placeholder="Quantity" v-model="item.quantity">
             </td>
             <td class="table-total">
                 <span class="table-text" v-model="item.line_total">{{item.quantity * item.price}}</span>
@@ -131,7 +139,7 @@
             <td class="table-empty" colspan="2"></td>
             <td class="table-label">Discount</td>
             <td class="table-discount">
-                <input type="text" class="table-discount_input form-control" v-model="info.discount">
+                <input type="text" v-model="info.discount" :class="['table-discount_input form-control']">
             </td>
         </tr>
         <tr>
@@ -212,8 +220,8 @@
                 items:[{
 
                     product_name:'',
-                    price:'',
-                    quantity:'',
+                    price:'0',
+                    quantity:'1',
                     line_total:''
 
                 }],
@@ -223,7 +231,8 @@
                 showModal: false,
                 queryResults:[],
                 errors:[],
-              
+                
+                raw:[],
 
             };
 
@@ -231,11 +240,11 @@
         created(){
             //methods to be executed while this page is created
             //for validation initializing the varibles
-            this.info.customer_name="";
-            this.info.title="";
-            this.info.due_date="";
-            this.info.estimate_date="";
-           
+            // this.info.customer_name="";
+            // this.info.title="";
+            // this.info.due_date="";
+            // this.info.estimate_date="";
+
 
         },
 
@@ -244,8 +253,8 @@
             addNewLine(){
                 this.items.push({
                     product_name:'',
-                    price:'',
-                    quantity: '',
+                    price:'0',
+                    quantity: '1',
                     line_total:''
 
                 });
@@ -275,58 +284,38 @@
 
             },
             createEstimate(){
-              if(this.info.customer_name!="" &&this.info.title!="" &&this.info.estimate_date!="" &&this.info.due_date!=""){
-                //Add
-                this.info.status="Not Paid";
-                if(this.info.discount==null){
-                    this.info.discount=0;
-                }
 
-                    fetch('api/estimate',{
-                        method: 'post',
-                        body: JSON.stringify({'info':this.info,'items':this.items}),
-                        headers:{
-                            'content-type': 'application/json'
-                        }
-                    })
-                    .then(res=>res.json())
-                    .then(data=>{
-                      
-                        //sweet alert
-                        this.$swal('Good job!','You have created the Estimate!','success');
-                        
+                    let formData=new FormData();
+                    formData.append('_method','POST');
+                    formData.append('title',this.info.title);
+                    formData.append('customer_name',this.info.customer_name);
+                    formData.append('due_date',this.info.due_date);
+                    formData.append('estimate_date',this.info.estimate_date);
 
-                        this.$router.push({ name: 'estimates'});
-                    })
-                    .catch(err=>{
-                            
-                           this.displayToastMessage('Opps!!!','Something Happen');
+                 let currObj=this;
+                        axios.post('/api/estimate',{info:this.info,items:this.items})
+                        .then(function(response){
+                          currObj.output=response.data.msg;
+                          currObj.status=response.data.status;
+                          // currObj.$swal('Info',currObj.output ,currObj.status);
 
+                          currObj.errors = '';//clearing errors
+
+
+                        })
+                        .catch(function(error){
+                          if (error.response.status == 422){
+                             currObj.validationErrors = error.response.data.errors;    
+                             currObj.errors = currObj.validationErrors;
+                             // console.log(currObj.errors);
+                              currObj.$toast.error({
+                                    title:'Opps!!',
+                                    message:'Something Happened.'
+                                });
+                            }
                         });
-                }
-                else{
-
-                    if(this.info.customer_name==""){ 
-                        this.displayToastMessage('Error!!!','Customer Name can\'t be Empty');
-                        // this.error.customer_name=true;
-                    }
-                    if(this.info.title==""){ 
-                        this.displayToastMessage('Error!!!','Estimate Title can\'t be Empty');
-                        // this.error.title=true;
-                    }
-                    if(this.info.estimate_date==""){
-                        this.displayToastMessage('Error!!!','Estimate Date can\'t be Empty');
-                        // this.error.estimate=true;
-                    }
-                    if(this.info.due_date==""){ 
-                        this.displayToastMessage('Error!!!','Estimate Due Date can\'t be Empty');
-                        // this.error.estimate=true;
-                    }
-
-                   
-                }
-                    
-                    console.log();
+                
+               
             },
             addCustomer(){
                          let currObj=this;
@@ -353,6 +342,8 @@
                      currObj.validationErrors = error.response.data.errors;    
                      currObj.errors = currObj.validationErrors;
                      // console.log(currObj.errors);
+                     
+
                     }
                 });
 
@@ -430,6 +421,52 @@
           
 
     },//end of computed
+
+    watch: {
+
+       
+
+        'info.title': function(val, oldVal){
+
+            // console.log(this.errors['info.title'][0]);
+            if(this.errors!=""){
+              this.errors['info.title'][0]='';
+            }
+           
+
+        },
+
+        'info.due_date': function(val, oldVal){
+
+            // console.log('due_date changes');
+             if(this.errors!=""){
+            this.errors['info.due_date'][0]='';
+             }
+
+        },
+
+        'info.estimate_date': function(val, oldVal){
+
+            // console.log('estimate_date changes');
+             if(this.errors!=""){
+            this.errors['info.estimate_date'][0]='';
+            }
+
+        },
+
+        'info.customer_name': function(val, oldVal){
+
+            // console.log('customer_name changes');
+             if(this.errors!=""){
+             this.errors['info.customer_name'][0]='';
+            }
+
+        },
+
+
+    },//end of watch
+
+
 
 };//end of export default
 
