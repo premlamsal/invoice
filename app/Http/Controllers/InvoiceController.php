@@ -30,50 +30,43 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {   
         // //validation
-        $this->validate($request,[
-        'info.customer_name' => 'required|string|max:50',
-        'info.title' => 'required|string|max:255',
-        'info.invoice_date' => 'required|date',
-        'info.due_date' => 'required|date',
-        'info.status' => 'required|string|max:10',
-        'info.discount'=> 'required|numeric|min:0',
+         $this->validate($request,[
 
-        'items.*.product_name'=> 'required|max:255',
-        'items.*.price'=> 'required|numeric|min:1',
-        'items.*.quantity'=> 'required|integer|min:1',
+            'info.title' => 'required | string |max:200',
+            'info.customer_name' => 'required | string| max:200',
+            'info.due_date' => 'required | date',
+            'info.invoice_date' => 'required | date',
+
+            'items.*.product_name' => 'required | string |max:200',
+            'items.*.price' => 'required | numeric',
+            'items.*.quantity' => 'required | numeric',
+
         ]);
 
+        //collecting data
+        $items = collect($request->items)->transform(function($item) {
+        $item['line_total'] = $item['quantity'] *$item['price'];
+            return new InvoiceDetail($item);
+        });
 
+        if($items->isEmpty()) {
+            return response()
+            ->json([
+                'items_empty' => 'One or more Item is required.'
+            ], 422);
+        }
 
-
-
-
-        // //collecting data
-        // $items = collect($request->items)->transform(function($item) {
-        // $item['line_total'] = $item['quantity'] *$item['price'];
-        //     return new InvoiceDetail($item);
-        // });
-
-        // if($items->isEmpty()) {
-        //     return response()
-        //     ->json([
-        //         'items_empty' => 'One or more Item is required.'
-        //     ], 422);
-        // }
-
-        // $data = $request->info;
-        // $data['sub_total'] = $items->sum('line_total');
-        // $data['tax_amount'] = $data['sub_total'] * 0.13;
-        // $data['grand_total'] = $data['sub_total'] + $data['tax_amount'] - $data['discount'];
+        $data = $request->info;
+        $data['sub_total'] = $items->sum('line_total');
+        $data['tax_amount'] = $data['sub_total'] * 0.13;
+        $data['grand_total'] = $data['sub_total'] + $data['tax_amount'] - $data['discount'];
        
 
-        // $invoice = Invoice::create($data);
+        $invoice = Invoice::create($data);
 
-        // $invoice->invoiceDetail()->saveMany($items);
+        $invoice->invoiceDetail()->saveMany($items);
 
-         
-       
-
+        return response()->json(['msg'=>'You have successfully created the Invoice.','status'=>'success']);
         
     }
     public function update(Request $request){

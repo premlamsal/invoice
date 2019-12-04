@@ -16,6 +16,8 @@
             <label>Customer</label>
 
             <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" class="form-control">
+               <span v-if="errors['info.customer_name']" :class="['errorText']">{{errors['info.customer_name'][0]}} <br></span>
+          
 
             <!-- Search suggestion block -->
            <div class="customer-search-suggestion">
@@ -73,15 +75,18 @@
         <div class="form-group">
             <label>Title</label>
             <input type="text" v-model="info.title" class="form-control">
+           <span v-if="errors['info.title']" :class="['errorText']">{{errors['info.title'][0]}}</span>
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <label>Invoice Date</label>
                 <input type="date" v-model="info.invoice_date" class="form-control">
+                <span v-if="errors['info.invoice_date']" :class="['errorText']">{{errors['info.invoice_date'][0]}}</span>
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
                 <input type="date" v-model="info.due_date" class="form-control">   
+                <span v-if="errors['info.due_date']" :class="['errorText']">{{errors['info.due_date'][0]}}</span>
             </div>
         </div>
     </div>
@@ -100,13 +105,13 @@
     </thead>
     <tbody>
         <tr v-for="(item,index) in items">
-            <td class="table-name">
+            <td class="table-name" :class="{'table-error':errors['items.' + index + '.product_name']}">
                 <input type="text" name="" class="form-control" placeholder="Product Name" v-model="item.product_name">
             </td>
-            <td class="table-price">
+            <td class="table-price" :class="{'table-error':errors['items.' + index + '.price']}">
                 <input type="text" class="form-control" placeholder="Enter the price" v-model="item.price">
             </td>
-            <td class="table-qty">
+            <td class="table-qty" :class="{'table-error':errors['items.' + index + '.quantity']}">
                 <input type="text" class="form-control" placeholder="Quantity" v-model="item.quantity">
             </td>
             <td class="table-total">
@@ -248,7 +253,7 @@
                 customer:{},
                 showModal: false,
                 queryResults:[],
-                 errors:[],
+                errors:[],
               
 
             };
@@ -257,12 +262,7 @@
         created(){
             //methods to be executed while this page is created
             //for validation initializing the varibles
-            this.info.customer_name="";
-            this.info.title="";
-            this.info.due_date= "";
-            this.info.invoice_date= "";
-            this.info.status="Not Paid";
-            this.info.discount=0;
+
         },
 
         methods :{
@@ -302,18 +302,32 @@
             },
             createInvoice(){
                 //Add
-                axios.post('api/invoice',{
-                    info:this.info,
-                    items:this.items
-
-                }).then(response=>{
-                   this.$router.push({ name: 'invoices'});
-                }).catch(error=>{
-                    if(error.response.status==422){
-                        this.errors=error.response.data.errors;
-                        console.log(this.errors);
+                 this.info.status="Not Paid";
+                    if(this.info.discount==null || this.info.discount==""){
+                        this.info.discount=0;
                     }
-                });
+
+                     let currObj=this;
+                        axios.post('/api/invoice',{info:this.info,items:this.items})
+                        .then(function(response){
+                          currObj.output=response.data.msg;
+                          currObj.status=response.data.status;
+                          currObj.$swal('Info',currObj.output ,currObj.status);
+                          currObj.$router.push({ name: 'invoices'});
+                          // currObj.errors = '';//clearing errors
+                          
+                        })
+                        .catch(function(error){
+                          if (error.response.status == 422){
+                             currObj.validationErrors = error.response.data.errors;    
+                             currObj.errors = currObj.validationErrors;
+                             // console.log(currObj.errors);
+                              currObj.$toast.error({
+                                    title:'Opps!!',
+                                    message:'Something Happened.'
+                                });
+                            }
+                        });
 
             },
             addCustomer(){
@@ -418,6 +432,53 @@
           
 
     },//end of computed
+
+     watch: {
+
+       
+
+        'info.title': function(val, oldVal){
+
+            // console.log(this.errors['info.title'][0]);
+            if(this.errors!=""){
+              this.errors['info.title'][0]='';
+            }
+           
+
+        },
+
+        'info.due_date': function(val, oldVal){
+
+            // console.log('due_date changes');
+             if(this.errors!=""){
+            this.errors['info.due_date'][0]='';
+             }
+
+        },
+
+        'info.invoice_date': function(val, oldVal){
+
+            // console.log('estimate_date changes');
+             if(this.errors!=""){
+            this.errors['info.invoice_date'][0]='';
+            }
+
+        },
+
+        'info.customer_name': function(val, oldVal){
+
+            // console.log('customer_name changes');
+             if(this.errors!=""){
+             this.errors['info.customer_name'][0]='';
+            }
+
+        },
+
+
+    },//end of watch
+
+
+
 
 };//end of export default
 

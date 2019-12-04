@@ -289,14 +289,6 @@
                     if(this.info.discount==null || this.info.discount==""){
                         this.info.discount=0;
                     }
-                  
-
-                    let formData=new FormData();
-                    formData.append('_method','POST');
-                    formData.append('title',this.info.title);
-                    formData.append('customer_name',this.info.customer_name);
-                    formData.append('due_date',this.info.due_date);
-                    formData.append('estimate_date',this.info.estimate_date);
 
                  let currObj=this;
                         axios.post('/api/estimate',{info:this.info,items:this.items})
@@ -304,9 +296,9 @@
                           currObj.output=response.data.msg;
                           currObj.status=response.data.status;
                           currObj.$swal('Info',currObj.output ,currObj.status);
-
+                          currObj.$router.push({ name: 'estimates'});
                           currObj.errors = '';//clearing errors
-                          this.$router.push({ name: 'estimates'});
+                          
 
 
                         })

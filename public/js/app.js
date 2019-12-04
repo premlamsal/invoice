@@ -2784,12 +2784,6 @@ __webpack_require__.r(__webpack_exports__);
         this.info.discount = 0;
       }
 
-      var formData = new FormData();
-      formData.append('_method', 'POST');
-      formData.append('title', this.info.title);
-      formData.append('customer_name', this.info.customer_name);
-      formData.append('due_date', this.info.due_date);
-      formData.append('estimate_date', this.info.estimate_date);
       var currObj = this;
       axios.post('/api/estimate', {
         info: this.info,
@@ -2798,11 +2792,10 @@ __webpack_require__.r(__webpack_exports__);
         currObj.output = response.data.msg;
         currObj.status = response.data.status;
         currObj.$swal('Info', currObj.output, currObj.status);
-        currObj.errors = ''; //clearing errors
-
-        this.$router.push({
+        currObj.$router.push({
           name: 'estimates'
         });
+        currObj.errors = ''; //clearing errors
       })["catch"](function (error) {
         if (error.response.status == 422) {
           currObj.validationErrors = error.response.data.errors;
@@ -3822,6 +3815,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3838,15 +3836,8 @@ __webpack_require__.r(__webpack_exports__);
       errors: []
     };
   },
-  created: function created() {
-    //methods to be executed while this page is created
+  created: function created() {//methods to be executed while this page is created
     //for validation initializing the varibles
-    this.info.customer_name = "";
-    this.info.title = "";
-    this.info.due_date = "";
-    this.info.invoice_date = "";
-    this.info.status = "Not Paid";
-    this.info.discount = 0;
   },
   methods: {
     //fetch(){} //all memeber functions will be created here
@@ -3877,20 +3868,33 @@ __webpack_require__.r(__webpack_exports__);
       this.items[index].line_total = this.items[index].price * this.items[index].quantity;
     },
     createInvoice: function createInvoice() {
-      var _this = this;
-
       //Add
-      axios.post('api/invoice', {
+      this.info.status = "Not Paid";
+
+      if (this.info.discount == null || this.info.discount == "") {
+        this.info.discount = 0;
+      }
+
+      var currObj = this;
+      axios.post('/api/invoice', {
         info: this.info,
         items: this.items
       }).then(function (response) {
-        _this.$router.push({
+        currObj.output = response.data.msg;
+        currObj.status = response.data.status;
+        currObj.$swal('Info', currObj.output, currObj.status);
+        currObj.$router.push({
           name: 'invoices'
-        });
+        }); // currObj.errors = '';//clearing errors
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this.errors = error.response.data.errors;
-          console.log(_this.errors);
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
+
+          currObj.$toast.error({
+            title: 'Opps!!',
+            message: 'Something Happened.'
+          });
         }
       });
     },
@@ -3915,7 +3919,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     autoComplete: function autoComplete() {
-      var _this2 = this;
+      var _this = this;
 
       if (this.info.customer_name === "") {
         this.queryResults = null;
@@ -3923,11 +3927,11 @@ __webpack_require__.r(__webpack_exports__);
         axios.post('api/customer_search/', {
           searchQuery: this.info.customer_name
         }).then(function (response) {
-          _this2.queryResults = response.data.queryResults;
+          _this.queryResults = response.data.queryResults;
         })["catch"](function (error) {
           if (error.response.status == 422) {
-            _this2.errors = error.response.data.errors;
-            console.log(_this2.errors);
+            _this.errors = error.response.data.errors;
+            console.log(_this.errors);
           }
         });
       }
@@ -3964,7 +3968,34 @@ __webpack_require__.r(__webpack_exports__);
         return this.subTotal + this.taxAmount;
       }
     }
-  } //end of computed
+  },
+  //end of computed
+  watch: {
+    'info.title': function infoTitle(val, oldVal) {
+      // console.log(this.errors['info.title'][0]);
+      if (this.errors != "") {
+        this.errors['info.title'][0] = '';
+      }
+    },
+    'info.due_date': function infoDue_date(val, oldVal) {
+      // console.log('due_date changes');
+      if (this.errors != "") {
+        this.errors['info.due_date'][0] = '';
+      }
+    },
+    'info.invoice_date': function infoInvoice_date(val, oldVal) {
+      // console.log('estimate_date changes');
+      if (this.errors != "") {
+        this.errors['info.invoice_date'][0] = '';
+      }
+    },
+    'info.customer_name': function infoCustomer_name(val, oldVal) {
+      // console.log('customer_name changes');
+      if (this.errors != "") {
+        this.errors['info.customer_name'][0] = '';
+      }
+    }
+  } //end of watch
 
 }); //end of export default
 
@@ -76297,6 +76328,15 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
+                  _vm.errors["info.customer_name"]
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(
+                          _vm._s(_vm.errors["info.customer_name"][0]) + " "
+                        ),
+                        _c("br")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "customer-search-suggestion" },
@@ -76554,7 +76594,13 @@ var render = function() {
                       _vm.$set(_vm.info, "title", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors["info.title"]
+                  ? _c("span", { class: ["errorText"] }, [
+                      _vm._v(_vm._s(_vm.errors["info.title"][0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -76581,7 +76627,13 @@ var render = function() {
                         _vm.$set(_vm.info, "invoice_date", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["info.invoice_date"]
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors["info.invoice_date"][0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-6" }, [
@@ -76607,7 +76659,13 @@ var render = function() {
                         _vm.$set(_vm.info, "due_date", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["info.due_date"]
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors["info.due_date"][0]))
+                      ])
+                    : _vm._e()
                 ])
               ])
             ])
@@ -76622,81 +76680,110 @@ var render = function() {
               "tbody",
               _vm._l(_vm.items, function(item, index) {
                 return _c("tr", [
-                  _c("td", { staticClass: "table-name" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.product_name,
-                          expression: "item.product_name"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        name: "",
-                        placeholder: "Product Name"
-                      },
-                      domProps: { value: item.product_name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(item, "product_name", $event.target.value)
-                        }
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-name",
+                      class: {
+                        "table-error":
+                          _vm.errors["items." + index + ".product_name"]
                       }
-                    })
-                  ]),
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: item.product_name,
+                            expression: "item.product_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "",
+                          placeholder: "Product Name"
+                        },
+                        domProps: { value: item.product_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "product_name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("td", { staticClass: "table-price" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.price,
-                          expression: "item.price"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Enter the price" },
-                      domProps: { value: item.price },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(item, "price", $event.target.value)
-                        }
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-price",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".price"]
                       }
-                    })
-                  ]),
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: item.price,
+                            expression: "item.price"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Enter the price" },
+                        domProps: { value: item.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "price", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("td", { staticClass: "table-qty" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.quantity,
-                          expression: "item.quantity"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Quantity" },
-                      domProps: { value: item.quantity },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(item, "quantity", $event.target.value)
-                        }
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-qty",
+                      class: {
+                        "table-error":
+                          _vm.errors["items." + index + ".quantity"]
                       }
-                    })
-                  ]),
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: item.quantity,
+                            expression: "item.quantity"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Quantity" },
+                        domProps: { value: item.quantity },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "quantity", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("td", { staticClass: "table-total" }, [
                     _c(
