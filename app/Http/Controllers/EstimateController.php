@@ -15,7 +15,7 @@ class EstimateController extends Controller
 
     public function index()
     {
-    return EstimateResource::collection(Estimate::with('estimateDetail')->orderBy('updated_at','desc')->paginate(8));
+     return EstimateResource::collection(Estimate::with('estimateDetail')->orderBy('updated_at','desc')->paginate(8));
     }
 
     public function store(Request $request)
@@ -32,6 +32,11 @@ class EstimateController extends Controller
             'items.*.product_name' => 'required | string |max:200',
             'items.*.price' => 'required | numeric',
             'items.*.quantity' => 'required | numeric',
+
+        ],[
+
+            'info.title.required'=> 'This field is required'
+
 
         ]);
 
@@ -122,5 +127,21 @@ class EstimateController extends Controller
           return new EstimateResource($Estimate);
         }
         
+    }
+    public function searchEstimates(Request $request){
+
+        $searchKey=$request->input('searchTableKey');
+        if($searchKey!=''){
+            
+            // $queryResults=Estimate::where('customer_name','like','%'.$searchQuery.'%')->get();
+            return EstimateResource::collection(Estimate::where('customer_name','like','%'.$searchKey.'%')->get());    
+
+        }
+
+
+       // return EstimateResource::collection(Estimate::where('customer_name','like','%'.$searchQuery.'%')->orderBy('updated_at','desc')->paginate(8));    
+
+
+  
     }
 }
