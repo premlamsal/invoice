@@ -10,7 +10,7 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">Invoices</h6>
-              
+                      {{isLoading}}
               <div class="searchTable">
                        <!-- Topbar Search -->
                    <div class="input-group">
@@ -50,7 +50,6 @@
                   </tfoot> -->
                   <tbody>
 
-                   <div class="isLoading">{{isLoading}}</div>
 
                     <tr v-for="invoice in invoices" v-bind:key="invoice.id">
                       <td>{{invoice.id}}</td>
@@ -128,6 +127,8 @@
       methods:{
 
         fetchInvoices(page_url){
+
+          this.isLoading="Loading all Data";
           page_url=page_url || '/api/invoices'
           let vm=this;
           fetch(page_url)
@@ -135,6 +136,7 @@
               .then(res=>{
                 // console.log(res);
                 this.invoices=res.data;
+                this.isLoading="";
                 if((this.invoices.length)!=null){
                    vm.makePagination(res.meta,res.links);
                 }
@@ -223,6 +225,11 @@
                   currObj.isLoading='';
 
                   currObj.invoices=response.data.data;
+                   if(response.data.data==""){
+
+                      currObj.isLoading="No Data Found";
+
+                    }
                    // if((this.estimates.length)!=null){
                    // // currObj.makePagination(res.meta,res.links);
                    // }
@@ -241,6 +248,7 @@
                 });
           }  
           else{
+            this.isLoading="Loading all Data";
             this.fetchInvoices();
           }  
 

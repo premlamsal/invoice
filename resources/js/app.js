@@ -82,31 +82,93 @@ Vue.use(VueSweetalert2);
 
 let routes = [
   
-  { path: '/', component: require('./components/dashboard.vue').default},
-  { path: '/dashboard', component: require('./components/dashboard.vue').default},
+  { 
+    path: '/',
+    component: require('./components/dashboard.vue').default
+  },
+
+  { 
+    path: '/dashboard', 
+    component: require('./components/dashboard.vue').default
+  },
 
   //invoice routes
-  { path: '/invoices', name:'invoices',component: require('./components/invoice/invoices.vue').default },
-  { path: '/newInvoice', component: require('./components/invoice/newInvoice.vue').default},
-  { path: '/:id/editInvoice',name:'editInvoice' ,component: require('./components/invoice/editInvoice.vue').default},
-  { path: '/:id/showInvoice/',name:'showInvoice' ,component: require('./components/invoice/showInvoice.vue').default},
-  { path: '/:id/printInvoice/',name:'printInvoice' ,component: require('./components/invoice/printInvoice.vue').default},
+  { 
+    path: '/invoices', 
+    name:'invoices',
+    component: require('./components/invoice/invoices.vue').default 
+  },
+
+  { 
+    path: '/newInvoice', 
+    component: require('./components/invoice/newInvoice.vue').default
+  },
+
+  {
+   path: '/:id/editInvoice',
+   name:'editInvoice' ,
+   component: require('./components/invoice/editInvoice.vue').default
+  },
+
+  { 
+    path: '/:id/showInvoice/',
+    name:'showInvoice' ,
+    component: require('./components/invoice/showInvoice.vue').default
+  },
+
+  { 
+    path: '/:id/printInvoice/',
+    name:'printInvoice' ,
+    component: require('./components/invoice/printInvoice.vue').default
+  },
 
   //estimate routes
-  { path: '/estimates', name:'estimates',component: require('./components/estimate/estimates.vue').default },
-  { path: '/newEstimate', component: require('./components/estimate/newEstimate.vue').default},
-  { path: '/:id/editEstimate',name:'editEstimate' ,component: require('./components/estimate/editEstimate.vue').default},
-  { path: '/:id/showEstimate/',name:'showEstimate' ,component: require('./components/estimate/showEstimate.vue').default},
-  { path: '/:id/printEstimate/',name:'printEstimate' ,component: require('./components/estimate/printEstimate.vue').default},
+  { 
+    path: '/estimates', 
+    name:'estimates',
+    component: require('./components/estimate/estimates.vue').default 
+  },
+
+  { 
+    path: '/newEstimate', 
+    component: require('./components/estimate/newEstimate.vue').default
+  },
+
+  { 
+    path: '/:id/editEstimate',
+    name:'editEstimate' ,
+    component: require('./components/estimate/editEstimate.vue').default
+  },
+  { 
+    path: '/:id/showEstimate/',
+    name:'showEstimate' ,
+    component: require('./components/estimate/showEstimate.vue').default
+  },
+  { 
+    path: '/:id/printEstimate/',
+    name:'printEstimate' ,
+    component: require('./components/estimate/printEstimate.vue').default
+  },
 
   //customer routes
-  { path: '/customers', name:'customers',component: require('./components/customer/customers.vue').default },
+  { 
+    path: '/customers', 
+    name:'customers',
+    component: require('./components/customer/customers.vue').default 
+  },
 
   //units route
-  { path: '/units/',name:'units' ,component: require('./components/units/units.vue').default},
+  { 
+    path: '/units/',
+    name:'units' ,component: require('./components/units/units.vue').default
+  },
 
   //settings route
-  { path: '/settings/',name:'settings' ,component: require('./components/settings.vue').default},
+  { 
+    path: '/settings/',
+    name:'settings' ,
+    component: require('./components/settings.vue').default
+  },
 
 ];
 

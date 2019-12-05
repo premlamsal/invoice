@@ -126,3 +126,6 @@
 
 
 </template>
+<script>
+  window.document.title="Dashboard";
+</script>
