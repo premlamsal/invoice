@@ -33,6 +33,10 @@ Route::put('invoice','InvoiceController@update');
 Route::delete('invoice/{id}','InvoiceController@destroy');
 
 
+//search estimates
+Route::post('invoices/search','InvoiceController@searchInvoices');
+
+
 //List Customers
 Route::get('customers','CustomerController@index');
 
@@ -77,6 +81,11 @@ Route::put('estimate','EstimateController@update');
 
 //Delete estimate
 Route::delete('estimate/{id}','EstimateController@destroy');
+
+
+//search estimates
+Route::post('estimates/search','EstimateController@searchEstimates');
+
 
 
 //List Units

@@ -134,4 +134,14 @@ class InvoiceController extends Controller
         }
         
     }
+     public function searchInvoices(Request $request){
+
+        $searchKey=$request->input('searchTableKey');
+        if($searchKey!=''){
+            
+            // $queryResults=Estimate::where('customer_name','like','%'.$searchQuery.'%')->get();
+            return InvoiceResource::collection(Invoice::where('customer_name','like','%'.$searchKey.'%')->get());    
+        }
+    }
+
 }

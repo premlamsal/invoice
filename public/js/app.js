@@ -2412,13 +2412,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       estimates: [],
       estimate_id: '',
       pagination: {},
-      edit: false
+      edit: false,
+      searchTableKey: '',
+      isLoading: ''
     };
   },
   created: function created() {
@@ -2499,7 +2515,35 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         path: "".concat(id, "/showEstimate/")
       });
-    }
+    },
+    autoCompleteTable: function autoCompleteTable() {
+      this.searchTableKey = this.searchTableKey.toLowerCase();
+
+      if (this.searchTableKey != '') {
+        this.isLoading = 'Loading Data...';
+        var currObj = this;
+        axios.post('/api/estimates/search', {
+          searchTableKey: this.searchTableKey
+        }).then(function (response) {
+          currObj.isLoading = '';
+          currObj.estimates = response.data.data; // if((this.estimates.length)!=null){
+          // // currObj.makePagination(res.meta,res.links);
+          // }
+          // currObj.status=response.data.status;
+
+          currObj.errors = ''; //clearing errors
+        })["catch"](function (error) {
+          if (error.response.status == '422') {
+            currObj.validationErrors = error.response.data.errors;
+            currObj.errors = currObj.validationErrors;
+            currObj.isLoading = 'Load Failed...'; // console.log(currObj.errors);
+          }
+        });
+      } else {
+        this.fetchEstimates();
+      }
+    } //end of autoCOmpleteTable
+
   } //end of methods
 
 }); //end of default
@@ -3479,13 +3523,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       invoices: [],
       invoice_id: '',
       pagination: {},
-      edit: false
+      edit: false,
+      searchTableKey: '',
+      isLoading: ''
     };
   },
   created: function created() {
@@ -3569,7 +3630,35 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         path: "".concat(id, "/showInvoice/")
       });
-    }
+    },
+    autoCompleteTable: function autoCompleteTable() {
+      this.searchTableKey = this.searchTableKey.toLowerCase();
+
+      if (this.searchTableKey != '') {
+        this.isLoading = 'Loading Data...';
+        var currObj = this;
+        axios.post('/api/invoices/search', {
+          searchTableKey: this.searchTableKey
+        }).then(function (response) {
+          currObj.isLoading = '';
+          currObj.invoices = response.data.data; // if((this.estimates.length)!=null){
+          // // currObj.makePagination(res.meta,res.links);
+          // }
+          // currObj.status=response.data.status;
+
+          currObj.errors = ''; //clearing errors
+        })["catch"](function (error) {
+          if (error.response.status == '422') {
+            currObj.validationErrors = error.response.data.errors;
+            currObj.errors = currObj.validationErrors;
+            currObj.isLoading = 'Load Failed...'; // console.log(currObj.errors);
+          }
+        });
+      } else {
+        this.fetchInvoices();
+      }
+    } //end of autoCOmpleteTable
+
   } //end of methods
 
 }); //end of default
@@ -74018,7 +74107,50 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "card shadow mb-4" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header py-3" }, [
+        _c(
+          "h6",
+          {
+            staticClass: "m-0 font-weight-bold text-primary",
+            staticStyle: { display: "inline-block" }
+          },
+          [_vm._v("Estimates")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "searchTable" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchTableKey,
+                  expression: "searchTableKey"
+                }
+              ],
+              staticClass: "form-control border-primary small",
+              attrs: {
+                type: "text",
+                placeholder: "Search for Customer",
+                "aria-label": "Search",
+                "aria-describedby": "basic-addon2"
+              },
+              domProps: { value: _vm.searchTableKey },
+              on: {
+                keyup: _vm.autoCompleteTable,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchTableKey = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "table-responsive" }, [
@@ -74033,113 +74165,119 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.estimates, function(estimate) {
-                  return _c("tr", { key: estimate.id }, [
-                    _c("td", [_vm._v(_vm._s(estimate.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Rs. " + _vm._s(estimate.grand_total))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(estimate.customer_name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(estimate.estimate_date))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(estimate.due_date))]),
-                    _vm._v(" "),
-                    estimate.status === "Paid"
-                      ? _c(
-                          "td",
+                [
+                  _c("div", { staticClass: "isLoading" }, [
+                    _vm._v(_vm._s(_vm.isLoading))
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.estimates, function(estimate) {
+                    return _c("tr", { key: estimate.id }, [
+                      _c("td", [_vm._v(_vm._s(estimate.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("Rs. " + _vm._s(estimate.grand_total))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(estimate.customer_name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(estimate.estimate_date))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(estimate.due_date))]),
+                      _vm._v(" "),
+                      estimate.status === "Paid"
+                        ? _c(
+                            "td",
+                            {
+                              staticStyle: {
+                                color: "#fff",
+                                "text-align": "center"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                { staticClass: "btn btn-outline-success" },
+                                [
+                                  _vm._v(
+                                    "\n                       " +
+                                      _vm._s(estimate.status) +
+                                      "\n                        "
+                                  ),
+                                  _c("span", { staticClass: "fa fa-check" })
+                                ]
+                              )
+                            ]
+                          )
+                        : estimate.status === "Not Paid"
+                        ? _c(
+                            "td",
+                            {
+                              staticStyle: {
+                                color: "#fff",
+                                "text-align": "center"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                { staticClass: "btn btn-outline-danger" },
+                                [
+                                  _vm._v(
+                                    "\n                       " +
+                                      _vm._s(estimate.status) +
+                                      "\n                       "
+                                  ),
+                                  _c("span", { staticClass: "fa fa-times" })
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(estimate.updated_at))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
                           {
-                            staticStyle: {
-                              color: "#fff",
-                              "text-align": "center"
+                            staticClass: "btn btn-outline-primary",
+                            staticStyle: { "margin-right": "5px" },
+                            on: {
+                              click: function($event) {
+                                return _vm.showEstimate(estimate.id)
+                              }
                             }
                           },
-                          [
-                            _c(
-                              "button",
-                              { staticClass: "btn btn-outline-success" },
-                              [
-                                _vm._v(
-                                  "\n                       " +
-                                    _vm._s(estimate.status) +
-                                    "\n                        "
-                                ),
-                                _c("span", { staticClass: "fa fa-check" })
-                              ]
-                            )
-                          ]
-                        )
-                      : estimate.status === "Not Paid"
-                      ? _c(
-                          "td",
+                          [_c("span", { staticClass: "fa fa-align-justify" })]
+                        ),
+                        _c(
+                          "button",
                           {
-                            staticStyle: {
-                              color: "#fff",
-                              "text-align": "center"
+                            staticClass: "btn btn-outline-success",
+                            staticStyle: { "margin-right": "5px" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editEstimate(estimate.id)
+                              }
                             }
                           },
-                          [
-                            _c(
-                              "button",
-                              { staticClass: "btn btn-outline-danger" },
-                              [
-                                _vm._v(
-                                  "\n                       " +
-                                    _vm._s(estimate.status) +
-                                    "\n                       "
-                                ),
-                                _c("span", { staticClass: "fa fa-times" })
-                              ]
-                            )
-                          ]
+                          [_c("span", { staticClass: "fa fa-edit" })]
+                        ),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-outline-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteEstimate(estimate.id)
+                              }
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-trash" })]
                         )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(estimate.updated_at))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-primary",
-                          staticStyle: { "margin-right": "5px" },
-                          on: {
-                            click: function($event) {
-                              return _vm.showEstimate(estimate.id)
-                            }
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-align-justify" })]
-                      ),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-success",
-                          staticStyle: { "margin-right": "5px" },
-                          on: {
-                            click: function($event) {
-                              return _vm.editEstimate(estimate.id)
-                            }
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-edit" })]
-                      ),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-danger",
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteEstimate(estimate.id)
-                            }
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-trash" })]
-                      )
+                      ])
                     ])
-                  ])
-                }),
-                0
+                  })
+                ],
+                2
               )
             ]
           )
@@ -74291,10 +74429,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header py-3" }, [
-      _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-        _vm._v("Estimates")
-      ])
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_c("i", { staticClass: "fas fa-search fa-sm" })]
+      )
     ])
   },
   function() {
@@ -75959,7 +76099,50 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "card shadow mb-4" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header py-3" }, [
+        _c(
+          "h6",
+          {
+            staticClass: "m-0 font-weight-bold text-primary",
+            staticStyle: { display: "inline-block" }
+          },
+          [_vm._v("Invoices")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "searchTable" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchTableKey,
+                  expression: "searchTableKey"
+                }
+              ],
+              staticClass: "form-control border-primary small",
+              attrs: {
+                type: "text",
+                placeholder: "Search for Customer",
+                "aria-label": "Search",
+                "aria-describedby": "basic-addon2"
+              },
+              domProps: { value: _vm.searchTableKey },
+              on: {
+                keyup: _vm.autoCompleteTable,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchTableKey = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "table-responsive" }, [
@@ -75974,113 +76157,119 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.invoices, function(invoice) {
-                  return _c("tr", { key: invoice.id }, [
-                    _c("td", [_vm._v(_vm._s(invoice.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Rs. " + _vm._s(invoice.grand_total))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(invoice.customer_name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(invoice.invoice_date))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(invoice.due_date))]),
-                    _vm._v(" "),
-                    invoice.status === "Paid"
-                      ? _c(
-                          "td",
+                [
+                  _c("div", { staticClass: "isLoading" }, [
+                    _vm._v(_vm._s(_vm.isLoading))
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.invoices, function(invoice) {
+                    return _c("tr", { key: invoice.id }, [
+                      _c("td", [_vm._v(_vm._s(invoice.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("Rs. " + _vm._s(invoice.grand_total))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(invoice.customer_name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(invoice.invoice_date))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(invoice.due_date))]),
+                      _vm._v(" "),
+                      invoice.status === "Paid"
+                        ? _c(
+                            "td",
+                            {
+                              staticStyle: {
+                                color: "#fff",
+                                "text-align": "center"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                { staticClass: "btn btn-outline-success" },
+                                [
+                                  _vm._v(
+                                    "\n                       " +
+                                      _vm._s(invoice.status) +
+                                      "\n                        "
+                                  ),
+                                  _c("span", { staticClass: "fa fa-check" })
+                                ]
+                              )
+                            ]
+                          )
+                        : invoice.status === "Not Paid"
+                        ? _c(
+                            "td",
+                            {
+                              staticStyle: {
+                                color: "#fff",
+                                "text-align": "center"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                { staticClass: "btn btn-outline-danger" },
+                                [
+                                  _vm._v(
+                                    "\n                       " +
+                                      _vm._s(invoice.status) +
+                                      "\n                       "
+                                  ),
+                                  _c("span", { staticClass: "fa fa-times" })
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(invoice.updated_at))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
                           {
-                            staticStyle: {
-                              color: "#fff",
-                              "text-align": "center"
+                            staticClass: "btn btn-outline-primary",
+                            staticStyle: { "margin-right": "5px" },
+                            on: {
+                              click: function($event) {
+                                return _vm.showInvoice(invoice.id)
+                              }
                             }
                           },
-                          [
-                            _c(
-                              "button",
-                              { staticClass: "btn btn-outline-success" },
-                              [
-                                _vm._v(
-                                  "\n                       " +
-                                    _vm._s(invoice.status) +
-                                    "\n                        "
-                                ),
-                                _c("span", { staticClass: "fa fa-check" })
-                              ]
-                            )
-                          ]
-                        )
-                      : invoice.status === "Not Paid"
-                      ? _c(
-                          "td",
+                          [_c("span", { staticClass: "fa fa-align-justify" })]
+                        ),
+                        _c(
+                          "button",
                           {
-                            staticStyle: {
-                              color: "#fff",
-                              "text-align": "center"
+                            staticClass: "btn btn-outline-success",
+                            staticStyle: { "margin-right": "5px" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editInvoice(invoice.id)
+                              }
                             }
                           },
-                          [
-                            _c(
-                              "button",
-                              { staticClass: "btn btn-outline-danger" },
-                              [
-                                _vm._v(
-                                  "\n                       " +
-                                    _vm._s(invoice.status) +
-                                    "\n                       "
-                                ),
-                                _c("span", { staticClass: "fa fa-times" })
-                              ]
-                            )
-                          ]
+                          [_c("span", { staticClass: "fa fa-edit" })]
+                        ),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-outline-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteInvoice(invoice.id)
+                              }
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-trash" })]
                         )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(invoice.updated_at))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-primary",
-                          staticStyle: { "margin-right": "5px" },
-                          on: {
-                            click: function($event) {
-                              return _vm.showInvoice(invoice.id)
-                            }
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-align-justify" })]
-                      ),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-success",
-                          staticStyle: { "margin-right": "5px" },
-                          on: {
-                            click: function($event) {
-                              return _vm.editInvoice(invoice.id)
-                            }
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-edit" })]
-                      ),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-outline-danger",
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteInvoice(invoice.id)
-                            }
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-trash" })]
-                      )
+                      ])
                     ])
-                  ])
-                }),
-                0
+                  })
+                ],
+                2
               )
             ]
           )
@@ -76232,10 +76421,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header py-3" }, [
-      _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-        _vm._v("Invoices")
-      ])
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_c("i", { staticClass: "fas fa-search fa-sm" })]
+      )
     ])
   },
   function() {
