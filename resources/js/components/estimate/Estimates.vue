@@ -9,8 +9,8 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">Estimates </h6>
-              {{isLoading}}
+              <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">Estimates</h6>
+              
               <div class="searchTable">
                        <!-- Topbar Search -->
                    <div class="input-group">
@@ -116,14 +116,12 @@
       methods:{
 
         fetchEstimates(page_url){
-          this.isLoading="Loading all Data";
           page_url=page_url || '/api/estimates'
           let vm=this;
           fetch(page_url)
             .then(res=>res.json())
               .then(res=>{
                 // console.log(res);
-                this.isLoading="";
                 this.estimates=res.data;
                 if((this.estimates.length)!=null){
                    vm.makePagination(res.meta,res.links);
@@ -209,11 +207,6 @@
                   currObj.isLoading='';
 
                   currObj.estimates=response.data.data;
-                    if(response.data.data==""){
-
-                      currObj.isLoading="No Data Found";
-
-                    }
                    // if((this.estimates.length)!=null){
                    // // currObj.makePagination(res.meta,res.links);
                    // }

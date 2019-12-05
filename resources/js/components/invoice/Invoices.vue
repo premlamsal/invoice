@@ -50,6 +50,7 @@
                   </tfoot> -->
                   <tbody>
 
+                   <div class="isLoading">{{isLoading}}</div>
 
                     <tr v-for="invoice in invoices" v-bind:key="invoice.id">
                       <td>{{invoice.id}}</td>
@@ -127,8 +128,7 @@
       methods:{
 
         fetchInvoices(page_url){
-
-          this.isLoading="Loading all Data";
+          this.isLoading="Loading Data";
           page_url=page_url || '/api/invoices'
           let vm=this;
           fetch(page_url)
