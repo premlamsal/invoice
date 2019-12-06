@@ -2582,12 +2582,14 @@ __webpack_require__.r(__webpack_exports__);
     fetchEstimates: function fetchEstimates(page_url) {
       var _this = this;
 
+      this.isLoading = "Loading all Data";
       page_url = page_url || '/api/estimates';
       var vm = this;
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
         // console.log(res);
+        _this.isLoading = "";
         _this.estimates = res.data;
 
         if (_this.estimates.length != null) {
@@ -2664,10 +2666,15 @@ __webpack_require__.r(__webpack_exports__);
           searchTableKey: this.searchTableKey
         }).then(function (response) {
           currObj.isLoading = '';
-          currObj.estimates = response.data.data; // if((this.estimates.length)!=null){
+          currObj.estimates = response.data.data;
+
+          if (response.data.data == "") {
+            currObj.isLoading = "No Data Found";
+          } // if((this.estimates.length)!=null){
           // // currObj.makePagination(res.meta,res.links);
           // }
           // currObj.status=response.data.status;
+
 
           currObj.errors = ''; //clearing errors
         })["catch"](function (error) {
@@ -74261,7 +74268,7 @@ var render = function() {
           },
           [_vm._v("Estimates")]
         ),
-        _vm._v(" "),
+        _vm._v("\n             " + _vm._s(_vm.isLoading) + "\n             "),
         _c("div", { staticClass: "searchTable" }, [
           _c("div", { staticClass: "input-group" }, [
             _c("input", {
@@ -74282,7 +74289,6 @@ var render = function() {
               },
               domProps: { value: _vm.searchTableKey },
               on: {
-                keyup: _vm.autoCompleteTable,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -74292,7 +74298,17 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "input-group-append" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.autoCompleteTable }
+                },
+                [_c("i", { staticClass: "fas fa-search fa-sm" })]
+              )
+            ])
           ])
         ])
       ]),
@@ -74306,7 +74322,7 @@ var render = function() {
               attrs: { width: "100%", cellspacing: "0" }
             },
             [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -74564,18 +74580,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-append" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_c("i", { staticClass: "fas fa-search fa-sm" })]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

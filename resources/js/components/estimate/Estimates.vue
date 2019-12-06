@@ -10,13 +10,13 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">Estimates</h6>
-              
+              {{isLoading}}
               <div class="searchTable">
                        <!-- Topbar Search -->
                    <div class="input-group">
-                      <input type="text" class="form-control border-primary small" placeholder="Search for Customer" aria-label="Search" aria-describedby="basic-addon2" v-model="searchTableKey" v-on:keyup="autoCompleteTable">
+                      <input type="text" class="form-control border-primary small" placeholder="Search for Customer" aria-label="Search" aria-describedby="basic-addon2" v-model="searchTableKey">
                       <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-primary" type="button" @click="autoCompleteTable">
                           <i class="fas fa-search fa-sm"></i>
                         </button>
                       </div>
@@ -116,12 +116,14 @@
       methods:{
 
         fetchEstimates(page_url){
+          this.isLoading="Loading all Data";
           page_url=page_url || '/api/estimates'
           let vm=this;
           fetch(page_url)
             .then(res=>res.json())
               .then(res=>{
                 // console.log(res);
+                this.isLoading="";
                 this.estimates=res.data;
                 if((this.estimates.length)!=null){
                    vm.makePagination(res.meta,res.links);
@@ -207,6 +209,11 @@
                   currObj.isLoading='';
 
                   currObj.estimates=response.data.data;
+                  if(response.data.data==""){
+
+                      currObj.isLoading="No Data Found";
+
+                    }
                    // if((this.estimates.length)!=null){
                    // // currObj.makePagination(res.meta,res.links);
                    // }
