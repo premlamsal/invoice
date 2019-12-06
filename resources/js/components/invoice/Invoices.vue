@@ -14,9 +14,9 @@
               <div class="searchTable">
                        <!-- Topbar Search -->
                    <div class="input-group">
-                      <input type="text" class="form-control border-primary small" placeholder="Search for Customer" aria-label="Search" aria-describedby="basic-addon2" v-model="searchTableKey" v-on:keyup="autoCompleteTable">
+                      <input type="text" class="form-control border-primary small" placeholder="Search for Customer" aria-label="Search" aria-describedby="basic-addon2" v-model="searchTableKey">
                       <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-primary" type="button" @click="searchTableBtn">
                           <i class="fas fa-search fa-sm"></i>
                         </button>
                       </div>
@@ -211,6 +211,9 @@
           this.$router.push({ path: `${id}/showInvoice/` }) 
 
 
+        }, 
+        searchTableBtn(){
+          this.autoCompleteTable();
         },
         autoCompleteTable(){
 

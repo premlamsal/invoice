@@ -2656,6 +2656,9 @@ __webpack_require__.r(__webpack_exports__);
         path: "".concat(id, "/showEstimate/")
       });
     },
+    searchTableBtn: function searchTableBtn() {
+      this.autoCompleteTable();
+    },
     autoCompleteTable: function autoCompleteTable() {
       this.searchTableKey = this.searchTableKey.toLowerCase();
 
@@ -3776,6 +3779,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         path: "".concat(id, "/showInvoice/")
       });
+    },
+    searchTableBtn: function searchTableBtn() {
+      this.autoCompleteTable();
     },
     autoCompleteTable: function autoCompleteTable() {
       this.searchTableKey = this.searchTableKey.toLowerCase();
@@ -74304,7 +74310,7 @@ var render = function() {
                 {
                   staticClass: "btn btn-primary",
                   attrs: { type: "button" },
-                  on: { click: _vm.autoCompleteTable }
+                  on: { click: _vm.searchTableBtn }
                 },
                 [_c("i", { staticClass: "fas fa-search fa-sm" })]
               )
@@ -76274,7 +76280,6 @@ var render = function() {
               },
               domProps: { value: _vm.searchTableKey },
               on: {
-                keyup: _vm.autoCompleteTable,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -76284,7 +76289,17 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "input-group-append" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.searchTableBtn }
+                },
+                [_c("i", { staticClass: "fas fa-search fa-sm" })]
+              )
+            ])
           ])
         ])
       ]),
@@ -76298,7 +76313,7 @@ var render = function() {
               attrs: { width: "100%", cellspacing: "0" }
             },
             [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -76556,18 +76571,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-append" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_c("i", { staticClass: "fas fa-search fa-sm" })]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
