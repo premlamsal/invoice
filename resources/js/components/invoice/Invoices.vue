@@ -50,7 +50,6 @@
                   </tfoot> -->
                   <tbody>
 
-                   <div class="isLoading">{{isLoading}}</div>
 
                     <tr v-for="invoice in invoices" v-bind:key="invoice.id">
                       <td>{{invoice.id}}</td>

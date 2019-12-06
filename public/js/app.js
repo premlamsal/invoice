@@ -2582,14 +2582,12 @@ __webpack_require__.r(__webpack_exports__);
     fetchEstimates: function fetchEstimates(page_url) {
       var _this = this;
 
-      this.isLoading = "Loading all Data";
       page_url = page_url || '/api/estimates';
       var vm = this;
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
         // console.log(res);
-        _this.isLoading = "";
         _this.estimates = res.data;
 
         if (_this.estimates.length != null) {
@@ -2666,15 +2664,10 @@ __webpack_require__.r(__webpack_exports__);
           searchTableKey: this.searchTableKey
         }).then(function (response) {
           currObj.isLoading = '';
-          currObj.estimates = response.data.data;
-
-          if (response.data.data == "") {
-            currObj.isLoading = "No Data Found";
-          } // if((this.estimates.length)!=null){
+          currObj.estimates = response.data.data; // if((this.estimates.length)!=null){
           // // currObj.makePagination(res.meta,res.links);
           // }
           // currObj.status=response.data.status;
-
 
           currObj.errors = ''; //clearing errors
         })["catch"](function (error) {
@@ -3700,7 +3693,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchInvoices: function fetchInvoices(page_url) {
       var _this = this;
 
-      this.isLoading = "Loading all Data";
+      this.isLoading = "Loading Data";
       page_url = page_url || '/api/invoices';
       var vm = this;
       fetch(page_url).then(function (res) {
@@ -74266,9 +74259,9 @@ var render = function() {
             staticClass: "m-0 font-weight-bold text-primary",
             staticStyle: { display: "inline-block" }
           },
-          [_vm._v("Estimates ")]
+          [_vm._v("Estimates")]
         ),
-        _vm._v("\n             " + _vm._s(_vm.isLoading) + "\n             "),
+        _vm._v(" "),
         _c("div", { staticClass: "searchTable" }, [
           _c("div", { staticClass: "input-group" }, [
             _c("input", {
