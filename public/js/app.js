@@ -4165,7 +4165,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    autoComplete: function autoComplete() {
+    autoComplete: _.debounce(function () {
       var _this = this;
 
       if (this.info.customer_name === "") {
@@ -4182,7 +4182,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
-    },
+    }, 500),
     clickSearchSuggestion: function clickSearchSuggestion(customer_id, customer_name) {
       Vue.set(this.info, 'customer_id', customer_id);
       Vue.set(this.info, 'customer_name', customer_name);

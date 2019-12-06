@@ -361,7 +361,7 @@
 
             },
 
-            autoComplete(){
+            autoComplete:_.debounce(function(){
 
                 if(this.info.customer_name===""){
 
@@ -385,7 +385,7 @@
                 }
    
               
-            },
+            },500),
             clickSearchSuggestion(customer_id,customer_name){
 
                     Vue.set(this.info, 'customer_id', customer_id);
