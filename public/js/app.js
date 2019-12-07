@@ -3149,7 +3149,7 @@ __webpack_require__.r(__webpack_exports__);
       this.items[index].line_total = this.items[index].price * this.items[index].quantity;
     },
     createEstimate: function createEstimate() {
-      this.info.status = "Not Paid";
+      this.info.status = "To Pay";
 
       if (this.info.discount == null || this.info.discount == "") {
         this.info.discount = 0;
@@ -4458,7 +4458,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     createInvoice: function createInvoice() {
       //Add
-      this.info.status = "Not Paid";
+      this.info.status = "To Pay";
 
       if (this.info.discount == null || this.info.discount == "") {
         this.info.discount = 0;
@@ -74977,7 +74977,7 @@ var render = function() {
                             )
                           ]
                         )
-                      : estimate.status === "Not Paid"
+                      : estimate.status === "To Pay"
                       ? _c(
                           "td",
                           {
@@ -76339,12 +76339,12 @@ var render = function() {
                                   color: "#fff"
                                 }
                               },
-                              [_vm._v("Not Paid")]
+                              [_vm._v("To Pay")]
                             )
                           ]
                         )
                       ]
-                    : _vm.info.status === "Not Paid"
+                    : _vm.info.status === "To Pay"
                     ? [
                         _c(
                           "select",
@@ -76388,7 +76388,7 @@ var render = function() {
                                 },
                                 attrs: { selected: "" }
                               },
-                              [_vm._v("Not Paid")]
+                              [_vm._v("To Pay")]
                             ),
                             _vm._v(" "),
                             _c(
@@ -77261,7 +77261,7 @@ var render = function() {
                             )
                           ]
                         )
-                      : invoice.status === "Not Paid"
+                      : invoice.status === "To Pay"
                       ? _c(
                           "td",
                           {

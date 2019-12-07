@@ -13,13 +13,13 @@
             <template v-if="(info.status==='Paid')">
                <select class="form-control" v-model="info.status">
                 <option selected="" style="background: green;color: #fff">Paid</option>       
-                <option style="background: red;color: #fff">Not Paid</option>
+                <option style="background: red;color: #fff">To Pay</option>
                </select>
             </template>
            
-              <template v-else-if="(info.status==='Not Paid')">
+              <template v-else-if="(info.status==='To Pay')">
                <select class="form-control" v-model="info.status">
-                <option selected="" style="background: red;color: #fff">Not Paid</option>       
+                <option selected="" style="background: red;color: #fff">To Pay</option>       
                 <option style="background: green;color: #fff">Paid</option>
                </select>
             </template>

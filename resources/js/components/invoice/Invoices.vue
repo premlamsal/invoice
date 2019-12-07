@@ -65,7 +65,7 @@
                         </button>
                       </td>
 
-                      <td style="color: #fff;text-align: center;" v-else-if="(invoice.status==='Not Paid')">
+                      <td style="color: #fff;text-align: center;" v-else-if="(invoice.status==='To Pay')">
                         <button class="btn btn-outline-danger">
                         {{invoice.status}}
                         <span class="fa fa-times"></span>

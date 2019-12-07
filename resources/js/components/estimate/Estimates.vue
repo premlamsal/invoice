@@ -54,7 +54,7 @@
                         </button>
                       </td>
 
-                      <td style="color: #fff;text-align: center;" v-else-if="(estimate.status==='Not Paid')">
+                      <td style="color: #fff;text-align: center;" v-else-if="(estimate.status==='To Pay')">
                         <button class="btn btn-outline-danger">
                         {{estimate.status}}
                         <span class="fa fa-times"></span>

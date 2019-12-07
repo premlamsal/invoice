@@ -303,7 +303,7 @@
             },
             createInvoice(){
                 //Add
-                 this.info.status="Not Paid";
+                 this.info.status="To Pay";
                     if(this.info.discount==null || this.info.discount==""){
                         this.info.discount=0;
                     }
