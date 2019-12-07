@@ -3799,7 +3799,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -77368,7 +77367,7 @@ var render = function() {
               _c("tr", [
                 _c("td", {
                   staticClass: "table-empty",
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c(
@@ -77438,8 +77437,6 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("Item Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
         _vm._v(" "),
