@@ -145,6 +145,7 @@
             <td class="table-label">Discount</td>
             <td class="table-discount">
                 <input type="text" class="table-discount_input form-control" v-model="info.discount">
+                 <span v-if="errors['info.discount']" :class="['errorText']">{{errors['info.discount'][0]}}</span>
             </td>
         </tr>
         <tr>

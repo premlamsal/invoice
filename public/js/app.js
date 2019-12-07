@@ -2444,6 +2444,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2884,6 +2885,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -3718,6 +3720,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4170,6 +4173,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -74759,7 +74763,13 @@ var render = function() {
                         _vm.$set(_vm.info, "discount", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["info.discount"]
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors["info.discount"][0]))
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -75841,7 +75851,13 @@ var render = function() {
                         _vm.$set(_vm.info, "discount", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["info.discount"]
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors["info.discount"][0]))
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -77016,7 +77032,13 @@ var render = function() {
                         _vm.$set(_vm.info, "discount", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["info.discount"]
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors["info.discount"][0]))
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -78122,7 +78144,13 @@ var render = function() {
                         _vm.$set(_vm.info, "discount", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["info.discount"]
+                    ? _c("span", { class: ["errorText"] }, [
+                        _vm._v(_vm._s(_vm.errors["info.discount"][0]))
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),

@@ -29,6 +29,9 @@ class EstimateController extends Controller
             'info.due_date' => 'required | date',
             'info.estimate_date' => 'required | date',
 
+            'info.discount' => 'required | numeric| max:200',
+
+
             'items.*.product_name' => 'required | string |max:200',
             'items.*.price' => 'required | numeric',
             'items.*.quantity' => 'required | numeric',
@@ -90,6 +93,7 @@ class EstimateController extends Controller
             'info.customer_name' => 'required | string| max:200',
             'info.due_date' => 'required | date',
             'info.estimate_date' => 'required | date',
+            'info.discount' => 'required | numeric| max:200',
 
             'items.*.product_name' => 'required | string |max:200',
             'items.*.price' => 'required | numeric',
