@@ -70,6 +70,11 @@
       </div>
  -->
        <!-- Nav Item - Charts -->
+         <!-- Heading -->
+      <div class="sidebar-heading mb-2">
+        Billing
+      </div>
+      
       <li class="nav-item">
         <router-link class="nav-link" to="/invoices">
           <i class="fas fa-fw fa-file-invoice"></i>
@@ -79,8 +84,9 @@
       <li class="nav-item">
         <router-link class="nav-link" to="/estimates">
           <i class="fas fa-fw fa-file-invoice-dollar"></i>
-          <span>Estimate</span></router-link>
+          <span>Estimates</span></router-link>
       </li>
+     
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -88,24 +94,31 @@
       <div class="sidebar-heading mb-2">
         Tuner
       </div>
-
-    
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <router-link class="nav-link" to="/settings">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Settings</span></router-link>
-      </li>
        <li class="nav-item">
         <router-link class="nav-link" to="/units">
           <i class="fas fa-fw fa-balance-scale"></i>
           <span>Units</span></router-link>
       </li>
-      <li class="nav-item">
+       <li class="nav-item">
         <router-link class="nav-link" to="/customers">
-          <i class="fas fa-fw fa-balance-scale"></i>
+          <i class="fas fa-fw fa-users"></i>
           <span>Customers</span></router-link>
+      </li>
+   <!-- Divider -->
+      <hr class="sidebar-divider">
+
+     <!-- Heading -->
+      <div class="sidebar-heading mb-2">
+        Setting
+      </div>
+
+      <!-- Nav Item - Tables -->
+     
+      
+       <li class="nav-item">
+        <router-link class="nav-link" to="/settings">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Settings</span></router-link>
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
