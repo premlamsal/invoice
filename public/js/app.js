@@ -3918,9 +3918,249 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/invoice/invoices.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\xampp\\htdocs\\laravel\\git\\billchito\\resources\\js\\components\\invoice\\invoices.vue: Unexpected token, expected \",\" (107:6)\n\n\u001b[0m \u001b[90m 105 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 106 | \u001b[39m  \u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m{\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 107 | \u001b[39mwindow\u001b[33m.\u001b[39mdocument\u001b[33m.\u001b[39mtitle\u001b[33m=\u001b[39m\u001b[32m\"New Invoice\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 108 | \u001b[39m   data(){\u001b[0m\n\u001b[0m \u001b[90m 109 | \u001b[39m        \u001b[36mreturn\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 110 | \u001b[39m          invoices \u001b[33m:\u001b[39m []\u001b[33m,\u001b[39m\u001b[0m\n    at Parser.raise (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:6387:17)\n    at Parser.unexpected (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:7704:16)\n    at Parser.expect (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:7690:28)\n    at Parser.parseObj (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:9221:14)\n    at Parser.parseExprAtom (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:8855:28)\n    at Parser.parseExprSubscripts (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:8483:23)\n    at Parser.parseMaybeUnary (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:8463:21)\n    at Parser.parseExprOps (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:8329:23)\n    at Parser.parseMaybeConditional (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:8302:23)\n    at Parser.parseMaybeAssign (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:8249:21)\n    at Parser.parseExportDefaultExpression (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:11081:24)\n    at Parser.parseExport (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:10976:31)\n    at Parser.parseStatementContent (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:10004:27)\n    at Parser.parseStatement (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:9900:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:10476:25)\n    at Parser.parseBlockBody (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:10463:10)\n    at Parser.parseTopLevel (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:9829:10)\n    at Parser.parse (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:11341:17)\n    at parse (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\parser\\lib\\index.js:11377:38)\n    at parser (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:166:34)\n    at normalizeFile (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:100:11)\n    at runSync (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\core\\lib\\transformation\\index.js:44:43)\n    at runAsync (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\core\\lib\\transformation\\index.js:35:14)\n    at process.nextTick (C:\\xampp\\htdocs\\laravel\\git\\billchito\\node_modules\\@babel\\core\\lib\\transform.js:34:34)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      invoices: [],
+      invoice_id: '',
+      pagination: {},
+      edit: false,
+      searchTableKey: '',
+      isLoading: ''
+    };
+  },
+  created: function created() {
+    this.fetchInvoices();
+  },
+  methods: {
+    fetchInvoices: function fetchInvoices(page_url) {
+      var _this = this;
+
+      this.isLoading = "Loading all Data";
+      page_url = page_url || '/api/invoices';
+      var vm = this;
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        // console.log(res);
+        _this.invoices = res.data;
+        _this.isLoading = "";
+
+        if (_this.invoices.length != null) {
+          vm.makePagination(res.meta, res.links);
+        } else {}
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        from_page: meta.from,
+        to_page: meta.to,
+        total_pages: meta.total,
+        path_page: meta.path + "?page=",
+        first_link: links.first,
+        last_link: links.last,
+        prev_link: links.prev,
+        next_link: links.next
+      };
+      this.pagination = pagination;
+    },
+    deleteInvoice: function deleteInvoice(id) {
+      var _this2 = this;
+
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          //delete code here
+          fetch('api/invoice/' + id, {
+            method: 'delete'
+          }).then(function (res) {
+            return res.json();
+          }).then(function (data) {
+            // alert('Invoice Removed');
+            _this2.$swal('Deleted!', 'Invoice has been deleted.', 'success');
+
+            _this2.message = "Invoice Removed";
+
+            _this2.fetchInvoices();
+          })["catch"](function (err) {
+            return console.log(err);
+          });
+        }
+      });
+    },
+    editInvoice: function editInvoice(id) {
+      // named route
+      // this.$router.push({ name: 'editInvoice', params: { id } });
+      this.$router.push({
+        path: "".concat(id, "/editInvoice/")
+      });
+    },
+    showInvoice: function showInvoice(id) {
+      // named route
+      // this.$router.push({ name: 'showInvoice', params: { id } }); //will hide parameter in url
+      this.$router.push({
+        path: "".concat(id, "/showInvoice/")
+      });
+    },
+    searchTableBtn: function searchTableBtn() {
+      this.autoCompleteTable();
+    },
+    autoCompleteTable: function autoCompleteTable() {
+      this.searchTableKey = this.searchTableKey.toLowerCase();
+
+      if (this.searchTableKey != '') {
+        this.isLoading = 'Loading Data...';
+        var currObj = this;
+        axios.post('/api/invoices/search', {
+          searchTableKey: this.searchTableKey
+        }).then(function (response) {
+          currObj.isLoading = '';
+          currObj.invoices = response.data.data;
+
+          if (response.data.data == "") {
+            currObj.isLoading = "No Data Found";
+          } // if((this.estimates.length)!=null){
+          // // currObj.makePagination(res.meta,res.links);
+          // }
+          // currObj.status=response.data.status;
+
+
+          currObj.errors = ''; //clearing errors
+        })["catch"](function (error) {
+          if (error.response.status == '422') {
+            currObj.validationErrors = error.response.data.errors;
+            currObj.errors = currObj.validationErrors;
+            currObj.isLoading = 'Load Failed...'; // console.log(currObj.errors);
+          }
+        });
+      } else {
+        this.isLoading = "Loading all Data";
+        this.fetchInvoices();
+      }
+    } //end of autoCOmpleteTable
+
+  } //end of methods
+
+}); //end of default
 
 /***/ }),
 

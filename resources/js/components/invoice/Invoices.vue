@@ -104,7 +104,7 @@
 </template>
 <script>
   export default{
-window.document.title="New Invoice";
+
    data(){
         return {
           invoices : [],
