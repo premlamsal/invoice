@@ -113,8 +113,8 @@
 
             </td>
           
-            <td class="table-qty" :class="{'table-error':errors['items.' + index + '.quantity']}">
-                <input type="text" :class="['form-control']" placeholder="Quantity" v-model="item.quantity">
+            <td class="table-quantity" :class="{'table-error':errors['items.' + index + '.quantity']}">
+                <input type="number" :class="['form-control']" placeholder="Quantity" v-model="item.quantity">
             </td>
 
              <td class="table-unit" :class="{'table-error':errors['items.' + index + '.unit']}">
@@ -145,7 +145,6 @@
             <td class="table-empty" colspan="3">
                 <button class="table-add_line btn btn-primary" @click="addNewLine"><span class="fa fa-plus-circle"></span></button>
             </td>
-           
             <td class="table-label">Sub Total</td>
             <td class="table-amount">{{subTotal}}</td>
         </tr>

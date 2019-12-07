@@ -26,3 +26,10 @@ td.table-error {
 .isLoading {
     margin: 0 auto;
 }
+
+td.table-name{
+	width: 34em;
+}
+td.table-quantity{
+	width: 12em;
+}
