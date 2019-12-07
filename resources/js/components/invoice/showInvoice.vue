@@ -138,7 +138,7 @@ img.comapny_logo_invoice{
 
 <script>
 
-    var converter = require('number-to-words');
+    
    export default{
 
         data(){
