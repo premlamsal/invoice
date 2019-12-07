@@ -127,7 +127,7 @@
       methods:{
 
         fetchInvoices(page_url){
-          this.isLoading="Loading Data";
+          this.isLoading="Loading all Data";
           page_url=page_url || '/api/invoices'
           let vm=this;
           fetch(page_url)

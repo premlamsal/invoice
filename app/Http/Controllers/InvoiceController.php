@@ -70,7 +70,19 @@ class InvoiceController extends Controller
         
     }
     public function update(Request $request){
+       // //validation
+         $this->validate($request,[
 
+            'info.title' => 'required | string |max:200',
+            'info.customer_name' => 'required | string| max:200',
+            'info.due_date' => 'required | date',
+            'info.invoice_date' => 'required | date',
+
+            'items.*.product_name' => 'required | string |max:200',
+            'items.*.price' => 'required | numeric',
+            'items.*.quantity' => 'required | numeric',
+
+        ]);  
         $id=$request->id;
 
         $invoice = Invoice::findOrFail($id);
@@ -99,11 +111,8 @@ class InvoiceController extends Controller
 
         $invoice->invoiceDetail()->saveMany($items);
 
-        return response()
-            ->json([
-                'updated' => true,
-                'id' => $invoice->id
-            ]);
+        return response()->json(['msg'=>'You have successfully updated the Invoice.','status'=>'success']);
+        
 
     }
 
