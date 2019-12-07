@@ -82,6 +82,26 @@ class EstimateController extends Controller
 
     public function update(Request $request)
     {
+
+        // $request=json_decode($request->items, true);
+        $this->validate($request,[
+
+            'info.title' => 'required | string |max:200',
+            'info.customer_name' => 'required | string| max:200',
+            'info.due_date' => 'required | date',
+            'info.estimate_date' => 'required | date',
+
+            'items.*.product_name' => 'required | string |max:200',
+            'items.*.price' => 'required | numeric',
+            'items.*.quantity' => 'required | numeric',
+
+        ],[
+
+            'info.title.required'=> 'This field is required'
+
+
+        ]);
+
          $id=$request->id;
 
         $estimate = Estimate::findOrFail($id);
@@ -109,11 +129,9 @@ class EstimateController extends Controller
 
         $estimate->estimateDetail()->saveMany($items);
 
-        return response()
-            ->json([
-                'updated' => true,
-                'id' => $estimate->id
-            ]);
+        
+
+         return response()->json(['msg'=>'You have successfully updated the Estimate.','status'=>'success']);
 
     }
 
