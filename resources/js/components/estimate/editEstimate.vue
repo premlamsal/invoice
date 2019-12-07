@@ -9,6 +9,9 @@
  <div class="row">
     <div class="col-sm-4">
         <div class="form-group">
+          <label>Estimate No.</label>
+           {{info.estimate_no}}
+           <br/>
             <label>Status</label>
             <template v-if="(info.status==='Paid')">
                <select class="form-control" v-model="info.status">
@@ -23,12 +26,9 @@
                 <option style="background: green;color: #fff">Paid</option>
                </select>
             </template>
-            <br>
-            <label>Estimate No.</label>
-            <input type="text" class="form-control" disabled="" v-model="info.estimate_no">
-            
+         
         </div>
-        <div class="form-group">
+        <div class="form-group" style="position: relative;">
             <label>Customer</label>   
             <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" class="form-control">
 
@@ -41,6 +41,7 @@
                        <li  @click="clickSearchSuggestion(queryResult.id,queryResult.name)">{{queryResult.name}}</li>
                    </ul>
                </div>
+
            </div>
                 <b-button id="show-btn" @click="$bvModal.show('bv-modal-add-customer')" class="btn btn-warning" style="margin-top: 8px;">
                        <span class="fa fa-plus-circle"></span>

@@ -9,6 +9,11 @@
  <div class="row">
     <div class="col-sm-4">
         <div class="form-group">
+
+           <label>Invoice No.</label>
+           {{info.invoice_no}}
+           <br/>
+            
             <label>Status</label>
             <template v-if="(info.status==='Paid')">
                <select class="form-control" v-model="info.status">
@@ -23,12 +28,8 @@
                 <option style="background: green;color: #fff">Paid</option>
                </select>
             </template>
-            <br>
-            <label>Invoice No.</label>
-            <input type="text" class="form-control" disabled="" v-model="info.invoice_no">
-            
         </div>
-        <div class="form-group">
+        <div class="form-group" style="position: relative;">
             <label>Customer</label>
             <input type="text" v-model="info.customer_name" v-on:keyup="autoComplete" class="form-control">
                <span v-if="errors['info.customer_name']" :class="['errorText']">{{errors['info.customer_name'][0]}} <br></span>

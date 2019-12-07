@@ -2467,6 +2467,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3549,6 +3550,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -74172,6 +74174,14 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
+                  _c("label", [_vm._v("Estimate No.")]),
+                  _vm._v(
+                    "\n           " +
+                      _vm._s(_vm.info.estimate_no) +
+                      "\n           "
+                  ),
+                  _c("br"),
+                  _vm._v(" "),
                   _c("label", [_vm._v("Status")]),
                   _vm._v(" "),
                   _vm.info.status === "Paid"
@@ -74294,40 +74304,17 @@ var render = function() {
                           ]
                         )
                       ]
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("label", [_vm._v("Estimate No.")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.info.estimate_no,
-                        expression: "info.estimate_no"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", disabled: "" },
-                    domProps: { value: _vm.info.estimate_no },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.info, "estimate_no", $event.target.value)
-                      }
-                    }
-                  })
+                    : _vm._e()
                 ],
                 2
               ),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "form-group" },
+                {
+                  staticClass: "form-group",
+                  staticStyle: { position: "relative" }
+                },
                 [
                   _c("label", [_vm._v("Customer")]),
                   _vm._v(" "),
@@ -76559,6 +76546,14 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
+                  _c("label", [_vm._v("Invoice No.")]),
+                  _vm._v(
+                    "\n           " +
+                      _vm._s(_vm.info.invoice_no) +
+                      "\n           "
+                  ),
+                  _c("br"),
+                  _vm._v(" "),
                   _c("label", [_vm._v("Status")]),
                   _vm._v(" "),
                   _vm.info.status === "Paid"
@@ -76681,40 +76676,17 @@ var render = function() {
                           ]
                         )
                       ]
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("label", [_vm._v("Invoice No.")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.info.invoice_no,
-                        expression: "info.invoice_no"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", disabled: "" },
-                    domProps: { value: _vm.info.invoice_no },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.info, "invoice_no", $event.target.value)
-                      }
-                    }
-                  })
+                    : _vm._e()
                 ],
                 2
               ),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "form-group" },
+                {
+                  staticClass: "form-group",
+                  staticStyle: { position: "relative" }
+                },
                 [
                   _c("label", [_vm._v("Customer")]),
                   _vm._v(" "),
