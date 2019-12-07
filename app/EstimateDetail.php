@@ -9,5 +9,5 @@ class EstimateDetail extends Model
 	public function estimateDetail() {
 	    return $this->belongsTo('\App\Estimate','estimate_id','id');
 	}
-	 protected $fillable = ['estimate_id', 'product_name', 'quantity','price','line_total'];
+	 protected $fillable = ['estimate_id', 'product_name', 'quantity','price','unit','line_total'];
 }

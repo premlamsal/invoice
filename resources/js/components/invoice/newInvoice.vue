@@ -97,8 +97,9 @@
     <thead>
         <tr>
             <th>Item Name</th>
-            <th>Price</th>
             <th>Qty</th>
+            <th>Unit</th>
+            <th>Price</th>
             <th>Total</th>
             <th></th>
         </tr>
@@ -108,11 +109,22 @@
             <td class="table-name" :class="{'table-error':errors['items.' + index + '.product_name']}">
                 <input type="text" name="" class="form-control" placeholder="Product Name" v-model="item.product_name">
             </td>
-            <td class="table-price" :class="{'table-error':errors['items.' + index + '.price']}">
-                <input type="text" class="form-control" placeholder="Enter the price" v-model="item.price">
-            </td>
+          
             <td class="table-qty" :class="{'table-error':errors['items.' + index + '.quantity']}">
                 <input type="text" class="form-control" placeholder="Quantity" v-model="item.quantity">
+            </td>
+
+            <td class="table-unit" :class="{'table-error':errors['items.' + index + '.unit']}">
+
+              <template>
+                 <select class="form-control" v-model="item.unit">
+                  <option selected="" v-for="unit in units">{{unit.short_name}}</option> 
+                 </select>
+              </template>
+
+            </td>
+              <td class="table-price" :class="{'table-error':errors['items.' + index + '.price']}">
+                <input type="text" class="form-control" placeholder="Enter the price" v-model="item.price">
             </td>
             <td class="table-total">
                 <span class="table-text" v-model="item.line_total">{{item.quantity * item.price}}</span>
@@ -124,14 +136,14 @@
     </tbody>
     <tfoot>
         <tr>
-            <td class="table-empty" colspan="2" style="border: none;">
+            <td class="table-empty" colspan="3" style="border: none;">
                 <button class="table-add_line btn btn-primary" @click="addNewLine"><span class="fa fa-plus-circle"></span></button>
             </td>
             <td class="table-label">Sub Total</td>
             <td class="table-amount">{{subTotal}}</td>
         </tr>
         <tr>
-            <td class="table-empty" colspan="2" style="border: none;"></td>
+            <td class="table-empty" colspan="3" style="border: none;"></td>
             <td class="table-label">Discount</td>
             <td class="table-discount">
                 <input type="text" class="table-discount_input form-control" v-model="info.discount">
@@ -139,7 +151,7 @@
             </td>
         </tr>
         <tr>
-             <td class="table-empty" colspan="2" style="border: none;"></td>
+             <td class="table-empty" colspan="3" style="border: none;"></td>
              <td class="table-label">13% Tax</td>
             <td class="table-amount">{{taxAmount}}</td>
             
@@ -244,8 +256,8 @@
                 items:[{
 
                     product_name:'',
-                    price:'',
-                    quantity:'',
+                    price:'0',
+                    quantity:'1',
                     line_total:''
 
                 }],
@@ -255,6 +267,7 @@
                 showModal: false,
                 queryResults:[],
                 errors:[],
+                units:[],
               
 
             };
@@ -263,7 +276,7 @@
         created(){
             //methods to be executed while this page is created
             //for validation initializing the varibles
-
+            this.fetchUnits();
         },
 
         methods :{
@@ -399,6 +412,19 @@
                             title: title,
                             message: message
                             });
+            },
+
+            fetchUnits(){
+
+             let vm=this;// current pointer instance while going inside the another functional instance
+                    axios.get('/api/units')
+                    .then(function(response){
+                      vm.units=response.data.data;
+                    })
+                    .catch(function(error){
+                      console.log();
+                    });
+
             },
 
     },// end of methods

@@ -2198,6 +2198,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 window.document.title = "Dashboard";
 
 /***/ }),
@@ -2211,6 +2222,17 @@ window.document.title = "Dashboard";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2460,6 +2482,7 @@ __webpack_require__.r(__webpack_exports__);
       showModal: false,
       queryResults: [],
       errors: [],
+      units: [],
       raw: []
     };
   },
@@ -2467,6 +2490,7 @@ __webpack_require__.r(__webpack_exports__);
     //methods to be executed while this page is created
     this.getIdFromUrl();
     this.fetchEstimate();
+    this.fetchUnits();
   },
   mounted: function mounted() {},
   methods: {
@@ -2587,8 +2611,17 @@ __webpack_require__.r(__webpack_exports__);
         return Vue.set(_this2.info, 'estimate_no', data.estimate.id), Vue.set(_this2.info, 'title', data.estimate.title), Vue.set(_this2.info, 'customer_id', data.estimate.customer_id), Vue.set(_this2.info, 'customer_name', data.estimate.customer_name), Vue.set(_this2.info, 'estimate_date', data.estimate.estimate_date), Vue.set(_this2.info, 'due_date', data.estimate.due_date), Vue.set(_this2.info, 'discount', data.estimate.discount), Vue.set(_this2.info, 'status', data.estimate.status), //veu.set will make data reactive and updated
         _this2.items = data.estimate.estimate_detail;
       });
-    } //enf od fetchEstimate
+    },
+    //enf od fetchEstimate
+    fetchUnits: function fetchUnits() {
+      var vm = this; // current pointer instance while going inside the another functional instance
 
+      axios.get('/api/units').then(function (response) {
+        vm.units = response.data.data;
+      })["catch"](function (error) {
+        console.log();
+      });
+    }
   },
   // end of methods
   computed: {
@@ -3099,6 +3132,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3113,14 +3163,17 @@ __webpack_require__.r(__webpack_exports__);
       showModal: false,
       queryResults: [],
       errors: [],
+      units: [],
       raw: []
     };
   },
-  created: function created() {//methods to be executed while this page is created
+  created: function created() {
+    //methods to be executed while this page is created
     // this.info.customer_name="";
     // this.info.title="";
     // this.info.due_date="";
     // this.info.estimate_date="";
+    this.fetchUnits();
   },
   methods: {
     //fetch(){} //all memeber functions will be created here
@@ -3233,6 +3286,15 @@ __webpack_require__.r(__webpack_exports__);
         title: title,
         message: message
       });
+    },
+    fetchUnits: function fetchUnits() {
+      var vm = this; // current pointer instance while going inside the another functional instance
+
+      axios.get('/api/units').then(function (response) {
+        vm.units = response.data.data;
+      })["catch"](function (error) {
+        console.log();
+      });
     }
   },
   // end of methods
@@ -3294,6 +3356,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -3721,13 +3787,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       items: [{
         product_name: '',
-        price: '',
-        quantity: '',
+        price: '0',
+        quantity: '1',
         line_total: ''
       }],
       info: {},
@@ -3735,13 +3814,15 @@ __webpack_require__.r(__webpack_exports__);
       customer: {},
       showModal: false,
       queryResults: [],
-      errors: []
+      errors: [],
+      units: []
     };
   },
   created: function created() {
     //methods to be executed while this page is created
     this.getIdFromUrl();
     this.fetchInvoice();
+    this.fetchUnits();
   },
   mounted: function mounted() {},
   methods: {
@@ -3857,8 +3938,17 @@ __webpack_require__.r(__webpack_exports__);
         return Vue.set(_this2.info, 'invoice_no', data.invoice.id), Vue.set(_this2.info, 'title', data.invoice.title), Vue.set(_this2.info, 'customer_id', data.invoice.customer_id), Vue.set(_this2.info, 'customer_name', data.invoice.customer_name), Vue.set(_this2.info, 'invoice_date', data.invoice.invoice_date), Vue.set(_this2.info, 'due_date', data.invoice.due_date), Vue.set(_this2.info, 'discount', data.invoice.discount), Vue.set(_this2.info, 'status', data.invoice.status), //veu.set will make data reactive and updated
         _this2.items = data.invoice.invoice_detail;
       });
-    } //enf od fetchInvoice
+    },
+    //end of fetchInvoice
+    fetchUnits: function fetchUnits() {
+      var vm = this; // current pointer instance while going inside the another functional instance
 
+      axios.get('/api/units').then(function (response) {
+        vm.units = response.data.data;
+      })["catch"](function (error) {
+        console.log();
+      });
+    }
   },
   // end of methods
   computed: {
@@ -4409,24 +4499,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       items: [{
         product_name: '',
-        price: '',
-        quantity: '',
+        price: '0',
+        quantity: '1',
         line_total: ''
       }],
       info: {},
       customer: {},
       showModal: false,
       queryResults: [],
-      errors: []
+      errors: [],
+      units: []
     };
   },
-  created: function created() {//methods to be executed while this page is created
+  created: function created() {
+    //methods to be executed while this page is created
     //for validation initializing the varibles
+    this.fetchUnits();
   },
   methods: {
     //fetch(){} //all memeber functions will be created here
@@ -4535,6 +4640,15 @@ __webpack_require__.r(__webpack_exports__);
         title: title,
         message: message
       });
+    },
+    fetchUnits: function fetchUnits() {
+      var vm = this; // current pointer instance while going inside the another functional instance
+
+      axios.get('/api/units').then(function (response) {
+        vm.units = response.data.data;
+      })["catch"](function (error) {
+        console.log();
+      });
     }
   },
   // end of methods
@@ -4599,6 +4713,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -73954,7 +74071,46 @@ var staticRenderFns = [
               ]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" })
+            _c("div", { staticClass: "card-body" }, [
+              _c("ul", [
+                _c("li", [
+                  _vm._v("Invoice created for "),
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
+                  _vm._v(" on 2019-12-07 "),
+                  _c("a", { attrs: { href: "" } }, [_vm._v("View this")])
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Invoice created for "),
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
+                  _vm._v(" on 2019-12-07")
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Invoice created for "),
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
+                  _vm._v(" on 2019-12-07")
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Invoice created for "),
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
+                  _vm._v(" on 2019-12-07")
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Invoice created for "),
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
+                  _vm._v(" on 2019-12-07")
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v("Invoice created for "),
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
+                  _vm._v(" on 2019-12-07")
+                ])
+              ])
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -74586,39 +74742,6 @@ var render = function() {
                   _c(
                     "td",
                     {
-                      staticClass: "table-price",
-                      class: {
-                        "table-error": _vm.errors["items." + index + ".price"]
-                      }
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.price,
-                            expression: "item.price"
-                          }
-                        ],
-                        class: ["form-control"],
-                        attrs: { type: "text", placeholder: "Enter the price" },
-                        domProps: { value: item.price },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "price", $event.target.value)
-                          }
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
                       staticClass: "table-qty",
                       class: {
                         "table-error":
@@ -74644,6 +74767,93 @@ var render = function() {
                               return
                             }
                             _vm.$set(item, "quantity", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-unit",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".unit"]
+                      }
+                    },
+                    [
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: item.unit,
+                                expression: "item.unit"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  item,
+                                  "unit",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.units, function(unit) {
+                            return _c("option", { attrs: { selected: "" } }, [
+                              _vm._v(_vm._s(unit.short_name))
+                            ])
+                          }),
+                          0
+                        )
+                      ]
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-price",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".price"]
+                      }
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: item.price,
+                            expression: "item.price"
+                          }
+                        ],
+                        class: ["form-control"],
+                        attrs: { type: "text", placeholder: "Enter the price" },
+                        domProps: { value: item.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "price", $event.target.value)
                           }
                         }
                       })
@@ -74692,7 +74902,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  { staticClass: "table-empty", attrs: { colspan: "2" } },
+                  { staticClass: "table-empty", attrs: { colspan: "3" } },
                   [
                     _c(
                       "button",
@@ -74715,7 +74925,7 @@ var render = function() {
               _c("tr", [
                 _c("td", {
                   staticClass: "table-empty",
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c("td", { staticClass: "table-label" }, [_vm._v("Discount")]),
@@ -74754,7 +74964,7 @@ var render = function() {
               _c("tr", [
                 _c("td", {
                   staticClass: "table-empty",
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c(
@@ -74825,9 +75035,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Item Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Price")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Unit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")]),
         _vm._v(" "),
@@ -75674,39 +75886,6 @@ var render = function() {
                   _c(
                     "td",
                     {
-                      staticClass: "table-price",
-                      class: {
-                        "table-error": _vm.errors["items." + index + ".price"]
-                      }
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.price,
-                            expression: "item.price"
-                          }
-                        ],
-                        class: ["form-control"],
-                        attrs: { type: "text", placeholder: "Enter the price" },
-                        domProps: { value: item.price },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "price", $event.target.value)
-                          }
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
                       staticClass: "table-qty",
                       class: {
                         "table-error":
@@ -75732,6 +75911,93 @@ var render = function() {
                               return
                             }
                             _vm.$set(item, "quantity", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-unit",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".unit"]
+                      }
+                    },
+                    [
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: item.unit,
+                                expression: "item.unit"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  item,
+                                  "unit",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.units, function(unit) {
+                            return _c("option", { attrs: { selected: "" } }, [
+                              _vm._v(_vm._s(unit.short_name))
+                            ])
+                          }),
+                          0
+                        )
+                      ]
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-price",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".price"]
+                      }
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: item.price,
+                            expression: "item.price"
+                          }
+                        ],
+                        class: ["form-control"],
+                        attrs: { type: "text", placeholder: "Enter the price" },
+                        domProps: { value: item.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "price", $event.target.value)
                           }
                         }
                       })
@@ -75780,7 +76046,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  { staticClass: "table-empty", attrs: { colspan: "2" } },
+                  { staticClass: "table-empty", attrs: { colspan: "3" } },
                   [
                     _c(
                       "button",
@@ -75803,7 +76069,7 @@ var render = function() {
               _c("tr", [
                 _c("td", {
                   staticClass: "table-empty",
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c("td", { staticClass: "table-label" }, [_vm._v("Discount")]),
@@ -75842,7 +76108,7 @@ var render = function() {
               _c("tr", [
                 _c("td", {
                   staticClass: "table-empty",
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c(
@@ -75924,9 +76190,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Item Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Price")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Unit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")]),
         _vm._v(" "),
@@ -76097,10 +76365,10 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "table-price" }, [
+                    _c("td", { staticClass: "table-qty" }, [
                       _vm._v(
                         "\n                " +
-                          _vm._s(item.price) +
+                          _vm._s(item.quantity) +
                           "\n            "
                       )
                     ]),
@@ -76108,7 +76376,15 @@ var render = function() {
                     _c("td", { staticClass: "table-qty" }, [
                       _vm._v(
                         "\n                " +
-                          _vm._s(item.quantity) +
+                          _vm._s(item.unit) +
+                          "\n            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-price" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.price) +
                           "\n            "
                       )
                     ]),
@@ -76138,7 +76414,7 @@ var render = function() {
                 _c("tr", [
                   _c("td", {
                     staticClass: "table-empty",
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   }),
                   _vm._v(" "),
                   _c("td", { staticClass: "table-label" }, [
@@ -76153,7 +76429,7 @@ var render = function() {
                 _c("tr", [
                   _c("td", {
                     staticClass: "table-empty",
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   }),
                   _vm._v(" "),
                   _c("td", { staticClass: "table-label" }, [
@@ -76172,7 +76448,7 @@ var render = function() {
                 _c("tr", [
                   _c("td", {
                     staticClass: "table-empty",
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   }),
                   _vm._v(" "),
                   _c(
@@ -76241,6 +76517,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Unit")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")])
       ])
@@ -76855,39 +77133,6 @@ var render = function() {
                   _c(
                     "td",
                     {
-                      staticClass: "table-price",
-                      class: {
-                        "table-error": _vm.errors["items." + index + ".price"]
-                      }
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.price,
-                            expression: "item.price"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Enter the price" },
-                        domProps: { value: item.price },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "price", $event.target.value)
-                          }
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
                       staticClass: "table-qty",
                       class: {
                         "table-error":
@@ -76913,6 +77158,93 @@ var render = function() {
                               return
                             }
                             _vm.$set(item, "quantity", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-unit",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".unit"]
+                      }
+                    },
+                    [
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: item.unit,
+                                expression: "item.unit"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  item,
+                                  "unit",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.units, function(unit) {
+                            return _c("option", { attrs: { selected: "" } }, [
+                              _vm._v(_vm._s(unit.short_name))
+                            ])
+                          }),
+                          0
+                        )
+                      ]
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-price",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".price"]
+                      }
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: item.price,
+                            expression: "item.price"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Enter the price" },
+                        domProps: { value: item.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "price", $event.target.value)
                           }
                         }
                       })
@@ -76961,7 +77293,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  { staticClass: "table-empty", attrs: { colspan: "2" } },
+                  { staticClass: "table-empty", attrs: { colspan: "3" } },
                   [
                     _c(
                       "button",
@@ -76984,7 +77316,7 @@ var render = function() {
               _c("tr", [
                 _c("td", {
                   staticClass: "table-empty",
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c("td", { staticClass: "table-label" }, [_vm._v("Discount")]),
@@ -77023,7 +77355,7 @@ var render = function() {
               _c("tr", [
                 _c("td", {
                   staticClass: "table-empty",
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c("td", { staticClass: "table-label" }, [_vm._v("13% Tax")]),
@@ -77110,6 +77442,10 @@ var staticRenderFns = [
         _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Unit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")]),
         _vm._v(" "),
@@ -77962,39 +78298,6 @@ var render = function() {
                   _c(
                     "td",
                     {
-                      staticClass: "table-price",
-                      class: {
-                        "table-error": _vm.errors["items." + index + ".price"]
-                      }
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: item.price,
-                            expression: "item.price"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Enter the price" },
-                        domProps: { value: item.price },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "price", $event.target.value)
-                          }
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
                       staticClass: "table-qty",
                       class: {
                         "table-error":
@@ -78020,6 +78323,93 @@ var render = function() {
                               return
                             }
                             _vm.$set(item, "quantity", $event.target.value)
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-unit",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".unit"]
+                      }
+                    },
+                    [
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: item.unit,
+                                expression: "item.unit"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  item,
+                                  "unit",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.units, function(unit) {
+                            return _c("option", { attrs: { selected: "" } }, [
+                              _vm._v(_vm._s(unit.short_name))
+                            ])
+                          }),
+                          0
+                        )
+                      ]
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-price",
+                      class: {
+                        "table-error": _vm.errors["items." + index + ".price"]
+                      }
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: item.price,
+                            expression: "item.price"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Enter the price" },
+                        domProps: { value: item.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "price", $event.target.value)
                           }
                         }
                       })
@@ -78071,7 +78461,7 @@ var render = function() {
                   {
                     staticClass: "table-empty",
                     staticStyle: { border: "none" },
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   },
                   [
                     _c(
@@ -78096,7 +78486,7 @@ var render = function() {
                 _c("td", {
                   staticClass: "table-empty",
                   staticStyle: { border: "none" },
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c("td", { staticClass: "table-label" }, [_vm._v("Discount")]),
@@ -78136,7 +78526,7 @@ var render = function() {
                 _c("td", {
                   staticClass: "table-empty",
                   staticStyle: { border: "none" },
-                  attrs: { colspan: "2" }
+                  attrs: { colspan: "3" }
                 }),
                 _vm._v(" "),
                 _c("td", { staticClass: "table-label" }, [_vm._v("13% Tax")]),
@@ -78232,9 +78622,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Item Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Price")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Unit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")]),
         _vm._v(" "),
@@ -78428,18 +78820,26 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "table-price" }, [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.price) +
-                          "\n            "
-                      )
-                    ]),
-                    _vm._v(" "),
                     _c("td", { staticClass: "table-qty" }, [
                       _vm._v(
                         "\n                " +
                           _vm._s(item.quantity) +
+                          "\n            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-price" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.unit) +
+                          "\n            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-price" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.price) +
                           "\n            "
                       )
                     ]),
@@ -78469,7 +78869,7 @@ var render = function() {
                 _c("tr", [
                   _c("td", {
                     staticClass: "table-empty",
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   }),
                   _vm._v(" "),
                   _c("td", { staticClass: "table-label" }, [
@@ -78484,7 +78884,7 @@ var render = function() {
                 _c("tr", [
                   _c("td", {
                     staticClass: "table-empty",
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   }),
                   _vm._v(" "),
                   _c("td", { staticClass: "table-label" }, [
@@ -78503,7 +78903,7 @@ var render = function() {
                 _c("tr", [
                   _c("td", {
                     staticClass: "table-empty",
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   }),
                   _vm._v(" "),
                   _c("td", { staticClass: "table-label" }, [_vm._v("13% Tax")]),
@@ -78516,7 +78916,7 @@ var render = function() {
                 _c("tr", [
                   _c("td", {
                     staticClass: "table-empty",
-                    attrs: { colspan: "2" }
+                    attrs: { colspan: "3" }
                   }),
                   _vm._v(" "),
                   _c(
@@ -78579,9 +78979,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Item Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Price")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")])
       ])

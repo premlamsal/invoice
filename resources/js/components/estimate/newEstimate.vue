@@ -99,8 +99,9 @@
     <thead>
         <tr>
             <th>Item Name</th>
-            <th>Price</th>
             <th>Qty</th>
+            <th>Unit</th>
+            <th>Price</th>
             <th>Total</th>
             <th></th>
         </tr>
@@ -111,13 +112,24 @@
                 <input type="text"  :class="['form-control']" placeholder="Product Name" v-model="item.product_name">
 
             </td>
-            <td class="table-price" :class="{'table-error':errors['items.' + index + '.price']}">
+          
+            <td class="table-qty" :class="{'table-error':errors['items.' + index + '.quantity']}">
+                <input type="text" :class="['form-control']" placeholder="Quantity" v-model="item.quantity">
+            </td>
+
+             <td class="table-unit" :class="{'table-error':errors['items.' + index + '.unit']}">
+
+              <template>
+                 <select class="form-control" v-model="item.unit">
+                  <option selected="" v-for="unit in units">{{unit.short_name}}</option> 
+                 </select>
+              </template>
+
+            </td>
+              <td class="table-price" :class="{'table-error':errors['items.' + index + '.price']}">
                 <input type="text" :class="['form-control']" placeholder="Enter the price" v-model="item.price">
                  <!-- <span v-if="errors['items.' + index + '.price']" :class="['errorText']"></span> -->
                   <!-- <span v-if="errors['items.' + index + '.price']" :class="['errorText']">{{errors['items.' + index + '.price']}}</span> -->
-            </td>
-            <td class="table-qty" :class="{'table-error':errors['items.' + index + '.quantity']}">
-                <input type="text" :class="['form-control']" placeholder="Quantity" v-model="item.quantity">
             </td>
             <td class="table-total">
                 <span class="table-text" v-model="item.line_total">{{item.quantity * item.price}}</span>
@@ -128,15 +140,19 @@
         </tr>
     </tbody>
     <tfoot>
+      
         <tr>
-            <td class="table-empty" colspan="2">
+            <td class="table-empty" colspan="3">
                 <button class="table-add_line btn btn-primary" @click="addNewLine"><span class="fa fa-plus-circle"></span></button>
             </td>
+           
             <td class="table-label">Sub Total</td>
             <td class="table-amount">{{subTotal}}</td>
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+          <td class="table-empty" colspan="3"></td>
+           
+            
             <td class="table-label">Discount</td>
             <td class="table-discount">
                 <input type="text" v-model="info.discount" :class="['table-discount_input form-control']">
@@ -144,7 +160,8 @@
             </td>
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="3"></td>
+         
             <td class="table-label text-primary" style="font-weight: bold;">Grand Total</td>
             <td class="table-amount" style="font-weight: bold;">{{grandTotal}}</td>
         </tr>
@@ -233,6 +250,7 @@
                 showModal: false,
                 queryResults:[],
                 errors:[],
+                units:[],
                 
                 raw:[],
 
@@ -245,7 +263,7 @@
             // this.info.title="";
             // this.info.due_date="";
             // this.info.estimate_date="";
-           
+           this.fetchUnits();
 
 
         },
@@ -392,6 +410,19 @@
                             title: title,
                             message: message
                             });
+            },
+
+            fetchUnits(){
+
+             let vm=this;// current pointer instance while going inside the another functional instance
+                    axios.get('/api/units')
+                    .then(function(response){
+                      vm.units=response.data.data;
+                    })
+                    .catch(function(error){
+                      console.log();
+                    });
+
             },
 
     },// end of methods

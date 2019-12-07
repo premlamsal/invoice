@@ -20,6 +20,7 @@ class CreateInvoiceDetailsTable extends Migration
             $table->string('product_name');
             $table->string('quantity');
             $table->string('price');
+            $table->string('unit');
             $table->string('line_total');
             $table->timestamps();
         });

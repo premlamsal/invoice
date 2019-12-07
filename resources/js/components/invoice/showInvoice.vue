@@ -52,8 +52,8 @@
     <thead>
         <tr>
             <th>Item Name</th>
-            <th>Price</th>
             <th>Qty</th>
+            <th>Price</th>
             <th>Total</th>
             
         </tr>
@@ -63,11 +63,14 @@
             <td class="table-name">
                 {{item.product_name}}
             </td>
-            <td class="table-price">
-                {{item.price}}
-            </td>
             <td class="table-qty">
                 {{item.quantity}}
+            </td>
+            <td class="table-price">
+                {{item.unit}}
+            </td>
+            <td class="table-price">
+                {{item.price}}
             </td>
             <td class="table-total">
                 <span class="table-text" v-model="item.line_total">{{item.quantity * item.price}}</span>
@@ -76,27 +79,27 @@
     </tbody>
     <tfoot>
         <tr>
-            <td class="table-empty" colspan="2">
+            <td class="table-empty" colspan="3">
                 <!-- <button class="table-add_line btn btn-primary"><span class="fa fa-plus-circle"></span></button> -->
             </td>
             <td class="table-label">Sub Total</td>
             <td class="table-amount">{{info.sub_total}}</td>
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="3"></td>
             <td class="table-label">Discount</td>
             <td class="table-discount">
                 {{info.discount}}
             </td>
         </tr>
         <tr>
-             <td class="table-empty" colspan="2"></td>
+             <td class="table-empty" colspan="3"></td>
              <td class="table-label">13% Tax</td>
             <td class="table-amount">{{info.taxAmount}}</td>
             
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="3"></td>
             <td class="table-label text-primary" style="font-weight: bold;">Grand Total</td>
             <td class="table-amount" style="font-weight: bold;">{{info.grand_total}}</td>
         </tr>

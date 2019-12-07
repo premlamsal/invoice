@@ -9,5 +9,5 @@ class InvoiceDetail extends Model
 	public function invoiceDetail() {
 	    return $this->belongsTo('\App\Invoice','invoice_id','id');
 	}
-	 protected $fillable = ['invoice_id', 'product_name', 'quantity','price','line_total'];
+	 protected $fillable = ['invoice_id', 'product_name', 'quantity','unit','price','line_total'];
 }
