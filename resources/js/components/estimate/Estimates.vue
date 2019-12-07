@@ -117,7 +117,7 @@
 
         fetchEstimates(page_url){
           this.isLoading="Loading all Data";
-          page_url=page_url || '/api/estimates'
+          page_url=page_url || 'api/estimates'
           let vm=this;
           fetch(page_url)
             .then(res=>res.json())

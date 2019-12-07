@@ -2795,7 +2795,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = "Loading all Data";
-      page_url = page_url || '/api/estimates';
+      page_url = page_url || 'api/estimates';
       var vm = this;
       fetch(page_url).then(function (res) {
         return res.json();
