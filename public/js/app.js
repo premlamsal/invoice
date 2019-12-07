@@ -76514,11 +76514,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Item Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Price")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Qty")]),
         _vm._v(" "),
         _c("th", [_vm._v("Unit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")])
       ])

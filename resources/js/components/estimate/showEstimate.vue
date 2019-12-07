@@ -52,9 +52,9 @@
     <thead>
         <tr>
             <th>Item Name</th>
-            <th>Price</th>
             <th>Qty</th>
             <th>Unit</th>
+            <th>Price</th>
             <th>Total</th>
             
         </tr>
