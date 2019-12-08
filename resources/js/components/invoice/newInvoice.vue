@@ -157,7 +157,7 @@
             
         </tr>
         <tr>
-            <td class="table-empty" colspan="2" style="border: none;"></td>
+            <td class="table-empty" colspan="3" style="border: none;"></td>
             <td class="table-label text-primary" style="font-weight: bold;">Grand Total</td>
             <td class="table-amount" style="font-weight: bold;">{{grandTotal}}</td>
         </tr>
