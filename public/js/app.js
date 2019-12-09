@@ -2067,9 +2067,11 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -2162,54 +2164,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-window.document.title = "Dashboard";
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dashInfo: []
+    };
+  },
+  created: function created() {
+    //methods to be executed while this page is created
+    this.fetchDashInfo();
+  },
+  methods: {
+    fetchDashInfo: function fetchDashInfo() {
+      var currObj = this;
+      axios.get('/api/fetchDashInfo').then(function (response) {
+        currObj.dashInfo = response.data;
+      })["catch"](function (error) {
+        if (error.response.status == 422) {
+          currObj.validationErrors = error.response.data.errors;
+          currObj.errors = currObj.validationErrors; // console.log(currObj.errors);
+        }
+      });
+    } //end of fetchDashInfo
+
+  } //end of methods
+
+});
 
 /***/ }),
 
@@ -73829,312 +73809,196 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
+        _c(
+          "div",
+          { staticClass: "card border-left-primary shadow h-100 py-2" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row no-gutters align-items-center" }, [
+                _c("div", { staticClass: "col mr-2" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "text-xs font-weight-bold text-primary text-uppercase mb-1"
+                    },
+                    [_vm._v("Invoices (Total)")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
+                    [_vm._v(_vm._s(_vm.dashInfo.invoice))]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
+        _c(
+          "div",
+          { staticClass: "card border-left-success shadow h-100 py-2" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row no-gutters align-items-center" }, [
+                _c("div", { staticClass: "col mr-2" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "text-xs font-weight-bold text-success text-uppercase mb-1"
+                    },
+                    [_vm._v("Estimates (Total)")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
+                    [_vm._v(_vm._s(_vm.dashInfo.estimate))]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
+        _c("div", { staticClass: "card border-left-info shadow h-100 py-2" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row no-gutters align-items-center" }, [
+              _c("div", { staticClass: "col mr-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-xs font-weight-bold text-info text-uppercase mb-1"
+                  },
+                  [_vm._v("Customer (Total)")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row no-gutters align-items-center" },
+                  [
+                    _c("div", { staticClass: "col-auto" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "h5 mb-0 mr-3 font-weight-bold text-gray-800"
+                        },
+                        [_vm._v(_vm._s(_vm.dashInfo.customer))]
+                      )
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(4)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-sm-flex align-items-center justify-content-between mb-4"
-        },
-        [
-          _c("h1", { staticClass: "h3 mb-0 text-gray-800" }, [
-            _vm._v("Dashboard")
-          ]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass:
-                "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm",
-              attrs: { href: "#" }
-            },
-            [
-              _c("i", { staticClass: "fas fa-download fa-sm text-white-50" }),
-              _vm._v(" Generate Report")
-            ]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-          _c(
-            "div",
-            { staticClass: "card border-left-primary shadow h-100 py-2" },
-            [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "row no-gutters align-items-center" },
-                  [
-                    _c("div", { staticClass: "col mr-2" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "text-xs font-weight-bold text-primary text-uppercase mb-1"
-                        },
-                        [_vm._v("Invoices (Total)")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "h5 mb-0 font-weight-bold text-gray-800"
-                        },
-                        [_vm._v("200")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-auto" }, [
-                      _c("i", {
-                        staticClass: "fas fa-file-invoice fa-2x text-gray-300"
-                      })
-                    ])
-                  ]
-                )
-              ])
-            ]
-          )
+    return _c(
+      "div",
+      {
+        staticClass: "d-sm-flex align-items-center justify-content-between mb-4"
+      },
+      [
+        _c("h1", { staticClass: "h3 mb-0 text-gray-800" }, [
+          _vm._v("Dashboard")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-          _c(
-            "div",
-            { staticClass: "card border-left-success shadow h-100 py-2" },
-            [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "row no-gutters align-items-center" },
-                  [
-                    _c("div", { staticClass: "col mr-2" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "text-xs font-weight-bold text-success text-uppercase mb-1"
-                        },
-                        [_vm._v("Estimates (Total)")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "h5 mb-0 font-weight-bold text-gray-800"
-                        },
-                        [_vm._v("300")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-auto" }, [
-                      _c("i", {
-                        staticClass:
-                          "fas fa-file-invoice-dollar fa-2x text-gray-300"
-                      })
-                    ])
-                  ]
-                )
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-          _c(
-            "div",
-            { staticClass: "card border-left-info shadow h-100 py-2" },
-            [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "row no-gutters align-items-center" },
-                  [
-                    _c("div", { staticClass: "col mr-2" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "text-xs font-weight-bold text-info text-uppercase mb-1"
-                        },
-                        [_vm._v("Customer (Total)")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "row no-gutters align-items-center" },
-                        [
-                          _c("div", { staticClass: "col-auto" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "h5 mb-0 mr-3 font-weight-bold text-gray-800"
-                              },
-                              [_vm._v("10")]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col" }, [
-                            _c(
-                              "div",
-                              { staticClass: "progress progress-sm mr-2" },
-                              [
-                                _c("div", {
-                                  staticClass: "progress-bar bg-info",
-                                  staticStyle: { width: "50%" },
-                                  attrs: {
-                                    role: "progressbar",
-                                    "aria-valuenow": "50",
-                                    "aria-valuemin": "0",
-                                    "aria-valuemax": "100"
-                                  }
-                                })
-                              ]
-                            )
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-auto" }, [
-                      _c("i", {
-                        staticClass: "fas fa-user-friends fa-2x text-gray-300"
-                      })
-                    ])
-                  ]
-                )
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-          _c(
-            "div",
-            { staticClass: "card border-left-warning shadow h-100 py-2" },
-            [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "row no-gutters align-items-center" },
-                  [
-                    _c("div", { staticClass: "col mr-2" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "text-xs font-weight-bold text-warning text-uppercase mb-1"
-                        },
-                        [_vm._v("Notifications  ")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "h5 mb-0 font-weight-bold text-gray-800"
-                        },
-                        [_vm._v("18")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-auto" }, [
-                      _c("i", {
-                        staticClass: "fas fa-comments fa-2x text-gray-300"
-                      })
-                    ])
-                  ]
-                )
-              ])
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xl-8 col-lg-7" }, [
-          _c("div", { staticClass: "card shadow mb-4" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "card-header py-3 d-flex flex-row align-items-center justify-content-between"
-              },
-              [
-                _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-                  _vm._v("Activities")
-                ])
-              ]
-            ),
+        _c(
+          "a",
+          {
+            staticClass:
+              "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm",
+            attrs: { href: "#" }
+          },
+          [
+            _c("i", { staticClass: "fas fa-download fa-sm text-white-50" }),
+            _vm._v(" Generate Report")
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("i", { staticClass: "fas fa-file-invoice fa-2x text-gray-300" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("i", { staticClass: "fas fa-file-invoice-dollar fa-2x text-gray-300" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("i", { staticClass: "fas fa-user-friends fa-2x text-gray-300" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
+      _c("div", { staticClass: "card border-left-warning shadow h-100 py-2" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row no-gutters align-items-center" }, [
+            _c("div", { staticClass: "col mr-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "text-xs font-weight-bold text-warning text-uppercase mb-1"
+                },
+                [_vm._v("Notifications  ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
+                [_vm._v("18")]
+              )
+            ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("ul", [
-                _c("li", [
-                  _vm._v("Invoice created for "),
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
-                  _vm._v(" on 2019-12-07 "),
-                  _c("a", { attrs: { href: "" } }, [_vm._v("View this")])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _vm._v("Invoice created for "),
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
-                  _vm._v(" on 2019-12-07")
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _vm._v("Invoice created for "),
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
-                  _vm._v(" on 2019-12-07")
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _vm._v("Invoice created for "),
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
-                  _vm._v(" on 2019-12-07")
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _vm._v("Invoice created for "),
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
-                  _vm._v(" on 2019-12-07")
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _vm._v("Invoice created for "),
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Prem Lamsal")]),
-                  _vm._v(" on 2019-12-07")
-                ])
-              ])
+            _c("div", { staticClass: "col-auto" }, [
+              _c("i", { staticClass: "fas fa-comments fa-2x text-gray-300" })
             ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-xl-4 col-lg-5" }, [
-          _c("div", { staticClass: "card shadow mb-4" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "card-header py-3 d-flex flex-row align-items-center justify-content-between"
-              },
-              [
-                _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-                  _vm._v("Company Info")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "dropdown no-arrow" })
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" })
           ])
         ])
       ])
@@ -94998,9 +94862,7 @@ component.options.__file = "resources/js/components/dashboard.vue"
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

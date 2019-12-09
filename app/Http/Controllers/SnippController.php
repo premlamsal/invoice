@@ -9,28 +9,16 @@ use App\Customer;
 
 class SnippController extends Controller
 {
-   public function totalInvoices(){
-   	$invoice=Invoice::count();
-   	return response()->json([
-          'info'=>$invoice,
-          'status'=>'success'
-        ]);
-   }
-   public function totalEstimates(){
-   	$estimate=Estimate::count();
-   	return response()->json([
-          'info'=>$estimate,
-          'status'=>'success'
-        ]);
-   }
-   public function totalCustomer(){
-   	$customer=Customer::count();
-   	return response()->json([
-          'info'=>$customer,
-          'status'=>'success'
-        ]);
-   }
-   public function totalNotification(){
+  
+   public function fetchDashInfo(){
+    $invoice=Invoice::count();
+    $estimate=Estimate::count();
+    $customer=Customer::count();
 
+    return response()->json([
+          'invoice'=>$invoice,
+          'estimate'=>$estimate,
+          'customer'=>$customer
+        ]);
    }
 }

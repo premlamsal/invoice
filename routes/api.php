@@ -103,3 +103,10 @@ Route::put('unit','UnitController@update');
 //Delete Unit
 Route::delete('unit/{id}','UnitController@destroy');
 
+
+
+//snipps
+
+//fetch dashboard information
+Route::get('fetchDashInfo','SnippController@fetchDashInfo');
+
