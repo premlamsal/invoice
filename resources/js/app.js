@@ -209,7 +209,13 @@ const app = new Vue({
     el: '#app',
      router,
      data:{
-     	message:''
+     	message:'',
+
+     },
+
+     methods:{
+
+        
      },
   
 });
