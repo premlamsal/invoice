@@ -5253,7 +5253,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (data) {
         return Vue.set(_this.settings, 'id', data.settings.id), Vue.set(_this.settings, 'company_name', data.settings.company_name), Vue.set(_this.settings, 'company_email', data.settings.company_email), Vue.set(_this.settings, 'company_address', data.settings.company_address), Vue.set(_this.settings, 'company_phone', data.settings.company_phone), Vue.set(_this.settings, 'company_url', data.settings.company_url), //company image
         Vue.set(_this.settings, 'company_logo', "/img/" + data.settings.company_logo), // this.company_logo="/img/"+data.settings.company_logo //concatenate image location and image name
-        Vue.set(_this.settings, 'vat', data.settings.vat) // console.log(data.settings.company_name)
+        Vue.set(_this.settings, 'tax', data.settings.tax) // console.log(data.settings.company_name)
         ;
       });
     },
@@ -5281,7 +5281,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('company_address', this.settings.company_address);
       formData.append('company_phone', this.settings.company_phone);
       formData.append('company_url', this.settings.company_url);
-      formData.append('vat', this.settings.vat); // Display the key/value pairs
+      formData.append('tax', this.settings.tax); // Display the key/value pairs
       // posting data //using post and sending form data as PUT to match the api route name setting
 
       axios.post('/api/settings', formData, config).then(function (response) {
@@ -79439,33 +79439,33 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("VAT Percentage")]),
+                  _c("label", [_vm._v("Tax Percentage")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.settings.vat,
-                        expression: "settings.vat"
+                        value: _vm.settings.tax,
+                        expression: "settings.tax"
                       }
                     ],
                     class: ["form-control"],
-                    attrs: { type: "number", placeholder: "VAT Percentage" },
-                    domProps: { value: _vm.settings.vat },
+                    attrs: { type: "number", placeholder: "Tax Percentage" },
+                    domProps: { value: _vm.settings.tax },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.settings, "vat", $event.target.value)
+                        _vm.$set(_vm.settings, "tax", $event.target.value)
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _vm.errors.vat
+                  _vm.errors.tax
                     ? _c("span", { class: ["errorText"] }, [
-                        _vm._v(_vm._s(_vm.errors.vat[0]))
+                        _vm._v(_vm._s(_vm.errors.tax[0]))
                       ])
                     : _vm._e()
                 ]),
@@ -79573,7 +79573,7 @@ var render = function() {
                       staticClass: "card-text",
                       staticStyle: { "text-align": "center" }
                     },
-                    [_vm._v(_vm._s(_vm.settings.vat) + "% VAT")]
+                    [_vm._v(_vm._s(_vm.settings.tax) + "% TAX")]
                   )
                 ])
               ]

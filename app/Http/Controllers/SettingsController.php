@@ -28,7 +28,7 @@ class SettingsController extends Controller
           'company_address' => 'required|string|max:200',
           'company_phone' =>  'required|digits:10',
           'company_url' => 'required|url',
-          'vat' => 'required|numeric ',
+          'tax' => 'required|numeric ',
           
         ]);
 
@@ -39,7 +39,7 @@ class SettingsController extends Controller
       $setting->company_address=$request->input('company_address');
       $setting->company_phone=$request->input('company_phone');
       $setting->company_url=$request->input('company_url');
-      $setting->vat=$request->input('vat');
+      $setting->tax=$request->input('tax');
          
       if($request->hasFile('image')){
         $imageName = time().'.'.$request->image->getClientOriginalExtension();

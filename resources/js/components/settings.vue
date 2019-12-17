@@ -32,9 +32,9 @@
                       <span v-if="errors.company_phone" :class="['errorText']">{{ errors.company_phone[0] }}</span>
                     </div>
                      <div class="form-group">
-                      <label>VAT Percentage</label>
-                      <input type="number" :class="['form-control']" placeholder="VAT Percentage" v-model="settings.vat">
-                      <span v-if="errors.vat" :class="['errorText']">{{ errors.vat[0] }}</span>
+                      <label>Tax Percentage</label>
+                      <input type="number" :class="['form-control']" placeholder="Tax Percentage" v-model="settings.tax">
+                      <span v-if="errors.tax" :class="['errorText']">{{ errors.tax[0] }}</span>
                     </div>
                     <div class="form-group">
                       <label>Company Website</label>
@@ -58,7 +58,7 @@
                         <h4 style="text-align: center;">{{settings.company_name}}</h4>
                         <p class="card-text" style="text-align: center;">{{settings.company_address}}</p>
                         <p class="card-text" style="text-align: center;">{{settings.company_phone}}</p>
-                        <p class="card-text" style="text-align: center;">{{settings.vat}}% VAT</p>
+                        <p class="card-text" style="text-align: center;">{{settings.tax}}% TAX</p>
                       </div>
                     </div>
               </div>
@@ -119,16 +119,11 @@
               Vue.set(this.settings, 'company_logo',"/img/"+ data.settings.company_logo),
               // this.company_logo="/img/"+data.settings.company_logo //concatenate image location and image name
 
-              Vue.set(this.settings, 'vat', data.settings.vat)
+              Vue.set(this.settings, 'tax', data.settings.tax)
               // console.log(data.settings.company_name)
           ));
       },//end of fetchSettings()
 
-
-
-
-
-      
       fileSelected(e){
           // alert("File Selected");
           this.image=e.target.files[0];
@@ -152,7 +147,7 @@
         formData.append('company_address',this.settings.company_address);
         formData.append('company_phone',this.settings.company_phone);
         formData.append('company_url',this.settings.company_url);
-        formData.append('vat',this.settings.vat);
+        formData.append('tax',this.settings.tax);
         // Display the key/value pairs
    
         // posting data //using post and sending form data as PUT to match the api route name setting
