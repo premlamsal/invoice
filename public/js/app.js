@@ -1912,6 +1912,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1921,7 +1939,8 @@ __webpack_require__.r(__webpack_exports__);
       //for form single unit data
       modalForName: "",
       modalForCode: 0,
-      errors: []
+      errors: [],
+      pagination: {}
     };
   },
   created: function created() {
@@ -1930,11 +1949,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     //methods codes here
-    fetchCustomers: function fetchCustomers() {
+    fetchCustomers: function fetchCustomers(page_url) {
       var vm = this; // current pointer instance while going inside the another functional instance
 
-      axios.get('/api/customers').then(function (response) {
+      page_url = page_url || 'api/customers';
+      axios.get(page_url).then(function (response) {
         vm.customers = response.data.data;
+
+        if (vm.customers.length != null) {
+          vm.makePagination(response.data.meta, response.data.links);
+        }
       })["catch"](function (error) {
         console.log();
       }); //above and below code provide same result but above code need current instance pointer for value assignmnent 
@@ -1947,6 +1971,21 @@ __webpack_require__.r(__webpack_exports__);
       // .catch(error=>{
       //   console.log(error)
       // })
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        from_page: meta.from,
+        to_page: meta.to,
+        total_pages: meta.total,
+        path_page: meta.path + "?page=",
+        first_link: links.first,
+        last_link: links.last,
+        prev_link: links.prev,
+        next_link: links.next
+      };
+      this.pagination = pagination;
     },
     showAddModal: function showAddModal() {
       this.modalForName = "Add Customer"; // Vue.set(this.modalForName,"Add Unit");
@@ -73987,6 +74026,152 @@ var render = function() {
                 )
               ]
             )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-8" }, [
+              _c(
+                "ul",
+                { staticClass: "pagination" },
+                [
+                  _c(
+                    "li",
+                    {
+                      staticClass: "page-item",
+                      class: { disabled: !_vm.pagination.first_link }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "page-link",
+                          on: {
+                            click: function($event) {
+                              return _vm.fetchCustomers(
+                                _vm.pagination.first_link
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("First")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "page-item",
+                      class: { disabled: !_vm.pagination.prev_link }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "page-link",
+                          on: {
+                            click: function($event) {
+                              return _vm.fetchCustomers(
+                                _vm.pagination.prev_link
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Previous")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.pagination.last_page, function(n) {
+                    return _c(
+                      "li",
+                      {
+                        key: n,
+                        staticClass: "page-item",
+                        class: { active: _vm.pagination.current_page == n }
+                      },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "page-link",
+                            on: {
+                              click: function($event) {
+                                return _vm.fetchCustomers(
+                                  _vm.pagination.path_page + n
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(n))]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "page-item",
+                      class: { disabled: !_vm.pagination.next_link }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "page-link",
+                          on: {
+                            click: function($event) {
+                              return _vm.fetchCustomers(
+                                _vm.pagination.next_link
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Next")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "page-item",
+                      class: { disabled: !_vm.pagination.last_link }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "page-link",
+                          on: {
+                            click: function($event) {
+                              return _vm.fetchCustomers(
+                                _vm.pagination.last_link
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Last")]
+                      )
+                    ]
+                  )
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _vm._v(
+                "\n                 Page: " +
+                  _vm._s(_vm.pagination.current_page) +
+                  "-" +
+                  _vm._s(_vm.pagination.last_page) +
+                  "\n                 Total Records: " +
+                  _vm._s(_vm.pagination.total_pages) +
+                  "\n               "
+              )
+            ])
           ])
         ])
       ])

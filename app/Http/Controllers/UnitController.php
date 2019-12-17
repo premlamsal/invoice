@@ -11,7 +11,7 @@ class UnitController extends Controller
 {
     public function index()
     {
-        return UnitResource::collection(Unit::paginate(2));
+        return UnitResource::collection(Unit::paginate(8));
     }
 
    
