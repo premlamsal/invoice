@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Invoice;
 use App\Estimate;
 use App\Customer;
+use App\Unit;
 
 class SnippController extends Controller
 {
@@ -14,11 +15,13 @@ class SnippController extends Controller
     $invoice=Invoice::count();
     $estimate=Estimate::count();
     $customer=Customer::count();
+    $unit=Unit::count();
 
     return response()->json([
           'invoice'=>$invoice,
           'estimate'=>$estimate,
-          'customer'=>$customer
+          'customer'=>$customer,
+          'unit'=>$unit
         ]);
    }
 }

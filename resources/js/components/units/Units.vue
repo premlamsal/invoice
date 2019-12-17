@@ -59,6 +59,25 @@
                   </tbody>
                 </table>
               </div>
+                  <div class="row">
+                <div class="col-md-8">
+                    <ul class="pagination">
+                      <li class="page-item" v-bind:class="{disabled:!pagination.first_link}"><button @click="fetchUnits(pagination.first_link)" class="page-link">First</button></li>
+
+                      <li class="page-item" v-bind:class="{disabled:!pagination.prev_link}"><button @click="fetchUnits(pagination.prev_link)" class="page-link">Previous</button></li>
+
+                      <li v-for="n in pagination.last_page" v-bind:key="n" class="page-item" v-bind:class="{active:pagination.current_page == n}"><button @click="fetchUnits(pagination.path_page + n)" class="page-link">{{n}}</button></li>
+
+                      <li class="page-item" v-bind:class="{disabled:!pagination.next_link}"><button @click="fetchUnits(pagination.next_link)" class="page-link">Next</button></li>
+
+                      <li class="page-item" v-bind:class="{disabled:!pagination.last_link}"><button @click="fetchUnits(pagination.last_link)" class="page-link">Last</button></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                  Page: {{pagination.current_page}}-{{pagination.last_page}}
+                  Total Records: {{pagination.total_pages}}
+                </div>
+              </div>
 
             </div>
           </div>
@@ -78,6 +97,7 @@
         modalForCode: 0 ,    
 
         errors: [],  
+        pagination: {},
 
       }
     },
@@ -88,12 +108,18 @@
 
     methods:{
       //methods codes here
-      fetchUnits(){
+      fetchUnits(page_url){
+        this.isLoading="Loading all Data";
+        page_url=page_url || 'api/units'
 
         let vm=this;// current pointer instance while going inside the another functional instance
-        axios.get('/api/units')
+        axios.get(page_url)
         .then(function(response){
           vm.units=response.data.data;
+          // console.log(response.data);
+            if((vm.units.length)!=null){
+                vm.makePagination(response.data.meta,response.data.links);
+              }
         })
         .catch(function(error){
           console.log();
@@ -115,6 +141,22 @@
 
 
       },
+       makePagination(meta,links){
+          let pagination={
+            current_page : meta.current_page,
+            last_page : meta.last_page,
+            from_page : meta.from,
+            to_page : meta.to,
+            total_pages : meta.total,
+            path_page : meta.path+"?page=",
+            first_link : links.first,
+            last_link : links.last,
+            prev_link : links.prev,
+            next_link : links.next
+          
+          }
+          this.pagination=pagination;
+        },
       showAddModal(){
         this.modalForName="Add Unit";
         // Vue.set(this.modalForName,"Add Unit");
