@@ -39,7 +39,18 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
+              <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">Customers</h6>
+                 <div class="searchTable">
+                       <!-- Topbar Search -->
+                   <div class="input-group">
+                      <input type="text" class="form-control border-primary small" placeholder="Search for Customer" aria-label="Search" aria-describedby="basic-addon2" v-model="searchTableKey">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" @click="searchTableBtn">
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+              </div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -102,10 +113,13 @@
         customer:{}, //for form single unit data
 
         modalForName: "",
-        modalForCode: 0 ,      
+        modalForCode: 0 , 
 
+        searchTableKey:'',
         errors:[],
         pagination: {},
+
+        isLoading:'',
 
       }
     },
@@ -300,7 +314,50 @@
           });
 
 
-      }//end of deleteUnit()
+      },//end of deleteUnit()
+      searchTableBtn(){
+          this.autoCompleteTable();
+        },
+        autoCompleteTable(){
+
+          this.searchTableKey=this.searchTableKey.toLowerCase();
+          if(this.searchTableKey!=''){
+              this.isLoading='Loading Data...';
+               let currObj=this;
+                axios.post('/api/customer_search',{searchQuery:this.searchTableKey})
+                .then(function(response){
+
+                  currObj.isLoading='';
+
+                  currObj.customers=response.data.queryResults;
+                   if(response.data.queryResults==""){
+
+                      currObj.isLoading="No Data Found";
+
+                    }
+                   // if((this.estimates.length)!=null){
+                   // // currObj.makePagination(res.meta,res.links);
+                   // }
+                  // currObj.status=response.data.status;
+                  currObj.errors = '';//clearing errors
+
+                })
+                .catch(function(error){
+                   if (error.response.status == '422'){
+                     currObj.validationErrors = error.response.data.errors;    
+                     currObj.errors = currObj.validationErrors;
+                      currObj.isLoading='Load Failed...';
+                     // console.log(currObj.errors);
+
+                    }
+                });
+          }  
+          else{
+            this.isLoading="Loading all Data";
+            this.fetchCustomers();
+          }  
+
+        }//end of autoCOmpleteTable
 
 
 

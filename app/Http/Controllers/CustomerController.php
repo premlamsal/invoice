@@ -85,8 +85,6 @@ class CustomerController extends Controller
                 'search' => 'ok',
                 'queryResults' => $queryResults
             ]);
-
-        
     }
 
     public function destroy($id){

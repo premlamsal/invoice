@@ -8,6 +8,7 @@ use App\Invoice;
 use App\InvoiceDetail;
 use App\Http\Resources\Invoice as InvoiceResource;
 use App\Customer;
+use App\Setting;
 
 
 class InvoiceController extends Controller
@@ -44,6 +45,8 @@ class InvoiceController extends Controller
             'items.*.quantity' => 'required | numeric',
 
         ]);
+
+         $settings=Settings::findOrFail(1);
 
         //collecting data
         $items = collect($request->items)->transform(function($item) {

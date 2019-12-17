@@ -1930,6 +1930,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1939,8 +1950,10 @@ __webpack_require__.r(__webpack_exports__);
       //for form single unit data
       modalForName: "",
       modalForCode: 0,
+      searchTableKey: '',
       errors: [],
-      pagination: {}
+      pagination: {},
+      isLoading: ''
     };
   },
   created: function created() {
@@ -2094,7 +2107,44 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
-    } //end of deleteUnit()
+    },
+    //end of deleteUnit()
+    searchTableBtn: function searchTableBtn() {
+      this.autoCompleteTable();
+    },
+    autoCompleteTable: function autoCompleteTable() {
+      this.searchTableKey = this.searchTableKey.toLowerCase();
+
+      if (this.searchTableKey != '') {
+        this.isLoading = 'Loading Data...';
+        var currObj = this;
+        axios.post('/api/customer_search', {
+          searchQuery: this.searchTableKey
+        }).then(function (response) {
+          currObj.isLoading = '';
+          currObj.customers = response.data.queryResults;
+
+          if (response.data.queryResults == "") {
+            currObj.isLoading = "No Data Found";
+          } // if((this.estimates.length)!=null){
+          // // currObj.makePagination(res.meta,res.links);
+          // }
+          // currObj.status=response.data.status;
+
+
+          currObj.errors = ''; //clearing errors
+        })["catch"](function (error) {
+          if (error.response.status == '422') {
+            currObj.validationErrors = error.response.data.errors;
+            currObj.errors = currObj.validationErrors;
+            currObj.isLoading = 'Load Failed...'; // console.log(currObj.errors);
+          }
+        });
+      } else {
+        this.isLoading = "Loading all Data";
+        this.fetchCustomers();
+      }
+    } //end of autoCOmpleteTable
     //end of methods block
 
   }
@@ -73966,7 +74016,59 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "card shadow mb-4" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "card-header py-3" }, [
+          _c(
+            "h6",
+            {
+              staticClass: "m-0 font-weight-bold text-primary",
+              staticStyle: { display: "inline-block" }
+            },
+            [_vm._v("Customers")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "searchTable" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchTableKey,
+                    expression: "searchTableKey"
+                  }
+                ],
+                staticClass: "form-control border-primary small",
+                attrs: {
+                  type: "text",
+                  placeholder: "Search for Customer",
+                  "aria-label": "Search",
+                  "aria-describedby": "basic-addon2"
+                },
+                domProps: { value: _vm.searchTableKey },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchTableKey = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.searchTableBtn }
+                  },
+                  [_c("i", { staticClass: "fas fa-search fa-sm" })]
+                )
+              ])
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "table-responsive" }, [
@@ -73977,7 +74079,7 @@ var render = function() {
                 attrs: { width: "100%", cellspacing: "0" }
               },
               [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -74180,16 +74282,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header py-3" }, [
-      _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-        _vm._v("Customers")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
